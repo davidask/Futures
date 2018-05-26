@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Future.xcodeproj">
+      location = "self:/Users/davidask/Formbound/Projects/Future/Futures.xcodeproj">
    </FileRef>
 </Workspace>

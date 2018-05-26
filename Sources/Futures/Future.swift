@@ -1,4 +1,4 @@
-import Foundation
+import Dispatch
 
 private enum FutureState<Value> {
     case pending
@@ -35,14 +35,14 @@ public protocol AnyFuture: class, Equatable {
 }
 
 public extension AnyFuture {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs == rhs
     }
 }
 
 public final class Future<T>: AnyFuture {
 
-    private let stateQueue = DispatchQueue(label: "promise.state")
+    private let stateQueue = DispatchQueue(label: "com.formbound.future.sate")
 
     private var observers: [FutureObserver<T>] = []
 
@@ -68,7 +68,7 @@ public final class Future<T>: AnyFuture {
         self.init(.rejected(error))
     }
 
-    public func addObserver(on queue: DispatchQueue, observer: @escaping FutureObserver<T>) {
+    private func addObserver(on queue: DispatchQueue, observer: @escaping FutureObserver<T>) {
         stateQueue.sync {
             switch state {
             case .pending:
@@ -88,10 +88,6 @@ public final class Future<T>: AnyFuture {
     fileprivate func resolve(_ result: FutureValue<T>) {
         stateQueue.sync {
 
-            defer {
-                observers.removeAll(keepingCapacity: false)
-            }
-
             guard case .pending = state else {
                 return
             }
@@ -101,6 +97,8 @@ public final class Future<T>: AnyFuture {
             for observer in observers {
                 observer(result)
             }
+
+            observers.removeAll(keepingCapacity: false)
         }
     }
 }
@@ -141,7 +139,7 @@ public extension Future {
 public extension Future {
 
     func then<U>(
-        on queue: DispatchQueue,
+        on queue: DispatchQueue = .futures,
         body: @escaping (T) throws -> Future<U>) -> Future<U> {
 
         let promise = Promise<U>()
@@ -160,8 +158,26 @@ public extension Future {
         return promise.future
     }
 
+    func thenIfRejected(on queue: DispatchQueue = .futures, body: @escaping(Error) -> Future<T>) -> Future<T> {
+        let promise = Promise<T>()
+
+        addObserver(on: queue) { result in
+            switch result {
+            case .fulfilled(let value):
+                promise.fulfill(value)
+            case .rejected(let error):
+                let future = body(error)
+                future.addObserver(on: queue) { result in
+                    promise.resolve(result)
+                }
+            }
+        }
+
+        return promise.future
+    }
+
     func map<U>(
-        on queue: DispatchQueue ,
+        on queue: DispatchQueue = .futures,
         body: @escaping (T) throws -> U) -> Future<U> {
 
         return then(on: queue) { value in
@@ -171,74 +187,7 @@ public extension Future {
         }
     }
 
-    func `catch`(on queue: DispatchQueue, body: @escaping(Error) throws -> Future<T>) -> Future<T> {
-        let promise = Promise<T>()
-
-        addObserver(on: queue) { result in
-            switch result {
-            case .fulfilled(let value):
-                promise.fulfill(value)
-            case .rejected(let error):
-                do {
-                    let future = try body(error)
-                    future.addObserver(on: queue) { result in
-                        promise.resolve(result)
-                    }
-                } catch {
-                    promise.reject(error)
-                }
-            }
-        }
-
-        return promise.future
-    }
-}
-
-public extension Future {
-
-    func and<U>(_ other: Future<U>, on queue: DispatchQueue ) -> Future<(T, U)> {
-        return then(on: queue) { value in
-
-            let promise = Promise<(T, U)>()
-
-            other.addObserver(on: queue) { result in
-                do {
-                    try promise.fulfill((value, result.unwrap()))
-                } catch {
-                    promise.reject(error)
-                }
-            }
-
-            return promise.future
-        }
-    }
-
-    public func fold<U, S: Sequence>(_ futures: S, on queue: DispatchQueue, with combiningFunction: @escaping (T, U) -> Future<T>) -> Future<T> where S.Element == Future<U> {
-
-        return futures.reduce(self) { f1, f2 in
-            return f1.and(f2, on: queue).then(on: queue) { f1, f2 in
-                return combiningFunction(f1, f2)
-            }
-        }
-    }
-
-    static func reduce<U, S: Sequence>(
-        _ futures: S,
-        on queue: DispatchQueue ,
-        initialResult: T,
-        nextPartialResult: @escaping (T, U) -> T) -> Future<T> where S.Element == Future<U> {
-
-        let initialResult = Future<T>(initialResult)
-
-        return initialResult.fold(futures, on: queue) { t, u in
-            return Future(nextPartialResult(t, u))
-        }
-    }
-}
-
-public extension Future {
-
-    func recover(on queue: DispatchQueue , body: @escaping (Error) throws -> T) -> Future<T> {
+    func mapIfRejected(on queue: DispatchQueue = .futures, body: @escaping (Error) throws -> T) -> Future<T> {
 
         let promise = Promise<T>()
 
@@ -257,8 +206,54 @@ public extension Future {
 
         return promise.future
     }
+}
 
-    func whenFulfilled(on queue: DispatchQueue , body: @escaping (T) -> Void) {
+public extension Future {
+
+    func and<U>(_ other: Future<U>, on queue: DispatchQueue = .futures) -> Future<(T, U)> {
+
+        return then(on: queue) { value in
+            let promise = Promise<(T, U)>()
+            other.addObserver(on: queue) { result in
+                do {
+                    try promise.fulfill((value, result.unwrap()))
+                } catch {
+                    promise.reject(error)
+                }
+            }
+            return promise.future
+        }
+    }
+
+    func fold<U, S: Sequence>(
+        _ futures: S,
+        on queue: DispatchQueue = .futures,
+        with combiningFunction: @escaping (T, U) -> Future<T>) -> Future<T> where S.Element == Future<U> {
+
+        return futures.reduce(self) { future1, future2 in
+            return future1.and(future2, on: queue).then(on: queue) { value1, value2 in
+                return combiningFunction(value1, value2)
+            }
+        }
+    }
+
+    static func reduce<U, S: Sequence>(
+        _ futures: S,
+        on queue: DispatchQueue = .futures,
+        initialResult: T,
+        nextPartialResult: @escaping (T, U) -> T) -> Future<T> where S.Element == Future<U> {
+
+        let initialResult = Future<T>(initialResult)
+
+        return initialResult.fold(futures, on: queue) { value1, value2 in
+            return Future(nextPartialResult(value1, value2))
+        }
+    }
+}
+
+public extension Future {
+
+    func whenFulfilled(on queue: DispatchQueue = .futures, body: @escaping (T) -> Void) {
         addObserver(on: queue) { result in
             guard case .fulfilled(let value) = result else {
                 return
@@ -268,7 +263,7 @@ public extension Future {
         }
     }
 
-    func whenRejected(on queue: DispatchQueue , body: @escaping (Error) -> Void) {
+    func whenRejected(on queue: DispatchQueue = .futures, body: @escaping (Error) -> Void) {
         addObserver(on: queue) { result in
             guard case .rejected(let error) = result else {
                 return
@@ -278,20 +273,23 @@ public extension Future {
         }
     }
 
-    func whenResolved(on queue: DispatchQueue , body: @escaping (FutureValue<T>) -> Void) {
+    func whenResolved(on queue: DispatchQueue = .futures, body: @escaping (FutureValue<T>) -> Void) {
         addObserver(on: queue, observer: body)
+
     }
 
-    func perform(on queue: DispatchQueue , body: @escaping (() -> Void) throws -> Void) -> Future<T> {
-        return then(on: queue) { result in
-            let promise = Promise<T>()
+    func perform(
+        on queue: DispatchQueue = .futures,
+        body: @escaping (T, @escaping () -> Void) throws -> Void) -> Future<T> {
 
+        return then(on: queue) { result in
+
+            let promise = Promise<T>()
             let completion = {
                 promise.fulfill(result)
             }
 
-            try body(completion)
-
+            try body(result, completion)
             return promise.future
         }
     }
@@ -302,41 +300,40 @@ public extension Future {
     func await() throws -> T {
 
         let semaphore = DispatchSemaphore(value: 0)
-
-        var FutureValue: FutureValue<T>!
+        var value: FutureValue<T>!
 
         addObserver(on: .futureAwait) { result in
-            FutureValue = result
+            value = result
             semaphore.signal()
         }
 
         semaphore.wait()
-        return try FutureValue.unwrap()
+        return try value.unwrap()
     }
-
 }
 
-public func promise<U>(on queue: DispatchQueue , _ body: @escaping () throws -> U) -> Future<U> {
+public func promise<T>(on queue: DispatchQueue = .futures, _ body: @escaping () throws -> T) -> Future<T> {
     return Promise(on: queue, body).future
 }
 
-public func promiseAsync<U>(
-    on queue: DispatchQueue ,
-    _ body: @escaping (@escaping (FutureValue<U>) -> Void) throws -> Void) -> Future<U> {
+public func promise<T>(
+    _ type: T.Type,
+    on queue: DispatchQueue = .futures,
+    _ body: @escaping (@escaping (FutureValue<T>) -> Void) throws -> Void) -> Future<T> {
 
     return Promise(on: queue, body).future
 }
 
-public final class Promise<Value> {
-    fileprivate(set) public var future: Future<Value>
+public final class Promise<T> {
+    fileprivate(set) public var future: Future<T>
 
     public init() {
-        future = Future<Value>()
+        future = Future<T>()
     }
 
-    public convenience init(
-        on dispatchQueue: DispatchQueue ,
-        _ body : @escaping (@escaping (FutureValue<Value>) -> Void) throws -> Void) {
+    fileprivate convenience init(
+        on dispatchQueue: DispatchQueue = .futures,
+        _ body : @escaping (@escaping (FutureValue<T>) -> Void) throws -> Void) {
         self.init()
 
         dispatchQueue.async {
@@ -350,13 +347,14 @@ public final class Promise<Value> {
         }
     }
 
-    public convenience init(on queue: DispatchQueue , _ body: @escaping () throws -> Value) {
-        self.init(on: queue) { completion in
-            completion(FutureValue { try body() })
+    fileprivate convenience init(on queue: DispatchQueue = .futures, _ body: @escaping () throws -> T) {
+        self.init()
+        queue.async {
+            self.resolve(FutureValue { try body() })
         }
     }
 
-    public func fulfill(_ value: Value) {
+    public func fulfill(_ value: T) {
         future.resolve(.fulfilled(value))
     }
 
@@ -364,7 +362,7 @@ public final class Promise<Value> {
         future.resolve(.rejected(error))
     }
 
-    public func resolve(_ result: FutureValue<Value>) {
+    public func resolve(_ result: FutureValue<T>) {
         future.resolve(result)
     }
 }

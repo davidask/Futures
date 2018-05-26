@@ -1,4 +1,4 @@
-import Foundation
+import Dispatch
 
 public enum FutureValue<Value> {
     case fulfilled(Value)

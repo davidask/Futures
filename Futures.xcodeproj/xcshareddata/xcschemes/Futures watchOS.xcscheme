@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B757AE0A20B8921E00850F92"
-               BuildableName = "Future.framework"
-               BlueprintName = "Future iOS"
-               ReferencedContainer = "container:Future.xcodeproj">
+               BlueprintIdentifier = "B757AE2920B8924600850F92"
+               BuildableName = "Futures.framework"
+               BlueprintName = "Futures watchOS"
+               ReferencedContainer = "container:Futures.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B757AE1320B8921E00850F92"
-               BuildableName = "FutureTests.xctest"
-               BlueprintName = "FutureTests"
-               ReferencedContainer = "container:Future.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B757AE0A20B8921E00850F92"
-            BuildableName = "Future.framework"
-            BlueprintName = "Future iOS"
-            ReferencedContainer = "container:Future.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B757AE0A20B8921E00850F92"
-            BuildableName = "Future.framework"
-            BlueprintName = "Future iOS"
-            ReferencedContainer = "container:Future.xcodeproj">
+            BlueprintIdentifier = "B757AE2920B8924600850F92"
+            BuildableName = "Futures.framework"
+            BlueprintName = "Futures watchOS"
+            ReferencedContainer = "container:Futures.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -82,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B757AE0A20B8921E00850F92"
-            BuildableName = "Future.framework"
-            BlueprintName = "Future iOS"
-            ReferencedContainer = "container:Future.xcodeproj">
+            BlueprintIdentifier = "B757AE2920B8924600850F92"
+            BuildableName = "Futures.framework"
+            BlueprintName = "Futures watchOS"
+            ReferencedContainer = "container:Futures.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
