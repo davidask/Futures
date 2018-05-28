@@ -12,6 +12,15 @@ class FuturesTests: XCTestCase {
         super.tearDown()
     }
 
+    func testEquality() {
+        let promise1 = promise { 1 }
+        let promise2 = promise { 2 }
+
+        XCTAssertEqual(promise1, promise1)
+        XCTAssertEqual(promise2, promise2)
+        XCTAssertNotEqual(promise1, promise2)
+    }
+
     func testBasicPromise() {
 
         let expectation = self.expectation(description: "measure")
@@ -23,7 +32,7 @@ class FuturesTests: XCTestCase {
             XCTAssert(result.isError == false)
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testAsyncPromise() {
@@ -37,7 +46,7 @@ class FuturesTests: XCTestCase {
             XCTAssert(result.isError == false)
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicFulfill() {
@@ -50,7 +59,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicObserving() {
@@ -94,7 +103,7 @@ class FuturesTests: XCTestCase {
             throwingExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicReject() {
@@ -107,7 +116,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicThen() {
@@ -137,7 +146,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testThenIfRejected() {
@@ -157,7 +166,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testMapIfRejected() {
@@ -175,7 +184,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicAnd() {
@@ -200,7 +209,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testReduce() {
@@ -224,7 +233,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testPerform() {
@@ -251,7 +260,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicMap() {
@@ -266,7 +275,7 @@ class FuturesTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
     func testBasicPerformance() {

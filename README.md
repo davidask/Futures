@@ -1,5 +1,5 @@
 # Futures
-[![CircleCI](https://circleci.com/gh/formbound/Future.svg?style=svg)](https://circleci.com/gh/formbound/Future)
+[![CircleCI](https://circleci.com/gh/formbound/Futures.svg?style=svg)](https://circleci.com/gh/formbound/Futures)
 
 Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It's lightweight and easy to understand.
 

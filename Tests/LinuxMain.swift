@@ -1,10 +1,10 @@
 #if os(Linux)
 
-import XCTest
 @testable import FuturesTests
+import XCTest
 
 XCTMain([
-    testCase(FuturesTests.allTests),
+    testCase(FuturesTests.allTests)
 ])
 
 #endif
