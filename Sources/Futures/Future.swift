@@ -26,7 +26,11 @@ extension FutureState: CustomStringConvertible {
     }
 }
 
-public final class FutureObserver<T> {
+public protocol AnyFutureObserver: class, Equatable {
+    func remove()
+}
+
+public final class FutureObserver<T>: AnyFutureObserver {
     public typealias Callback = (FutureValue<T>) -> Void
 
     private let callback: Callback
