@@ -26,23 +26,41 @@ extension FutureState: CustomStringConvertible {
     }
 }
 
-public typealias FutureObserver<Value> = (FutureValue<Value>) -> Void
+public final class FutureObserver<T> {
+    public typealias Callback = (FutureValue<T>) -> Void
 
-public protocol AnyFuture: class, Equatable {
-    var isPending: Bool { get }
-    var isFulfilled: Bool { get }
-    var isRejected: Bool { get }
+    private let callback: Callback
+
+    private let queue: DispatchQueue
+
+    private weak var future: Future<T>?
+
+    fileprivate init(_ callback: @escaping Callback, future: Future<T>, queue: DispatchQueue) {
+        self.callback = callback
+        self.future = future
+        self.queue = queue
+    }
+
+    public func remove() {
+        future?.removeObserver(self)
+    }
+
+    fileprivate func invoke(_ value: FutureValue<T>) {
+        queue.async {
+            self.callback(value)
+        }
+    }
 }
 
-public extension AnyFuture {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs == rhs
+extension FutureObserver: Equatable {
+    public static func == (lhs: FutureObserver, rhs: FutureObserver) -> Bool {
+        return lhs === rhs
     }
 }
 
 public final class Future<T>: AnyFuture {
 
-    private let stateQueue = DispatchQueue(label: "com.formbound.future.sate")
+    private let stateQueue = DispatchQueue(label: "com.formbound.future.state", attributes: .concurrent)
 
     private var observers: [FutureObserver<T>] = []
 
@@ -52,7 +70,7 @@ public final class Future<T>: AnyFuture {
         }
     }
 
-    fileprivate init() {
+    public init() {
         state = .pending
     }
 
@@ -68,25 +86,27 @@ public final class Future<T>: AnyFuture {
         self.init(.rejected(error))
     }
 
-    private func addObserver(on queue: DispatchQueue, observer: @escaping FutureObserver<T>) {
-        stateQueue.sync {
+    private func addObserver(_ observer: FutureObserver<T>) {
+        stateQueue.sync(flags: .barrier) {
             switch state {
             case .pending:
-                observers.append({ result in
-                    queue.async {
-                        observer(result)
-                    }
-                })
+                observers.append(observer)
             case .finished(let result):
-                queue.async {
-                    observer(result)
-                }
+                observer.invoke(result)
+            }
+        }
+    }
+
+    fileprivate func removeObserver(_ observerToRemove: FutureObserver<T>) {
+        stateQueue.sync(flags: .barrier) {
+            observers = observers.filter { observer in
+                observer != observerToRemove
             }
         }
     }
 
     fileprivate func resolve(_ result: FutureValue<T>) {
-        stateQueue.sync {
+        stateQueue.sync(flags: .barrier) {
 
             guard case .pending = state else {
                 return
@@ -95,7 +115,7 @@ public final class Future<T>: AnyFuture {
             state = .finished(result)
 
             for observer in observers {
-                observer(result)
+                observer.invoke(result)
             }
 
             observers.removeAll(keepingCapacity: false)
@@ -138,16 +158,33 @@ public extension Future {
 
 public extension Future {
 
+    func await() throws -> T {
+
+        let semaphore = DispatchSemaphore(value: 0)
+        var value: FutureValue<T>!
+
+        whenResolved(on: .futureAwait) { result in
+            value = result
+            semaphore.signal()
+        }
+
+        semaphore.wait()
+        return try value.unwrap()
+    }
+}
+
+public extension Future {
+
     func then<U>(
         on queue: DispatchQueue = .futures,
         body: @escaping (T) throws -> Future<U>) -> Future<U> {
 
         let promise = Promise<U>()
 
-        addObserver(on: queue) { result in
+        whenResolved(on: queue) { result in
             do {
                 let future = try body(result.unwrap())
-                future.addObserver(on: queue) { result in
+                future.whenResolved(on: queue) { result in
                     promise.resolve(FutureValue { try result.unwrap() })
                 }
             } catch {
@@ -161,13 +198,13 @@ public extension Future {
     func thenIfRejected(on queue: DispatchQueue = .futures, body: @escaping(Error) -> Future<T>) -> Future<T> {
         let promise = Promise<T>()
 
-        addObserver(on: queue) { result in
+        whenResolved(on: queue) { result in
             switch result {
             case .fulfilled(let value):
                 promise.fulfill(value)
             case .rejected(let error):
                 let future = body(error)
-                future.addObserver(on: queue) { result in
+                future.whenResolved(on: queue) { result in
                     promise.resolve(result)
                 }
             }
@@ -191,7 +228,7 @@ public extension Future {
 
         let promise = Promise<T>()
 
-        addObserver(on: queue) { result in
+        whenResolved(on: queue) { result in
             switch result {
             case .fulfilled(let value):
                 promise.fulfill(value)
@@ -214,7 +251,7 @@ public extension Future {
 
         return then(on: queue) { value in
             let promise = Promise<(T, U)>()
-            other.addObserver(on: queue) { result in
+            other.whenResolved(on: queue) { result in
                 do {
                     try promise.fulfill((value, result.unwrap()))
                 } catch {
@@ -253,8 +290,9 @@ public extension Future {
 
 public extension Future {
 
-    func whenFulfilled(on queue: DispatchQueue = .futures, body: @escaping (T) -> Void) {
-        addObserver(on: queue) { result in
+    @discardableResult
+    func whenFulfilled(on queue: DispatchQueue = .futures, body: @escaping (T) -> Void) -> FutureObserver<T> {
+        return whenResolved(on: queue) { result in
             guard case .fulfilled(let value) = result else {
                 return
             }
@@ -263,8 +301,9 @@ public extension Future {
         }
     }
 
-    func whenRejected(on queue: DispatchQueue = .futures, body: @escaping (Error) -> Void) {
-        addObserver(on: queue) { result in
+    @discardableResult
+    func whenRejected(on queue: DispatchQueue = .futures, body: @escaping (Error) -> Void) -> FutureObserver<T> {
+        return whenResolved(on: queue) { result in
             guard case .rejected(let error) = result else {
                 return
             }
@@ -273,8 +312,15 @@ public extension Future {
         }
     }
 
-    func whenResolved(on queue: DispatchQueue = .futures, body: @escaping (FutureValue<T>) -> Void) {
-        addObserver(on: queue, observer: body)
+    @discardableResult
+    func whenResolved(
+        on queue: DispatchQueue = .futures,
+        body: @escaping FutureObserver<T>.Callback) -> FutureObserver<T> {
+        let observer = FutureObserver<T>(body, future: self, queue: queue)
+
+        self.addObserver(observer)
+
+        return observer
 
     }
 
@@ -295,74 +341,17 @@ public extension Future {
     }
 }
 
-public extension Future {
+public extension Promise {
 
-    func await() throws -> T {
-
-        let semaphore = DispatchSemaphore(value: 0)
-        var value: FutureValue<T>!
-
-        addObserver(on: .futureAwait) { result in
-            value = result
-            semaphore.signal()
-        }
-
-        semaphore.wait()
-        return try value.unwrap()
-    }
-}
-
-public func promise<T>(on queue: DispatchQueue = .futures, _ body: @escaping () throws -> T) -> Future<T> {
-    return Promise(on: queue, body).future
-}
-
-public func promise<T>(
-    _ type: T.Type,
-    on queue: DispatchQueue = .futures,
-    _ body: @escaping (@escaping (FutureValue<T>) -> Void) throws -> Void) -> Future<T> {
-
-    return Promise(on: queue, body).future
-}
-
-public final class Promise<T> {
-    fileprivate(set) public var future: Future<T>
-
-    public init() {
-        future = Future<T>()
-    }
-
-    fileprivate convenience init(
-        on dispatchQueue: DispatchQueue = .futures,
-        _ body : @escaping (@escaping (FutureValue<T>) -> Void) throws -> Void) {
-        self.init()
-
-        dispatchQueue.async {
-            do {
-                try body { result in
-                    self.resolve(result)
-                }
-            } catch {
-                self.reject(error)
-            }
-        }
-    }
-
-    fileprivate convenience init(on queue: DispatchQueue = .futures, _ body: @escaping () throws -> T) {
-        self.init()
-        queue.async {
-            self.resolve(FutureValue { try body() })
-        }
-    }
-
-    public func fulfill(_ value: T) {
+    func fulfill(_ value: T) {
         future.resolve(.fulfilled(value))
     }
 
-    public func reject(_ error: Error) {
+    func reject(_ error: Error) {
         future.resolve(.rejected(error))
     }
 
-    public func resolve(_ result: FutureValue<T>) {
+    func resolve(_ result: FutureValue<T>) {
         future.resolve(result)
     }
 }
