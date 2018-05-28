@@ -12,6 +12,15 @@ class FuturesTests: XCTestCase {
         super.tearDown()
     }
 
+    func testEquality() {
+        let promise1 = promise { 1 }
+        let promise2 = promise { 2 }
+
+        XCTAssertEqual(promise1, promise1)
+        XCTAssertEqual(promise2, promise2)
+        XCTAssertNotEqual(promise1, promise2)
+    }
+
     func testBasicPromise() {
 
         let expectation = self.expectation(description: "measure")

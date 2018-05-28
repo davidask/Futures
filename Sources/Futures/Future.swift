@@ -26,7 +26,7 @@ extension FutureState: CustomStringConvertible {
     }
 }
 
-public protocol AnyFutureObserver: class, Equatable {
+public protocol AnyFutureObserver: class {
     func remove()
 }
 
@@ -124,6 +124,12 @@ public final class Future<T>: AnyFuture {
 
             observers.removeAll(keepingCapacity: false)
         }
+    }
+}
+
+extension Future: Equatable {
+    public static func == (lhs: Future, rhs: Future) -> Bool {
+        return lhs === rhs
     }
 }
 
