@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Future Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/Future" class="dashAnchor"></a>
+
+    <a title="Future Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+           Docs
+        </a>
+         (87% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/formbound/Futures">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      Future Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Future.html">Future</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FutureObserver.html">FutureObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Promise.html">Promise</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/FutureValue.html">FutureValue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/DispatchQueue.html">DispatchQueue</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promiseAA6FutureCyxGxm_So13DispatchQueueC2onyyAA0C5ValueOyxGcKctlF">promise(_:on:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promiseAA6FutureCyxGSo13DispatchQueueC2on_xyKctlF">promise(on:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/AnyFuture.html">AnyFuture</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>Future</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/AnyFuture.html">AnyFuture</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Container for a result that will be provided later.</p>
+
+<p>Functions that promise to do work asynchronously return a <code>Future&lt;T&gt;</code>. The receipient of a future can
+observe it to be notified, or to queue more asynchronous work, when the operation completes.</p>
+
+<p>The provider of a <code>Future&lt;T&gt;</code> creates a placeholder object before the actual result is available,
+immeadiately returning the object, providing a dynamic way of structuring complex dependencies
+for asynchronous work. This is common behavior in Future/Promise implementation across many languages.
+Referencing these resources may be useful if you&rsquo;re unfamilliar with the concept of Promises/Futures:</p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Javascript</a></li>
+<li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Scala</a></li>
+<li><a href="https://docs.google.com/document/d/10WOZgLQaYNpOrag-eTbUm-JUCCfdyfravZ4qSOQPg1M/edit">Python</a></li>
+</ul>
+
+<p>When receiving a <code>Future&lt;T&gt;</code>, you have a number of options. You can immediately observe the result of the future
+using <code>whenResolved()</code>, <code>whenFulfilled()</code>, or <code>whenRjected()</code>, or choose to do more asyncrhonous work before, or
+parallel to observing.
+Each <code>Future&lt;T&gt;</code> can have multiple observers, which are used to both simply return a result, or to queue up other
+futures.</p>
+
+<p>To perform more asynchronous work, once a <code>Future&lt;T&gt;</code> is fulfilled, use <code>then()</code>. To transform the fulfilled value
+of a future into another value, use <code>map()</code>.</p>
+
+<p>Options for combining futures into a single future is provided using <code>and()</code>, <code>fold()</code>, and <code>Future&lt;T&gt;.reduce()</code></p>
+
+<p>A <code>Future&lt;T&gt;</code> differs from a <code><a href="../Classes/Promise.html">Promise&lt;T&gt;</a></code> in that a future is the container of a result; the promise being the
+function that sets that result. This design decision was made, in this library as well as in many others, to
+prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselves.</p>
+
+<p>A <code>Future&lt;T&gt;</code> is regarded as:</p>
+
+<ul>
+<li>resolved, when a value is set</li>
+<li>fulfilled, when a value is set and successful</li>
+<li>rejected, when a value is not set, and an error occured</li>
+</ul>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureCACyxGycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureCACyxGycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a pending future</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureCACyxGAA0B5ValueOyxGcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureCACyxGAA0B5ValueOyxGcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a resolved future</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">resolved</span><span class="p">:</span> <span class="kt"><a href="../Enums/FutureValue.html">FutureValue</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resolved</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Enums/FutureValue.html">FutureValue&lt;T&gt;</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureCACyxGxcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureCACyxGxcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a resolved, fulfilled future</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Value of the fulfilled future</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureCACyxGs5Error_pcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureCACyxGs5Error_pcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a resolved, fulfilled future</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>error</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Error, rejecting the future</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Future</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Future</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC9isPendingSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isPending" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC9isPendingSbvp">isPending</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates whether the future is pending</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isPending</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC11isFulfilledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isFulfilled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC11isFulfilledSbvp">isFulfilled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates whether the future is fulfilled</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isFulfilled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC10isRejectedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isRejected" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC10isRejectedSbvp">isRejected</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates whether the future is rejected</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isRejected</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC5awaitxyKF"></a>
+                    <a name="//apple_ref/swift/Method/await()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC5awaitxyKF">await()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Blocks, until the future is resolved</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An error, if the future is rejected
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">await</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The fulfilled value of the future</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC4thenACyqd__GSo13DispatchQueueC2on_AExKc8callbacktlF"></a>
+                    <a name="//apple_ref/swift/Method/then(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC4thenACyqd__GSo13DispatchQueueC2on_AExKc8callbacktlF">then(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the current <code>Future</code> is fulfilled, run the provided callback which returns a new <code>Future&lt;T&gt;</code>.</p>
+
+<p>This allows you to dispatch new asynchronous operations as steps in a sequence of operations.
+Note that, based on the result, you can decide what asynchronous work to perform next.</p>
+
+<p>This function is best used when you have other APIs returning <code>Future&lt;T&gt;</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">then</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>DispatchQueue on which to resolve and return a new future.
+   Defaults to <code><a href="../Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will receive the value of this <code>Future</code> and return a new <code>Future&lt;T&gt;</code>.
+  Throwing an error in this function will result in the rejection of the returned <code>Future&lt;T&gt;</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The fulfilled value of this <code>Future&lt;T&gt;</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC14thenIfRejectedACyxGSo13DispatchQueueC2on_AEs5Error_pc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/thenIfRejected(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC14thenIfRejectedACyxGSo13DispatchQueueC2on_AEs5Error_pc8callbacktF">thenIfRejected(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the current <code>Future</code> is rejected, run the provided callback which reurns a new <code>Future&lt;T&gt;</code>.</p>
+
+<p>This allows you to proceed with some other operation if the current <code>Future</code> was rejected, due to an error
+you can recover from.</p>
+
+<p>If the calback cannot provide a <code>Future</code> recovering from the error, an error inside the callback should be
+throw, or a <code>Future</code> which is rejected should be returned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">thenIfRejected</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping(Error)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>DispatchQueue on which to resolve and return a new future.
+   Defaults to <code><a href="../Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will receive the error resulting in this <code>Future&lt;T&gt;</code>s rejection.
+  Throwing an error in this function will result in the rejection of the returned <code>Future&lt;T&gt;</code>.
+  and return a new <code>Future&lt;T&gt;</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC3mapACyqd__GSo13DispatchQueueC2on_qd__xKc8callbacktlF"></a>
+                    <a name="//apple_ref/swift/Method/map(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC3mapACyqd__GSo13DispatchQueueC2on_qd__xKc8callbacktlF">map(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the current <code>Future</code> is fulfilled, run the provided callback that returns a new value of type <code>U</code>.</p>
+
+<p>This method is intended to provide a shorthand way of transforming fulfilled results of other futures.
+It is not intended to be used as <code>map</code> in the Swift standard library, however, that function may well
+be used inside the function provided to this method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>DispatchQueue on which to resolve and return a new value.
+   Defaults to <code><a href="../Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will receive the value of this <code>Future</code> and return a new <code>Future&lt;T&gt;</code>.
+  Throwing an error in this function will result in the rejection of the returned <code>Future&lt;T&gt;</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC13mapIfRejectedACyxGSo13DispatchQueueC2on_xs5Error_pKc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/mapIfRejected(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC13mapIfRejectedACyxGSo13DispatchQueueC2on_xs5Error_pKc8callbacktF">mapIfRejected(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the current <code>Future</code> is rejected, run the provided callback that returns a new value of type <code>U</code>.</p>
+
+<p>This allows you to provide a future with an eventual value if the current <code>Future</code> was rejected, due
+to an error you can recover from.</p>
+
+<p>If the calback cannot provide a a new value, an error inside the callback should be thrown.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">mapIfRejected</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>DispatchQueue on which to resolve and return a new value.
+   Defaults to <code><a href="../Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will receive the value of this <code>Future&lt;T&gt;</code>, and return a new value of type <code>U</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC3andACyx_qd__tGACyqd__G_So13DispatchQueueC2ontlF"></a>
+                    <a name="//apple_ref/swift/Method/and(_:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC3andACyx_qd__tGACyqd__G_So13DispatchQueueC2ontlF">and(_:on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new <code>Future</code>, that resolves when this <strong>and</strong> the provided future both are resolved.
+The returned future will provide the pair of values from this and the provided future.</p>
+
+<p>Note that the returned future will be rejected with the first error encountered.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">and</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">T</span><span class="p">,</span> <span class="kt">U</span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>other</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code>Future</code> to combine with this future.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to wait on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC4foldACyxGqd_0__So13DispatchQueueC2onAEx_qd__tc4withts8SequenceRd_0_ACyqd__G7ElementRtd_0_r0_lF"></a>
+                    <a name="//apple_ref/swift/Method/fold(_:on:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC4foldACyxGqd_0__So13DispatchQueueC2onAEx_qd__tc4withts8SequenceRd_0_ACyqd__G7ElementRtd_0_r0_lF">fold(_:on:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new <code>Future&lt;T&gt;</code> that fires only when this <code>Future&lt;T&gt;</code> and all provided <code>Future&lt;U&gt;</code>s complete.</p>
+
+<p>A combining function must be provided, resulting in a new future for any pair of <code>Future&lt;U&gt;</code> and <code>Future&lt;T&gt;</code>
+eventually resulting in a single <code>Future&lt;T&gt;</code>.</p>
+
+<p>The returned <code>Future&lt;T&gt;</code> will be rejected as soon as either this, or a provided future is rejected. However,
+a failure will not occur until all preceding <code>Future</code>s have been resolved. As soon as a rejection is
+encountered, there subsequent futures will not be waited for, resulting in the fastest possible rejection
+for the provided futures.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">fold</span><span class="o">&lt;</span><span class="kt">U</span><span class="p">,</span> <span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">futures</span><span class="p">:</span> <span class="kt">S</span><span class="p">,</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="n">with</span> <span class="nv">combiningFunction</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">,</span> <span class="kt">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>futures</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A sequence of <code>Future&lt;U&gt;</code> to wait for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to wait on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>combiningFunction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that will be used to fold the values of two
+               <code>Future</code>s and return a new value wrapped in an <code>Future</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC6reduceACyxGqd_0__So13DispatchQueueC2onx13initialResultxx_qd__tc011nextPartialH0ts8SequenceRd_0_ACyqd__G7ElementRtd_0_r0_lFZ"></a>
+                    <a name="//apple_ref/swift/Method/reduce(_:on:initialResult:nextPartialResult:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC6reduceACyxGqd_0__So13DispatchQueueC2onx13initialResultxx_qd__tc011nextPartialH0ts8SequenceRd_0_ACyqd__G7ElementRtd_0_r0_lFZ">reduce(_:on:initialResult:nextPartialResult:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new <code>Future&lt;T&gt;</code> that fires only when all the provided <code>Future&lt;U&gt;</code>s have been resolved.
+The returned future carries the value of the <code>initialResult</code> provided, combined with the result of
+fulfilled <code>Future&lt;U&gt;</code>s using the provided <code>nextPartialResult</code> function.</p>
+
+<p>The returned <code>Future&lt;T&gt;</code> will be rejected as soon as either this, or a provided future is rejected. However,
+a failure will not occur until all preceding <code>Future</code>s have been resolved. As soon as a rejection is
+encountered, there subsequent futures will not be waited for, resulting in the fastest possible rejection
+for the provided futures.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="n">reduce</span><span class="o">&lt;</span><span class="kt">U</span><span class="p">,</span> <span class="kt">S</span><span class="p">:</span> <span class="kt">Sequence</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">futures</span><span class="p">:</span> <span class="kt">S</span><span class="p">,</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="nv">initialResult</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span>
+    <span class="nv">nextPartialResult</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">,</span> <span class="kt">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">S</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">U</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>futures</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A sequence of <code>Future&lt;U&gt;</code> to wait for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to wait on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>initialResult</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An initial result to begin the reduction.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>nextPartialResult</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bifunction used to produce partial results.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the reduced value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC13whenFulfilledAA0B8ObserverCyxGSo13DispatchQueueC2on_yxc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/whenFulfilled(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC13whenFulfilledAA0B8ObserverCyxGSo13DispatchQueueC2on_yxc8callbacktF">whenFulfilled(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds a <code><a href="../Classes/FutureObserver.html">FutureObserver&lt;T&gt;</a></code> to this <code>Future&lt;T&gt;</code>, that is called when the future is fulfilled.</p>
+
+<p>An observer callback cannot return a value, meaning that this function cannot be chained from.
+If you are attempting to create a sequence of operations based on the result of another future,
+consider using <code>then()</code>, <code>map()</code>, or some of the other methods available.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">whenFulfilled</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FutureObserver.html">FutureObserver</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to observe on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback invoked with the fulfilled result of this future</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/FutureObserver.html">FutureObserver&lt;T&gt;</a></code>, which can be used to remove the observer from this future.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC12whenRejectedAA0B8ObserverCyxGSo13DispatchQueueC2on_ys5Error_pc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/whenRejected(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC12whenRejectedAA0B8ObserverCyxGSo13DispatchQueueC2on_ys5Error_pc8callbacktF">whenRejected(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds a <code><a href="../Classes/FutureObserver.html">FutureObserver&lt;T&gt;</a></code> to this <code>Future&lt;T&gt;</code>, that is called when the future is rejected.</p>
+
+<p>An observer callback cannot return a value, meaning that this function cannot be chained from.
+If you are attempting to create a sequence of operations based on the result of another future,
+consider using <code>then()</code>, <code>map()</code>, or some of the other methods available.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">whenRejected</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FutureObserver.html">FutureObserver</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to observe on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback invoked with the rejection error of this future</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/FutureObserver.html">FutureObserver&lt;T&gt;</a></code>, which can be used to remove the observer from this future.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC12whenResolvedAA0B8ObserverCyxGSo13DispatchQueueC2on_yAA0B5ValueOyxGc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/whenResolved(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC12whenResolvedAA0B8ObserverCyxGSo13DispatchQueueC2on_yAA0B5ValueOyxGc8callbacktF">whenResolved(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds a <code><a href="../Classes/FutureObserver.html">FutureObserver&lt;T&gt;</a></code> to this <code>Future&lt;T&gt;</code>, that is called when the future is resolved.</p>
+
+<p>An observer callback cannot return a value, meaning that this function cannot be chained from.
+If you are attempting to create a sequence of operations based on the result of another future,
+consider using <code>then()</code>, <code>map()</code>, or some of the other methods available.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">whenResolved</span><span class="p">(</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Classes/FutureObserver.html">FutureObserver</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;.</span><span class="kt">Callback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FutureObserver.html">FutureObserver</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to observe on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback invoked with the resolved <code><a href="../Enums/FutureValue.html">FutureValue&lt;T&gt;</a></code> of this future</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/FutureObserver.html">FutureObserver&lt;T&gt;</a></code>, which can be used to remove the observer from this future.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC7performACyxGSo13DispatchQueueC2on_yx_yyctKc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/perform(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC7performACyxGSo13DispatchQueueC2on_yx_yyctKc8callbacktF">perform(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a <code>Future&lt;T&gt;</code> that pipes the result of this future to the returned future of this function,
+once an asyncronous operation has been completed.</p>
+
+<p>This method is useful when you have an asyncronous dependency in your computation pipeline that
+is required for you to proceed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">perform</span><span class="p">(</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">,</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to perform on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback invoked with a completion handler to be invoked when the operation is finished</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the piped value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC7performACyxGSo13DispatchQueueC2on_yxKc8callbacktF"></a>
+                    <a name="//apple_ref/swift/Method/perform(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC7performACyxGSo13DispatchQueueC2on_yxKc8callbacktF">perform(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a <code>Future&lt;T&gt;</code> that pipes the result of this future to the returned future of this function,
+once an operation has been completed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">perform</span><span class="p">(</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="p">,</span>
+    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">T</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to perform on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback invoked with the value of this future.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the piped value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-01)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

@@ -1,0 +1,7 @@
+output: docs
+clean: true
+exclude: [Packages]
+author: Formbound
+github_url: https://github.com/formbound/Futures
+readme: README.md
+theme: fullwidth

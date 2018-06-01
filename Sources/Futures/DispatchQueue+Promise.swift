@@ -5,6 +5,8 @@ private var futuresDispatchQueue = DispatchQueue(label: "com.formbound.future.de
 private let futureAwaitDispatchQueue = DispatchQueue(label: "com.formbound.future.await", attributes: .concurrent)
 
 public extension DispatchQueue {
+
+    /// The default queue, on which futures are observed and executed on.
     static var futures: DispatchQueue {
         get {
             return futuresDispatchQueue

@@ -42,6 +42,10 @@ A future is regarded as:
 
 
 
+## Documentation
+
+The complete documentation can be found [here](https://formbound.github.io/Futures/).
+
 ## Getting started
 
 Futures can be added to your project either using [Carthage](https://github.com/Carthage/Carthage) or Swift package manager.
@@ -52,7 +56,7 @@ If you want to depend on Futures in your project, it's as simple as adding a `d
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/formbound/Futures.git", from: "1.0.0")
+    .package(url: "https://github.com/formbound/Futures.git", from: "1.0.2")
 ]
 ```
 
@@ -108,7 +112,7 @@ promise(String.self) { completion in
 
 ### Observing
 
-Observing the value of a future can be done by calling:
+Multiple observers can be added to any future. Observing the value of a future can be done by calling:
 
 * `whenResolved`, if you're interested in both a value and a rejection error 
 * `whenFulfilled`, if you only care about the value
@@ -143,7 +147,7 @@ future.whenResolved { result in
 
 ### Then
 
-Use the `then` function on a future to invoke another future when fulfilled.
+When the current `Future` is fulfilled, run the provided callback which returns a new `Future<T>`. This allows you to dispatch new asynchronous operations as steps in a sequence of operations. Note that, based on the result, you can decide what asynchronous work to perform next. This function is best used when you have other APIs returning `Future<T>`.
 
 ```swift
 func add(value: Double, to otherValue: Double) -> Future<Double> {
@@ -171,7 +175,7 @@ promise {
 
 ### Map
 
-Use `map` to transform a fulfilled value into a future of another value
+When the current `Future` is fulfilled, run the provided callback that returns a new value of type `U`. This method is intended to provide a shorthand way of transforming fulfilled results of other futures. It is not intended to be used as `map` in the Swift standard library, however, that function may well be used inside the function provided to this method.
 
 ```swift
 promise {
@@ -187,7 +191,7 @@ Like with `thenIfRejected` you can also call `mapIfRejected`
 
 ### And
 
-Use `and` to combine two futures into a future that resolves into a tuple
+Returns a new `Future`, that resolves when this **and** the provided future both are resolved. The returned future will provide the pair of values from this and the provided future. Note that the returned future will be rejected with the first error encountered.
 
 ```swift
 let future1 = promise {
@@ -207,7 +211,7 @@ future1.and(future2).whenFulfilled { result in
 
 ### Reduce
 
-A sequence of futures can be reduced into one promise
+Returns a new `Future<T>` that fires only when all the provided `Future<U>`s have been resolved. The returned future carries the value of the `initialResult` provided, combined with the result of fulfilled `Future<U>`s using the provided `nextPartialResult` function. The returned `Future<T>` will be rejected as soon as either this, or a provided future is rejected. However, a failure will not occur until all preceding `Future`s have been resolved. As soon as a rejection is encountered, there subsequent futures will not be waited for, resulting in the fastest possible rejection for the provided futures.
 
 ```swift
 let futures = (1 ... 10).map { value in
@@ -221,3 +225,6 @@ Future<Int>.reduce(futures, initialResult: 0) { combined, next in
 }
 ```
 
+
+
+For more in-depth documentation, visit the [docs](https://formbound.github.io/Futures/).

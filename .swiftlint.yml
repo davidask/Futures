@@ -1,6 +1,9 @@
 excluded:
   - Carthage
 
+file_length:
+  warning: 800
+  error: 1000
 
 opt_in_rules:
   - empty_count

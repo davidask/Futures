@@ -1,0 +1,61 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 29,
+      "symbol": "AnyFutureObserver",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 30,
+      "symbol": "AnyFutureObserver.remove()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 41,
+      "symbol": "FutureObserver.Callback",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
+      "line": 8,
+      "symbol": "FutureValue.fulfilled",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
+      "line": 9,
+      "symbol": "FutureValue.rejected",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
+      "line": 96,
+      "symbol": "FutureValue.success",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Promise.swift",
+      "line": 3,
+      "symbol": "promise(on:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Promise.swift",
+      "line": 7,
+      "symbol": "promise(_:on:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/davidask/Formbound/Projects/Futures"
+}

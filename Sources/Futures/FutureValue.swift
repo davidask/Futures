@@ -1,10 +1,17 @@
 import Dispatch
 
-public enum FutureValue<Value> {
-    case fulfilled(Value)
+/// Value of a future, being either rejected with an error or fulfilled with a value.
+///
+/// - fulfilled: A fulfilled future, with a value.
+/// - rejected: A rejected future, with an error.
+public enum FutureValue<T> {
+    case fulfilled(T)
     case rejected(Error)
 
-    public init(_ capturing: () throws -> Value) {
+    /// Creates a new `FutureValue<T>`, capturing the return value, or throw error of a function.
+    ///
+    /// - Parameter capturing: Function to invoke, resulting in an error or a value.
+    public init(_ capturing: () throws -> T) {
         do {
             self = .fulfilled(try capturing())
         } catch {
@@ -12,15 +19,22 @@ public enum FutureValue<Value> {
         }
     }
 
-    public init(_ value: Value) {
+    /// Creates a new fulfilled `FutureValue<T>`.
+    ///
+    /// - Parameter value: A fulfilled value.
+    public init(_ value: T) {
         self = .fulfilled(value)
     }
 
+    /// Creates a new rejected `FutureValue<T>`.
+    ///
+    /// - Parameter error: A rejection error
     public init(_ error: Error) {
         self = .rejected(error)
     }
 
-    public var value: Value? {
+    /// Returns the value, if fulfilled
+    public var value: T? {
         guard case .fulfilled(let value) = self else {
             return nil
         }
@@ -28,6 +42,7 @@ public enum FutureValue<Value> {
         return value
     }
 
+    /// Returns the error, if rejected
     public var error: Error? {
         guard case .rejected(let error) = self else {
             return nil
@@ -36,6 +51,7 @@ public enum FutureValue<Value> {
         return error
     }
 
+    /// Indicates whether the value is rejected
     public var isError: Bool {
 
         switch self {
@@ -48,8 +64,12 @@ public enum FutureValue<Value> {
         }
     }
 
+    /// Returns the a fulfilled value, or throws a rejection error
+    ///
+    /// - Returns: A fulfilled value.
+    /// - Throws: A rejection error.
     @discardableResult
-    public func unwrap() throws -> Value {
+    public func unwrap() throws -> T {
 
         switch self {
 
@@ -61,32 +81,7 @@ public enum FutureValue<Value> {
         }
     }
 
-    public func flatMap<U>(_ transform: (Value) -> FutureValue<U>) -> FutureValue<U> {
-
-        switch self {
-
-        case .fulfilled(let value):
-            return transform(value)
-
-        case .rejected(let error):
-            return .rejected(error)
-        }
-    }
-
-    public func map<U>(_ transform: (Value) throws -> U) -> FutureValue<U> {
-
-        switch self {
-
-        case .fulfilled(let value):
-            return FutureValue<U> {
-                try transform(value)
-
-            }
-        case .rejected(let error):
-            return .rejected(error)
-        }
-    }
-
+    /// The description of this `FutureValue<T>`
     public var description: String {
         switch self {
         case .fulfilled(let value):
@@ -94,5 +89,11 @@ public enum FutureValue<Value> {
         case .rejected(let error):
             return "Rejected (" + String(describing: error) + ")"
         }
+    }
+}
+
+public extension FutureValue where T == Void {
+    static var success: FutureValue {
+        return .fulfilled(())
     }
 }
