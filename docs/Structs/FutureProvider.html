@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>FutureObserver Class Reference</title>
+    <title>FutureProvider Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/FutureObserver" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Struct/FutureProvider" class="dashAnchor"></a>
 
-    <a title="FutureObserver Class Reference"></a>
+    <a title="FutureProvider Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html"> Reference</a>
       <img class="carat" src="../img/carat.png" />
-      FutureObserver Class Reference
+      FutureProvider Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -119,23 +119,16 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>FutureObserver</h1>
+            <h1>FutureProvider</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">FutureObserver</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/AnyFutureObserver.html">AnyFutureObserver</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">FutureProvider</span><span class="o">&lt;</span><span class="kt">Source</span><span class="o">&gt;</span></code></pre>
 
                 </div>
               </div>
-            <p>Used to keep track of observers, in order to supply the ability to
-remove observers from a future, if the result of a future is no longer interesting.</p>
+            <p>A typed container in which to provide specialized futures.</p>
 
-<p>The following methods return a <code>FutureObserver</code>:</p>
-
-<ul>
-<li><code>Future&lt;T&gt;.whenResolved()</code></li>
-<li><code>Future&lt;T&gt;.whenFulfilled()</code></li>
-<li><code>Future&lt;T&gt;.whenRejected()</code></li>
-</ul>
+<p>See <code><a href="../Protocols/FutureSupport.html">FutureSupport</a></code>.</p>
 
           </div>
         </section>
@@ -147,9 +140,9 @@ remove observers from a future, if the result of a future is no longer interesti
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures14FutureObserverC6removeyyF"></a>
-                    <a name="//apple_ref/swift/Method/remove()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures14FutureObserverC6removeyyF">remove()</a>
+                    <a name="/s:7Futures14FutureProviderV6sourcexvp"></a>
+                    <a name="//apple_ref/swift/Property/source" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures14FutureProviderV6sourcexvp">source</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -157,45 +150,14 @@ remove observers from a future, if the result of a future is no longer interesti
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Removes the observer from its associated future. The observer will not be invoked
-after a call to <code>remove()</code> is made.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
-                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">FutureObserver</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">FutureObserver</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">source</span><span class="p">:</span> <span class="kt">Source</span></code></pre>
 
                         </div>
                       </div>

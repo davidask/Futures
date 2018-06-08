@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (87% documented)
+         (92% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -57,9 +57,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/FutureObserver.html">FutureObserver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/Promise.html">Promise</a>
               </li>
             </ul>
           </li>
@@ -99,6 +96,20 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/FutureSupport.html">FutureSupport</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/FutureProvider.html">FutureProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/Promise.html">Promise</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -112,7 +123,7 @@
 
 <p><a href="https://circleci.com/gh/formbound/Futures"><img src="https://circleci.com/gh/formbound/Futures.svg?style=svg" alt="CircleCI"></a></p>
 
-<p>Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It&rsquo;s lightweight and easy to understand.</p>
+<p>Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It&rsquo;s lightweight, fast, and easy to understand.</p>
 <h3 id='supported-platforms' class='heading'>Supported Platforms</h3>
 
 <p>Futures supports all platforms where Swift is supported.</p>
@@ -129,13 +140,13 @@
 <p>Fundamentally, Futures is a very simple framework, that consists of two types:</p>
 
 <ul>
-<li><code><a href="Classes/Promise.html">Promise</a></code>, a single assignment container producing a <code><a href="Classes/Future.html">Future</a></code></li>
+<li><code><a href="Structs/Promise.html">Promise</a></code>, a single assignment container producing a <code><a href="Classes/Future.html">Future</a></code></li>
 <li><code><a href="Classes/Future.html">Future</a></code>, a read-only container resolving into either a value, or an error</li>
 </ul>
 
-<p>Unlike many promise frameworks, a promise is not distinguished from a future, which does not ensure immutability of a promise that gets passed around. This framework distinguishes a <code><a href="Classes/Promise.html">Promise</a></code> from a future in that a <code><a href="Classes/Future.html">Future</a></code> is the observable value while a <code><a href="Classes/Promise.html">Promise</a></code> is the function that sets the value.</p>
+<p>Unlike many promise frameworks, a promise is not distinguished from a future, which does not ensure immutability of a promise that gets passed around. This framework distinguishes a <code><a href="Structs/Promise.html">Promise</a></code> from a future in that a <code><a href="Classes/Future.html">Future</a></code> is the observable value while a <code><a href="Structs/Promise.html">Promise</a></code> is the function that sets the value.</p>
 
-<p>Futures are resolved, by default, on a single serial queue. This queue can be modified by assigning a different queue to <code><a href="Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>. You can also specify a queue of your choice to each callback added to a future .</p>
+<p>Futures are observed, by default, on a single concurrent dispatch queue. This queue can be modified by assigning a different queue to <code><a href="Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>. You can also specify a queue of your choice to each callback added to a future .</p>
 
 <p>A future is regarded as:</p>
 
@@ -144,6 +155,76 @@
 <li><code>fulfilled</code>, if the value is set, and successful</li>
 <li><code>rejected</code>, if the value is set, and a failure (error)</li>
 </ul>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>When a function returns a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you can either decide to observe it directly, or continue with more asynchronous tasks. For observing, you use:</p>
+
+<ul>
+<li><code>whenResolved</code>, if you&rsquo;re interested in both a value and a rejection error</li>
+<li><code>whenFulfilled</code>, if you only care about the values</li>
+<li><code>whenRejected</code>, if you only care about the error</li>
+</ul>
+
+<p>If you have more asynchronous work to do based on the result of the first future, you can use</p>
+
+<ul>
+<li><code>then()</code>, to execute another future based on the result of the current one</li>
+<li><code>thenIfRejected()</code>, to recover from a potential error resulting from the current future</li>
+<li><code>map()</code>, to transform the fulfilled value of the current future</li>
+<li><code>mapIfRejected()</code>, to transform an error resulting from the rejection of the current future, as the means of recovering from that error</li>
+<li><code>defer()</code>, to execute a <code>Void</code> returning future regardless of whether the current future is rejected or resolved</li>
+<li><code>and()</code>, to combine the result of two futures into a single tuple</li>
+<li><code>Future&lt;T&gt;.reduce()</code>, to combine the result of multiple futures into a single future</li>
+</ul>
+
+<p>Note that you can specify an observation dispatch queue for all these functions. For instance, you can use <code>then(on: .main)</code>, or <code>.map(on: .global())</code>. By default, the queue is <code><a href="Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
+
+<p>As a simple example, this is how some code may look:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">future</span> <span class="o">=</span> <span class="nf">presentLoadingIndicator</span><span class="p">(</span>
+    <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">)</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span>
+    <span class="nf">loadNetworkResource</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="s">"http://someHost/resource"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+<span class="p">}</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">data</span> <span class="k">in</span>
+    <span class="k">try</span> <span class="n">jsonDecoder</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">SomeType</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">}</span><span class="o">.</span><span class="k">defer</span> <span class="p">{</span>
+    <span class="nf">dismissLoadingIndicator</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">future</span><span class="o">.</span><span class="n">whenFulfilled</span> <span class="p">{</span> <span class="n">someType</span> <span class="k">in</span>
+    <span class="c1">// Success</span>
+<span class="p">}</span>
+
+<span class="n">future</span><span class="o">.</span><span class="n">whenRejected</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+    <span class="c1">// Error</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>To create your functions returning a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you create a new pending promise, and resolve it when appropriate:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">performAsynchronousWork</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>
+
+    <span class="kt">DispatchQueue</span><span class="o">.</span><span class="nf">global</span><span class="p">()</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+        <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="n">someString</span><span class="p">)</span>
+
+        <span class="c1">// If error</span>
+        <span class="n">promise</span><span class="o">.</span><span class="nf">reject</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">promise</span><span class="o">.</span><span class="n">future</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You can also use shorthands:</p>
+<pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
+    <span class="s">"Some string"</span>
+<span class="p">}</span> <span class="c1">// Future&lt;String&gt;</span>
+</code></pre>
+
+<p>Or asynchronously</p>
+<pre class="highlight swift"><code><span class="nf">promise</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">completion</span> <span class="k">in</span>
+    <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="s">"Some string"</span><span class="p">))</span>
+<span class="p">}</span> <span class="c1">// Future&lt;String&gt;</span>
+</code></pre>
 <h2 id='documentation' class='heading'>Documentation</h2>
 
 <p>The complete documentation can be found <a href="https://formbound.github.io/Futures/">here</a>.</p>
@@ -153,7 +234,7 @@
 
 <p>If you want to depend on Futures in your project, it&rsquo;s as simple as adding a <code>dependencies</code> clause to your <code>Package.swift</code>:</p>
 <pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
-    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/formbound/Futures.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.2"</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/formbound/Futures.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.1.0"</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre>
 
@@ -166,127 +247,6 @@
 <p>Lastly, import the module in your Swift files</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Futures</span>
 </code></pre>
-<h2 id='usage' class='heading'>Usage</h2>
-
-<p>The simplest way to create a <code><a href="Classes/Future.html">Future</a></code> is to invoke the global <code>promise</code> function:</p>
-<pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
-    <span class="s">"Hello world!"</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>You can also specify a queue on which to resolve the future:</p>
-<pre class="highlight swift"><code><span class="nf">promise</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">)</span> <span class="p">{</span>
-    <span class="s">"Hello world!"</span>
-<span class="p">}</span>
-</code></pre>
-
-<p><strong>Note:</strong> default queue can be accessed, and modified via <code><a href="Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
-
-<p>A future that is resolved using a callback can also be created:</p>
-<pre class="highlight swift"><code><span class="nf">promise</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">completion</span> <span class="k">in</span>
-    <span class="k">if</span> <span class="n">something</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
-        <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">fulfilled</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">))</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">rejected</span><span class="p">(</span><span class="k">throw</span> <span class="kt">SomethingError</span><span class="o">.</span><span class="n">notTrue</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='observing' class='heading'>Observing</h3>
-
-<p>Multiple observers can be added to any future. Observing the value of a future can be done by calling:</p>
-
-<ul>
-<li><code>whenResolved</code>, if you&rsquo;re interested in both a value and a rejection error</li>
-<li><code>whenFulfilled</code>, if you only care about the value</li>
-<li><code>whenRejected</code>, if you only care about the error</li>
-</ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">future</span> <span class="o">=</span> <span class="n">promise</span> <span class="p">{</span>
-    <span class="k">try</span> <span class="nf">something</span><span class="p">()</span>
-<span class="p">}</span>
-
-<span class="n">future</span><span class="o">.</span><span class="n">whenFulfilled</span> <span class="p">{</span> <span class="n">value</span> <span class="k">in</span>
-    <span class="nf">print</span><span class="p">(</span><span class="s">"Fulfilled with"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="n">future</span><span class="o">.</span><span class="n">whenRejected</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-    <span class="nf">print</span><span class="p">(</span><span class="s">"Rejected with"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="n">future</span><span class="o">.</span><span class="n">whenResolved</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
-    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="o">.</span><span class="nf">fulfilled</span><span class="p">(</span><span class="k">let</span> <span class="nv">value</span><span class="p">):</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"Fulfilled with"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="k">case</span> <span class="o">.</span><span class="nf">rejected</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"Rejected with"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='then' class='heading'>Then</h3>
-
-<p>When the current <code><a href="Classes/Future.html">Future</a></code> is fulfilled, run the provided callback which returns a new <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>. This allows you to dispatch new asynchronous operations as steps in a sequence of operations. Note that, based on the result, you can decide what asynchronous work to perform next. This function is best used when you have other APIs returning <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>.</p>
-<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">add</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="n">to</span> <span class="nv">otherValue</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Double</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">promise</span> <span class="p">{</span>
-        <span class="n">value</span> <span class="o">+</span> <span class="n">otherValue</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">promise</span> <span class="p">{</span>
-    <span class="mi">10</span>
-<span class="p">}</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span> <span class="n">value</span> <span class="k">in</span>
-    <span class="nf">add</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>Call <code>thenIfRejected</code>  on a future to return another future, possibly recovering from the error that results in the rejection.</p>
-<pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
-    <span class="k">try</span> <span class="nf">something</span><span class="p">()</span>
-<span class="p">}</span><span class="o">.</span><span class="n">thenIfRejected</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
-    <span class="k">return</span> <span class="k">try</span> <span class="nf">recover</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='map' class='heading'>Map</h3>
-
-<p>When the current <code><a href="Classes/Future.html">Future</a></code> is fulfilled, run the provided callback that returns a new value of type <code>U</code>. This method is intended to provide a shorthand way of transforming fulfilled results of other futures. It is not intended to be used as <code>map</code> in the Swift standard library, however, that function may well be used inside the function provided to this method.</p>
-<pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
-    <span class="p">[</span><span class="s">"Hello"</span><span class="p">,</span> <span class="s">"World!"</span><span class="p">]</span>
-<span class="p">}</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">strings</span> <span class="k">in</span>
-    <span class="n">strings</span><span class="o">.</span><span class="nf">joined</span><span class="p">(</span><span class="nv">separator</span><span class="p">:</span> <span class="s">" "</span><span class="p">)</span>
-<span class="p">}</span><span class="o">.</span><span class="n">whenFulfilled</span> <span class="p">{</span> <span class="n">string</span> <span class="k">in</span>
-    <span class="nf">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="c1">// "Hello World!"</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>Like with <code>thenIfRejected</code> you can also call <code>mapIfRejected</code></p>
-<h3 id='and' class='heading'>And</h3>
-
-<p>Returns a new <code><a href="Classes/Future.html">Future</a></code>, that resolves when this <strong>and</strong> the provided future both are resolved. The returned future will provide the pair of values from this and the provided future. Note that the returned future will be rejected with the first error encountered.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">future1</span> <span class="o">=</span> <span class="n">promise</span> <span class="p">{</span>
-    <span class="s">"Hello"</span>
-<span class="p">}</span>
-
-<span class="k">let</span> <span class="nv">future2</span> <span class="o">=</span> <span class="n">promise</span> <span class="p">{</span>
-    <span class="s">"World!"</span>
-<span class="p">}</span>
-
-<span class="n">future1</span><span class="o">.</span><span class="nf">and</span><span class="p">(</span><span class="n">future2</span><span class="p">)</span><span class="o">.</span><span class="n">whenFulfilled</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
-    <span class="nf">let</span> <span class="p">(</span><span class="n">hello</span><span class="p">,</span> <span class="n">world</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span> <span class="c1">// ("Hello", "World!")</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='reduce' class='heading'>Reduce</h3>
-
-<p>Returns a new <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code> that fires only when all the provided <code><a href="Classes/Future.html">Future&lt;U&gt;</a></code>s have been resolved. The returned future carries the value of the <code>initialResult</code> provided, combined with the result of fulfilled <code><a href="Classes/Future.html">Future&lt;U&gt;</a></code>s using the provided <code>nextPartialResult</code> function. The returned <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code> will be rejected as soon as either this, or a provided future is rejected. However, a failure will not occur until all preceding <code><a href="Classes/Future.html">Future</a></code>s have been resolved. As soon as a rejection is encountered, there subsequent futures will not be waited for, resulting in the fastest possible rejection for the provided futures.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">futures</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">...</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">value</span> <span class="k">in</span>
-    <span class="n">promise</span> <span class="p">{</span> <span class="n">value</span> <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;.</span><span class="nf">reduce</span><span class="p">(</span><span class="n">futures</span><span class="p">,</span> <span class="nv">initialResult</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">combined</span><span class="p">,</span> <span class="n">next</span> <span class="k">in</span>
-    <span class="n">combined</span> <span class="o">+</span> <span class="n">next</span>
-<span class="p">}</span><span class="o">.</span><span class="n">whenFulfilled</span> <span class="p">{</span> <span class="n">value</span> <span class="k">in</span>
-    <span class="nf">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1">// 55</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>For more in-depth documentation, visit the <a href="https://formbound.github.io/Futures/">docs</a>.</p>
 
           </div>
         </section>
@@ -295,7 +255,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-01)</p>
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-08)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

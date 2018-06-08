@@ -1,15 +1,58 @@
 import Dispatch
 
+/// Shorthand for creating a new `Future<T>`.
+///
+/// Note that the callback provided to this method will execute on the provided dispatch queue.
+///
+/// - Parameters:
+///   - queue: Dispatch queue to execute the callback on.
+///   - body: Function that returns a value, assigned to the future returned by this function.
+/// - Returns: A future that will receive the eventual value.
 public func promise<T>(on queue: DispatchQueue = .futures, _ body: @escaping () throws -> T) -> Future<T> {
-    return Promise(on: queue, body).future
+    let promise = Promise<T>()
+
+    queue.async {
+        do {
+            try promise.fulfill(body())
+        } catch {
+            promise.reject(error)
+        }
+    }
+
+    return promise.future
 }
 
+/// Shorthand for creating a new `Future<T>`, in an asynchronous fashion.
+///
+/// Note that the callback provided to this method will execute on the provided dispatch queue.
+///
+/// - Parameters:
+///   - type: Type of the future value.
+///   - queue: Dispatch queue to execute the callback on.
+///   - body: A function with a completion function as its parameter, taking a `FutureValue<T>`, which will be
+///     used to resolve the future returned by this method.
+///   - value: `FutureValue<T>` to resolve the future with.
+/// - Returns: A future that will receive the eventual value.
 public func promise<T>(
     _ type: T.Type,
     on queue: DispatchQueue = .futures,
-    _ body: @escaping (@escaping (FutureValue<T>) -> Void) throws -> Void) -> Future<T> {
+    _ body: @escaping (@escaping (_ value: FutureValue<T>) -> Void) throws -> Void) -> Future<T> {
 
-    return Promise(on: queue, body).future
+    let promise = Promise<T>()
+
+    queue.async {
+        do {
+            let completion = { (value: FutureValue<T>) in
+                promise.resolve(value)
+            }
+
+            try body(completion)
+        } catch {
+            promise.reject(error)
+        }
+    }
+
+    return promise.future
 }
 
 /// A promise to provide a result later.
@@ -50,36 +93,19 @@ public func promise<T>(
 /// ```
 ///
 /// - Note: `Future` is the observable value, while `Promise` is the function that sets it.
-public final class Promise<T> {
+public struct Promise<T> {
 
     /// The future value of this promise.
-    fileprivate(set) public var future: Future<T>
+    public let future: Future<T>
 
     /// Creates a new pending `Promise`.
     public init() {
         future = Future<T>()
     }
+}
 
-    fileprivate convenience init(
-        on dispatchQueue: DispatchQueue = .futures,
-        _ body : @escaping (@escaping (FutureValue<T>) -> Void) throws -> Void) {
-        self.init()
-
-        dispatchQueue.async {
-            do {
-                try body { result in
-                    self.resolve(result)
-                }
-            } catch {
-                self.reject(error)
-            }
-        }
-    }
-
-    fileprivate convenience init(on queue: DispatchQueue = .futures, _ body: @escaping () throws -> T) {
-        self.init()
-        queue.async {
-            self.resolve(FutureValue { try body() })
-        }
+public extension Promise where T == Void {
+    func fulfill() {
+        self.fulfill(())
     }
 }

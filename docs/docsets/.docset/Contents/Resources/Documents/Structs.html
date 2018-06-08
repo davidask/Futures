@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Protocols  Reference</title>
+    <title>Structures  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Section/Protocols" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Section/Structures" class="dashAnchor"></a>
 
-    <a title="Protocols  Reference"></a>
+    <a title="Structures  Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="index.html"> Reference</a>
       <img class="carat" src="img/carat.png" />
-      Protocols  Reference
+      Structures  Reference
     </p>
 
     <div class="content-wrapper">
@@ -119,8 +119,8 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>Protocols</h1>
-            <p>The following protocols are available globally.</p>
+            <h1>Structures</h1>
+            <p>The following structures are available globally.</p>
 
           </div>
         </section>
@@ -132,9 +132,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures9AnyFutureP"></a>
-                    <a name="//apple_ref/swift/Protocol/AnyFuture" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures9AnyFutureP">AnyFuture</a>
+                    <a name="/s:7Futures7PromiseV"></a>
+                    <a name="//apple_ref/swift/Struct/Promise" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures7PromiseV">Promise</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -142,113 +142,88 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Type-erasure for <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code></p>
+                        <p>A promise to provide a result later.</p>
 
-                        <a href="Protocols/AnyFuture.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AnyFuture</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+<p>This is the provider API for <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>. If you want to return a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you can use the global functions
+<code>promise(), or create a new</code>Promise<T><code>to fulfill in an asynchronous fashion.
+To create a new promise, returning a</code>Future<T>`, follow this pattern:</p>
+<pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
+    <span class="s">"Hello World!"</span>
+<span class="p">}</span>
+</code></pre>
 
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7Futures17AnyFutureObserverP"></a>
-                    <a name="//apple_ref/swift/Protocol/AnyFutureObserver" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures17AnyFutureObserverP">AnyFutureObserver</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
+<p>The above function will return a <code><a href="Classes/Future.html">Future&lt;String&gt;</a></code> eventually carrying the stirng <code>Hello World!</code>.</p>
 
-                        <a href="Protocols/AnyFutureObserver.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AnyFutureObserver</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+<p>You can also provide a future using a callback, like so:</p>
+<pre class="highlight swift"><code><span class="nf">promise</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">completion</span> <span class="k">in</span>
+    <span class="o">...</span> <span class="k">if</span> <span class="n">success</span> <span class="o">...</span>
+    <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">fulfilled</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">)</span>
+    <span class="o">...</span> <span class="k">if</span> <span class="n">error</span> <span class="o">...</span>
+    <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">rejected</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="p">}</span>
 
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7Futures13FutureSupportP"></a>
-                    <a name="//apple_ref/swift/Protocol/FutureSupport" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures13FutureSupportP">FutureSupport</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A protocol that can be used to add support for futures to a type of your choice.</p>
+</code></pre>
 
-<p>When you want an API that supports futures, i types that already have methods with callbacks,
-the signatures of the method providing the <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code> and the original function can conflict, especially
-when working with methods where a completion callback is optional.
-To get around this, when this protocol is conformed to by a type, it will expose one instance property, <code>futures</code>,
-and one static property also named <code>futures</code>. These properties both return a <code><a href="Structs/FutureProvider.html">FutureProvider&lt;Source&gt;</a></code> which you
-can extend to provide support for futures to any type. The returned <code><a href="Structs/FutureProvider.html">FutureProvider&lt;Source&gt;</a></code> provides the property
-<code>source</code> for access to the instance it should be acting on.</p>
-
-<p>As an example, here&rsquo;s how we implement support for presenting view controllers:
-extension UIViewController: FutureSupport {}</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">FutureProvider</span> <span class="k">where</span> <span class="kt">Source</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">present</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewControllerToPresent</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span> <span class="p">{</span>
-
-        <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">()</span>
-        <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
-            <span class="k">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">viewControllerToPresent</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="n">animated</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">()</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">return</span> <span class="n">promise</span><span class="o">.</span><span class="n">future</span>
+<p>If you want to provide a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code> in a completely custom manner, you can create a pending promise, resolve it
+when convenient, and then return its <code><a href="Classes/Future.html">Future</a></code>:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">someAsynOperation</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="n">dispatchQueue</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+        <span class="o">...</span> <span class="k">if</span> <span class="n">success</span> <span class="o">...</span>
+        <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="o">...</span> <span class="k">if</span> <span class="n">error</span> <span class="o">...</span>
+        <span class="n">promise</span><span class="o">.</span><span class="nf">reject</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
     <span class="p">}</span>
+    <span class="k">return</span> <span class="n">promise</span><span class="o">.</span><span class="n">future</span>
 <span class="p">}</span>
 </code></pre>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <code><a href="Classes/Future.html">Future</a></code> is the observable value, while <code>Promise</code> is the function that sets it.
 
-<p>Using this implementation is now possible.</p>
-<pre class="highlight swift"><code><span class="n">viewController</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span>
-    <span class="n">otherViewController</span><span class="p">,</span>
-    <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">)</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span>
-    <span class="nf">someOtherFutureReturningMethod</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre>
+</div>
 
-                        <a href="Protocols/FutureSupport.html" class="slightly-smaller">See more</a>
+                        <a href="Structs/Promise.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FutureSupport</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures14FutureProviderV"></a>
+                    <a name="//apple_ref/swift/Struct/FutureProvider" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures14FutureProviderV">FutureProvider</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A typed container in which to provide specialized futures.</p>
+
+<p>See <code><a href="Protocols/FutureSupport.html">FutureSupport</a></code>.</p>
+
+                        <a href="Structs/FutureProvider.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">FutureProvider</span><span class="o">&lt;</span><span class="kt">Source</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>

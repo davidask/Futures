@@ -15,45 +15,24 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
-      "line": 41,
-      "symbol": "FutureObserver.Callback",
-      "symbol_kind": "source.lang.swift.decl.typealias",
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureProvider.swift",
+      "line": 5,
+      "symbol": "FutureProvider.source",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
-      "line": 8,
-      "symbol": "FutureValue.fulfilled",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
-      "line": 9,
-      "symbol": "FutureValue.rejected",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
-      "line": 96,
+      "line": 100,
       "symbol": "FutureValue.success",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Promise.swift",
-      "line": 3,
-      "symbol": "promise(on:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.free",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Promise.swift",
-      "line": 7,
-      "symbol": "promise(_:on:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.free",
+      "line": 108,
+      "symbol": "Promise.fulfill()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],

@@ -1,6 +1,6 @@
 import Dispatch
 
-private var futuresDispatchQueue = DispatchQueue(label: "com.formbound.future.default")
+private var futuresDispatchQueue = DispatchQueue(label: "com.formbound.future.default", attributes: .concurrent)
 
 private let futureAwaitDispatchQueue = DispatchQueue(label: "com.formbound.future.await", attributes: .concurrent)
 

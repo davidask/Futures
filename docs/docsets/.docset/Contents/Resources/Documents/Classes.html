@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (87% documented)
+         (92% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -58,9 +58,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/FutureObserver.html">FutureObserver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/Promise.html">Promise</a>
               </li>
             </ul>
           </li>
@@ -99,6 +96,20 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/FutureSupport.html">FutureSupport</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/FutureProvider.html">FutureProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/Promise.html">Promise</a>
               </li>
             </ul>
           </li>
@@ -173,6 +184,14 @@ remove observers from a future, if the result of a future is no longer interesti
 <p>Functions that promise to do work asynchronously return a <code>Future&lt;T&gt;</code>. The receipient of a future can
 observe it to be notified, or to queue more asynchronous work, when the operation completes.</p>
 
+<p>A <code>Future&lt;T&gt;</code> is regarded as:</p>
+
+<ul>
+<li><code>resolved</code>, when a value is set</li>
+<li><code>fulfilled</code>, when a value is set and successful</li>
+<li><code>rejected</code>, when a value is not set, and an error occured</li>
+</ul>
+
 <p>The provider of a <code>Future&lt;T&gt;</code> creates a placeholder object before the actual result is available,
 immeadiately returning the object, providing a dynamic way of structuring complex dependencies
 for asynchronous work. This is common behavior in Future/Promise implementation across many languages.
@@ -183,6 +202,19 @@ Referencing these resources may be useful if you&rsquo;re unfamilliar with the c
 <li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Scala</a></li>
 <li><a href="https://docs.google.com/document/d/10WOZgLQaYNpOrag-eTbUm-JUCCfdyfravZ4qSOQPg1M/edit">Python</a></li>
 </ul>
+
+<p>The provider of a <code>Future&lt;T&gt;</code> may be implemented as follows:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">performAsynchronousWork</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="kt">DispatchQueue</span><span class="o">.</span><span class="nf">global</span><span class="p">()</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+        <span class="o">...</span> <span class="n">on</span> <span class="n">success</span> <span class="o">...</span>
+        <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="s">"A string"</span><span class="p">)</span>
+        <span class="o">...</span> <span class="n">on</span> <span class="n">failure</span> <span class="o">...</span>
+        <span class="n">promise</span><span class="o">.</span><span class="nf">reject</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">promise</span><span class="o">.</span><span class="n">future</span>
+<span class="p">}</span>
+</code></pre>
 
 <p>When receiving a <code>Future&lt;T&gt;</code>, you have a number of options. You can immediately observe the result of the future
 using <code>whenResolved()</code>, <code>whenFulfilled()</code>, or <code>whenRjected()</code>, or choose to do more asyncrhonous work before, or
@@ -195,17 +227,9 @@ of a future into another value, use <code>map()</code>.</p>
 
 <p>Options for combining futures into a single future is provided using <code>and()</code>, <code>fold()</code>, and <code>Future&lt;T&gt;.reduce()</code></p>
 
-<p>A <code>Future&lt;T&gt;</code> differs from a <code><a href="Classes/Promise.html">Promise&lt;T&gt;</a></code> in that a future is the container of a result; the promise being the
+<p>A <code>Future&lt;T&gt;</code> differs from a <code><a href="Structs/Promise.html">Promise&lt;T&gt;</a></code> in that a future is the container of a result; the promise being the
 function that sets that result. This design decision was made, in this library as well as in many others, to
 prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselves.</p>
-
-<p>A <code>Future&lt;T&gt;</code> is regarded as:</p>
-
-<ul>
-<li>resolved, when a value is set</li>
-<li>fulfilled, when a value is set and successful</li>
-<li>rejected, when a value is not set, and an error occured</li>
-</ul>
 
                         <a href="Classes/Future.html" class="slightly-smaller">See more</a>
                       </div>
@@ -222,84 +246,13 @@ prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselv
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7Futures7PromiseC"></a>
-                    <a name="//apple_ref/swift/Class/Promise" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures7PromiseC">Promise</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A promise to provide a result later.</p>
-
-<p>This is the provider API for <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>. If you want to return a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you can use the global functions
-<code>promise(), or create a new</code>Promise<T><code>to fulfill in an asynchronous fashion.
-To create a new promise, returning a</code>Future<T>`, follow this pattern:</p>
-<pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
-    <span class="s">"Hello World!"</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>The above function will return a <code><a href="Classes/Future.html">Future&lt;String&gt;</a></code> eventually carrying the stirng <code>Hello World!</code>.</p>
-
-<p>You can also provide a future using a callback, like so:</p>
-<pre class="highlight swift"><code><span class="nf">promise</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">completion</span> <span class="k">in</span>
-    <span class="o">...</span> <span class="k">if</span> <span class="n">success</span> <span class="o">...</span>
-    <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">fulfilled</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">)</span>
-    <span class="o">...</span> <span class="k">if</span> <span class="n">error</span> <span class="o">...</span>
-    <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">rejected</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-<span class="p">}</span>
-
-</code></pre>
-
-<p>If you want to provide a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code> in a completely custom manner, you can create a pending promise, resolve it
-when convenient, and then return its <code><a href="Classes/Future.html">Future</a></code>:</p>
-<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">someAsynOperation</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span><span class="p">()</span>
-    <span class="n">dispatchQueue</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
-        <span class="o">...</span> <span class="k">if</span> <span class="n">success</span> <span class="o">...</span>
-        <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="o">...</span> <span class="k">if</span> <span class="n">error</span> <span class="o">...</span>
-        <span class="n">promise</span><span class="o">.</span><span class="nf">reject</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">promise</span><span class="o">.</span><span class="n">future</span>
-<span class="p">}</span>
-</code></pre>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    <code><a href="Classes/Future.html">Future</a></code> is the observable value, while <code>Promise</code> is the function that sets it.
-
-</div>
-
-                        <a href="Classes/Promise.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </div>
         </section>
 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-01)</p>
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-08)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
