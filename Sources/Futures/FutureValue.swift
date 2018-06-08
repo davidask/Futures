@@ -5,7 +5,11 @@ import Dispatch
 /// - fulfilled: A fulfilled future, with a value.
 /// - rejected: A rejected future, with an error.
 public enum FutureValue<T> {
+
+    /// The value is fulfilled
     case fulfilled(T)
+
+    /// The value is rejected
     case rejected(Error)
 
     /// Creates a new `FutureValue<T>`, capturing the return value, or throw error of a function.

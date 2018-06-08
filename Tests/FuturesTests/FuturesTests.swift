@@ -187,6 +187,26 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
+    func testDeferred() {
+        let expectation = self.expectation(description: #function)
+
+        func throwError() throws -> Future<Int> {
+            throw NSError(domain: "", code: 0, userInfo: nil)
+        }
+
+        _ = promise {
+            true
+        }.then { _ in
+            try throwError()
+        }.defer {
+            promise {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+
     func testBasicAnd() {
 
         let expectation = self.expectation(description: #function)
@@ -230,33 +250,6 @@ class FuturesTests: XCTestCase {
             combined + next
         }.whenFulfilled { value in
             XCTAssertEqual(value, expected)
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10, handler: nil)
-    }
-
-    func testPerform() {
-        let expectation = self.expectation(description: #function)
-
-        var flag = false
-
-        promise {
-            true
-        }.perform(on: .main) { value, completion in
-            XCTAssertEqual(value, true)
-
-            #if !os(Linux)
-            XCTAssertEqual(Thread.current, Thread.main)
-            #endif
-
-            DispatchQueue.global().async {
-                flag = true
-                completion()
-            }
-
-        }.whenFulfilled { _ in
-            XCTAssertEqual(flag, true)
             expectation.fulfill()
         }
 
@@ -312,8 +305,8 @@ class FuturesTests: XCTestCase {
         ("testThenIfRejected", testThenIfRejected),
         ("testMapIfRejected", testMapIfRejected),
         ("testBasicAnd", testBasicAnd),
-        ("testPerform", testPerform),
         ("testBasicMap", testBasicMap),
+        ("testDeferred", testDeferred),
         ("testBasicPerformance", testBasicPerformance)
     ]
 }
