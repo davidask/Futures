@@ -16,8 +16,9 @@ public struct FutureProvider<Source> {
 /// `source` for access to the instance it should be acting on.
 ///
 /// As an example, here's how we implement support for presenting view controllers:
-/// extension UIViewController: FutureSupport {}
 /// ```
+/// extension UIViewController: FutureSupport {}
+///
 /// extension FutureProvider where Source: UIViewController {
 ///     func present(_ viewControllerToPresent: UIViewController, animated: Bool) -> Future<Void> {
 ///

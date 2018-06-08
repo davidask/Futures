@@ -136,9 +136,10 @@ and one static property also named <code>futures</code>. These properties both r
 can extend to provide support for futures to any type. The returned <code><a href="../Structs/FutureProvider.html">FutureProvider&lt;Source&gt;</a></code> provides the property
 <code>source</code> for access to the instance it should be acting on.</p>
 
-<p>As an example, here&rsquo;s how we implement support for presenting view controllers:
-extension UIViewController: FutureSupport {}</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">FutureProvider</span> <span class="k">where</span> <span class="kt">Source</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+<p>As an example, here&rsquo;s how we implement support for presenting view controllers:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIViewController</span><span class="p">:</span> <span class="kt">FutureSupport</span> <span class="p">{}</span>
+
+<span class="kd">extension</span> <span class="kt">FutureProvider</span> <span class="k">where</span> <span class="kt">Source</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">present</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewControllerToPresent</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span> <span class="p">{</span>
 
         <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">()</span>
