@@ -126,7 +126,7 @@
 <p>Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It&rsquo;s lightweight, fast, and easy to understand.</p>
 <h3 id='supported-platforms' class='heading'>Supported Platforms</h3>
 
-<p>Futures supports all platforms where Swift is supported.</p>
+<p>Futures supports all platforms where Swift 3 and later is supported.</p>
 
 <ul>
 <li>Ubuntu 14.04</li>
@@ -180,26 +180,25 @@
 <p>Note that you can specify an observation dispatch queue for all these functions. For instance, you can use <code>then(on: .main)</code>, or <code>.map(on: .global())</code>. By default, the queue is <code><a href="Extensions/DispatchQueue.html#/s:So13DispatchQueueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
 
 <p>As a simple example, this is how some code may look:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">future</span> <span class="o">=</span> <span class="nf">presentLoadingIndicator</span><span class="p">(</span>
-    <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">)</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span>
-    <span class="nf">loadNetworkResource</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="s">"http://someHost/resource"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
-<span class="p">}</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">data</span> <span class="k">in</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">future</span> <span class="o">=</span> <span class="nf">loadNetworkResource</span><span class="p">(</span>
+    <span class="nv">from</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="s">"http://someHost/resource"</span><span class="p">)</span><span class="o">!</span>
+<span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">data</span> <span class="k">in</span>
     <span class="k">try</span> <span class="n">jsonDecoder</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">SomeType</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
 <span class="p">}</span><span class="o">.</span><span class="k">defer</span> <span class="p">{</span>
-    <span class="nf">dismissLoadingIndicator</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="nf">someFunctionToExecuteRegardless</span><span class="p">()</span>
 <span class="p">}</span>
 
-<span class="n">future</span><span class="o">.</span><span class="n">whenFulfilled</span> <span class="p">{</span> <span class="n">someType</span> <span class="k">in</span>
+<span class="n">future</span><span class="o">.</span><span class="nf">whenFulfilled</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span><span class="p">)</span> <span class="p">{</span> <span class="n">someType</span> <span class="k">in</span>
     <span class="c1">// Success</span>
 <span class="p">}</span>
 
-<span class="n">future</span><span class="o">.</span><span class="n">whenRejected</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+<span class="n">future</span><span class="o">.</span><span class="nf">whenRejected</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="o">.</span><span class="n">main</span>
+    <span class="p">)</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
     <span class="c1">// Error</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>To create your functions returning a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you create a new pending promise, and resolve it when appropriate:</p>
+<p>To create your functions returning a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you create a new pending promise, and resolve it when appropriate.</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">performAsynchronousWork</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>
 
@@ -214,15 +213,18 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>You can also use shorthands:</p>
+<p>You can also use shorthands.</p>
 <pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
-    <span class="s">"Some string"</span>
-<span class="p">}</span> <span class="c1">// Future&lt;String&gt;</span>
+     <span class="k">try</span> <span class="n">jsonDecoder</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">SomeType</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">}</span> <span class="c1">// Future&lt;SomeType&gt;</span>
 </code></pre>
 
-<p>Or asynchronously</p>
+<p>Or shorthands which you can return from asynchronously.</p>
 <pre class="highlight swift"><code><span class="nf">promise</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">completion</span> <span class="k">in</span>
+    <span class="c1">/// ... on success ...</span>
     <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="s">"Some string"</span><span class="p">))</span>
+    <span class="c1">/// ... if error ...</span>
+    <span class="nf">completion</span><span class="p">(</span><span class="o">.</span><span class="nf">reject</span><span class="p">(</span><span class="n">anError</span><span class="p">))</span>
 <span class="p">}</span> <span class="c1">// Future&lt;String&gt;</span>
 </code></pre>
 <h2 id='documentation' class='heading'>Documentation</h2>
@@ -255,7 +257,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-08)</p>
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-06-15)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
