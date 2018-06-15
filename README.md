@@ -72,8 +72,7 @@ future.whenFulfilled(on: .main) { someType in
     // Success
 }
 
-future.whenRejected(on: .main
-    ) { error in
+future.whenRejected(on: .main) { error in
     // Error
 }
 ```
