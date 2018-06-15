@@ -3,10 +3,9 @@
 
 Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It's lightweight, fast, and easy to understand.
 
-
 ### Supported Platforms
 
-Futures supports all platforms where Swift is supported.
+Futures supports all platforms where Swift 3 and later is supported.
 
 * Ubuntu 14.04
 * macOS 10.9
@@ -61,26 +60,25 @@ Note that you can specify an observation dispatch queue for all these functions.
 As a simple example, this is how some code may look:
 
 ```swift
-let future = presentLoadingIndicator(
-    animated: true
-).then {
-    loadNetworkResource(from: URL("http://someHost/resource")!)
-}.map { data in
+let future = loadNetworkResource(
+    from: URL("http://someHost/resource")!
+).map { data in
     try jsonDecoder.decode(SomeType.self, from: data)
 }.defer {
-    dismissLoadingIndicator(animated: true)
+    someFunctionToExecuteRegardless()
 }
 
-future.whenFulfilled { someType in
+future.whenFulfilled(on: .main) { someType in
     // Success
 }
 
-future.whenRejected { error in
+future.whenRejected(on: .main
+    ) { error in
     // Error
 }
 ```
 
-To create your functions returning a `Future<T>`, you create a new pending promise, and resolve it when appropriate:
+To create your functions returning a `Future<T>`, you create a new pending promise, and resolve it when appropriate.
 
 ```swift
 func performAsynchronousWork() -> Future<String> {
@@ -97,18 +95,21 @@ func performAsynchronousWork() -> Future<String> {
 }
 ```
 
-You can also use shorthands:
+You can also use shorthands.
 
 ```swift
 promise {
-    "Some string"
-} // Future<String>
+     try jsonDecoder.decode(SomeType.self, from: data)
+} // Future<SomeType>
 ```
 
-Or asynchronously
+Or shorthands which you can return from asynchronously.
 ```swift
 promise(String.self) { completion in
+    /// ... on success ...
     completion(.fulfill("Some string"))
+    /// ... if error ...
+    completion(.reject(anError))
 } // Future<String>
 ```
 
