@@ -58,7 +58,7 @@ public func promise<T>(
 /// A promise to provide a result later.
 ///
 /// This is the provider API for `Future<T>`. If you want to return a `Future<T>`, you can use the global functions
-/// `promise(), or create a new `Promise<T>` to fulfill in an asynchronous fashion.
+/// `promise()`, or create a new `Promise<T>` to fulfill in an asynchronous fashion.
 /// To create a new promise, returning a `Future<T>`, follow this pattern:
 /// ```
 /// promise {

@@ -119,11 +119,11 @@ extension FutureObserver: Equatable {
 /// prevent receivers of `Future<T>` to resolve the future themselves.
 public final class Future<T>: AnyFuture {
 
-    private let stateQueue = DispatchQueue(label: "com.formbound.future.state", attributes: .concurrent)
+    fileprivate let stateQueue = DispatchQueue(label: "com.formbound.future.state", attributes: .concurrent)
 
     private var observers: [FutureObserver<T>] = []
 
-    private var state: FutureState<T> {
+    fileprivate var state: FutureState<T> {
         willSet {
             precondition(state.canTransition(to: newValue))
         }
@@ -155,7 +155,7 @@ public final class Future<T>: AnyFuture {
         self.init(resolved: .rejected(error))
     }
 
-    private func addObserver(_ observer: FutureObserver<T>) {
+    fileprivate func addObserver(_ observer: FutureObserver<T>) {
         stateQueue.sync(flags: .barrier) {
             switch state {
             case .pending:
