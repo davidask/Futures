@@ -1,8 +1,6 @@
 import Dispatch
 
-private var futuresDispatchQueue = DispatchQueue(label: "com.formbound.future.default", attributes: .concurrent)
-
-private let futureAwaitDispatchQueue = DispatchQueue(label: "com.formbound.future.await", attributes: .concurrent)
+private var futuresDispatchQueue = DispatchQueue(label: "com.formbound.futures.default", attributes: .concurrent)
 
 public extension DispatchQueue {
 
@@ -15,6 +13,4 @@ public extension DispatchQueue {
             futuresDispatchQueue = newValue
         }
     }
-
-    internal static let futureAwait = futureAwaitDispatchQueue
 }

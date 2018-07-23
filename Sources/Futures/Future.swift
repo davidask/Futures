@@ -1,4 +1,5 @@
 import Dispatch
+import Foundation
 
 private enum FutureState<Value> {
     case pending
@@ -119,11 +120,22 @@ extension FutureObserver: Equatable {
 /// prevent receivers of `Future<T>` to resolve the future themselves.
 public final class Future<T>: AnyFuture {
 
-    fileprivate let stateQueue = DispatchQueue(label: "com.formbound.future.state", attributes: .concurrent)
+    private let lock = NSLock()
+
+    public var identifier: String?
+
+    private func synchronize<T>(_ body: () throws -> T) rethrows -> T {
+        lock.lock()
+        defer {
+            lock.unlock()
+        }
+
+        return try body()
+    }
 
     private var observers: [FutureObserver<T>] = []
 
-    fileprivate var state: FutureState<T> {
+    private var state: FutureState<T> {
         willSet {
             precondition(state.canTransition(to: newValue))
         }
@@ -156,7 +168,7 @@ public final class Future<T>: AnyFuture {
     }
 
     fileprivate func addObserver(_ observer: FutureObserver<T>) {
-        stateQueue.sync(flags: .barrier) {
+        synchronize {
             switch state {
             case .pending:
                 observers.append(observer)
@@ -167,7 +179,7 @@ public final class Future<T>: AnyFuture {
     }
 
     fileprivate func removeObserver(_ observerToRemove: FutureObserver<T>) {
-        stateQueue.sync(flags: .barrier) {
+        synchronize {
             observers = observers.filter { observer in
                 observer != observerToRemove
             }
@@ -175,8 +187,7 @@ public final class Future<T>: AnyFuture {
     }
 
     fileprivate func setValue(_ value: FutureValue<T>) {
-        stateQueue.sync(flags: .barrier) {
-
+        synchronize {
             guard case .pending = state else {
                 return
             }
@@ -190,19 +201,10 @@ public final class Future<T>: AnyFuture {
             observers.removeAll(keepingCapacity: false)
         }
     }
-}
-
-extension Future: Equatable {
-    public static func == (lhs: Future, rhs: Future) -> Bool {
-        return lhs === rhs
-    }
-}
-
-public extension Future {
 
     /// Indicates whether the future is pending
-    var isPending: Bool {
-        return stateQueue.sync {
+    public var isPending: Bool {
+        return synchronize {
             guard case .pending = state else {
                 return false
             }
@@ -212,8 +214,8 @@ public extension Future {
     }
 
     /// Indicates whether the future is fulfilled
-    var isFulfilled: Bool {
-        return stateQueue.sync {
+    public var isFulfilled: Bool {
+        return synchronize {
             guard case .finished(let result) = state, case .fulfilled = result else {
                 return false
             }
@@ -223,14 +225,20 @@ public extension Future {
     }
 
     /// Indicates whether the future is rejected
-    var isRejected: Bool {
-        return stateQueue.sync {
+    public var isRejected: Bool {
+        return synchronize {
             guard case .finished(let result) = state, case .rejected = result else {
                 return false
             }
 
             return true
         }
+    }
+}
+
+extension Future: Equatable {
+    public static func == (lhs: Future, rhs: Future) -> Bool {
+        return lhs === rhs
     }
 }
 
