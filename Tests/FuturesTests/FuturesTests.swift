@@ -306,7 +306,6 @@ class FuturesTests: XCTestCase {
         ("testMapIfRejected", testMapIfRejected),
         ("testBasicAnd", testBasicAnd),
         ("testBasicMap", testBasicMap),
-        ("testDeferred", testDeferred),
-        ("testBasicPerformance", testBasicPerformance)
+        ("testDeferred", testDeferred)
     ]
 }

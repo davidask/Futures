@@ -123,7 +123,7 @@ public final class Future<T>: AnyFuture {
 
     private var observers: [FutureObserver<T>] = []
 
-    fileprivate var state: FutureState<T> {
+    private var state: FutureState<T> {
         willSet {
             precondition(state.canTransition(to: newValue))
         }
@@ -190,18 +190,9 @@ public final class Future<T>: AnyFuture {
             observers.removeAll(keepingCapacity: false)
         }
     }
-}
-
-extension Future: Equatable {
-    public static func == (lhs: Future, rhs: Future) -> Bool {
-        return lhs === rhs
-    }
-}
-
-public extension Future {
 
     /// Indicates whether the future is pending
-    var isPending: Bool {
+    public var isPending: Bool {
         return stateQueue.sync {
             guard case .pending = state else {
                 return false
@@ -212,7 +203,7 @@ public extension Future {
     }
 
     /// Indicates whether the future is fulfilled
-    var isFulfilled: Bool {
+    public var isFulfilled: Bool {
         return stateQueue.sync {
             guard case .finished(let result) = state, case .fulfilled = result else {
                 return false
@@ -223,7 +214,7 @@ public extension Future {
     }
 
     /// Indicates whether the future is rejected
-    var isRejected: Bool {
+    public var isRejected: Bool {
         return stateQueue.sync {
             guard case .finished(let result) = state, case .rejected = result else {
                 return false
@@ -231,6 +222,12 @@ public extension Future {
 
             return true
         }
+    }
+}
+
+extension Future: Equatable {
+    public static func == (lhs: Future, rhs: Future) -> Bool {
+        return lhs === rhs
     }
 }
 
