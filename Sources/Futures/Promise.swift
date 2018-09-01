@@ -71,9 +71,9 @@ public func promise<T>(
 /// ```
 /// promise(String.self) { completion in
 ///     ... if success ...
-///     completion(.fulfilled("Hello World!")
+///     completion(.fulfilled("Hello World!"))
 ///     ... if error ...
-///     completion(.rejected(error)
+///     completion(.rejected(error))
 /// }
 ///
 /// ```

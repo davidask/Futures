@@ -22,7 +22,7 @@ Fundamentally, Futures is a very simple framework, that consists of two types:
 * `Future`, a read-only container resolving into either a value, or an error
 
 
-Unlike many promise frameworks, a promise is not distinguished from a future, which does not ensure immutability of a promise that gets passed around. This framework distinguishes a `Promise` from a future in that a `Future` is the observable value while a `Promise` is the function that sets the value.
+In many promise frameworks, a promise is undistinguished from a future. This introduces mutability of a promise that gets passed around. In Futures, a `Future` is the observable value while a `Promise` is the function that sets the value.
 
 
 Futures are observed, by default, on a single concurrent dispatch queue. This queue can be modified by assigning a different queue to `DispatchQueue.futures`. You can also specify a queue of your choice to each callback added to a future .
