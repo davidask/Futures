@@ -1,10 +1,10 @@
 import Dispatch
 
-/// Value of a future, being either rejected with an error or fulfilled with a value.
+/// Result of a future, being either rejected with an error or fulfilled with a value.
 ///
-/// - fulfilled: A fulfilled future, with a value.
-/// - rejected: A rejected future, with an error.
-public enum FutureValue<T> {
+/// - fulfilled: A fulfilled future result, with a value.
+/// - rejected: A rejected future result, with an error.
+public enum FutureResult<T> {
 
     /// The value is fulfilled
     case fulfilled(T)
@@ -12,7 +12,7 @@ public enum FutureValue<T> {
     /// The value is rejected
     case rejected(Error)
 
-    /// Creates a new `FutureValue<T>`, capturing the return value, or throw error of a function.
+    /// Creates a new `FutureResult<T>`, capturing the return value, or throw error of a function.
     ///
     /// - Parameter capturing: Function to invoke, resulting in an error or a value.
     public init(_ capturing: () throws -> T) {
@@ -23,14 +23,14 @@ public enum FutureValue<T> {
         }
     }
 
-    /// Creates a new fulfilled `FutureValue<T>`.
+    /// Creates a new fulfilled `FutureResult<T>`.
     ///
     /// - Parameter value: A fulfilled value.
     public init(_ value: T) {
         self = .fulfilled(value)
     }
 
-    /// Creates a new rejected `FutureValue<T>`.
+    /// Creates a new rejected `FutureResult<T>`.
     ///
     /// - Parameter error: A rejection error
     public init(_ error: Error) {
@@ -85,7 +85,7 @@ public enum FutureValue<T> {
         }
     }
 
-    /// The description of this `FutureValue<T>`
+    /// The description of this `FutureResult<T>`
     public var description: String {
         switch self {
         case .fulfilled(let value):
@@ -96,8 +96,8 @@ public enum FutureValue<T> {
     }
 }
 
-public extension FutureValue where T == Void {
-    static var success: FutureValue {
+public extension FutureResult where T == Void {
+    static var success: FutureResult {
         return .fulfilled(())
     }
 }

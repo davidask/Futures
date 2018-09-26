@@ -1,10 +1,10 @@
 import Dispatch
 
-private enum FutureState<Value> {
+private enum FutureState<Result> {
     case pending
-    case finished(FutureValue<Value>)
+    case finished(FutureResult<Result>)
 
-    fileprivate func canTransition(to newState: FutureState<Value>) -> Bool {
+    fileprivate func canTransition(to newState: FutureState<Result>) -> Bool {
 
         switch (self, newState) {
         case (.pending, .finished):
@@ -39,13 +39,13 @@ public protocol AnyFutureObserver: class {
 /// - `Future<T>.whenRejected()`
 public final class FutureObserver<T>: AnyFutureObserver {
 
-    private let callback: (FutureValue<T>) -> Void
+    private let callback: (FutureResult<T>) -> Void
 
     private let queue: DispatchQueue
 
     private weak var future: Future<T>?
 
-    fileprivate init(_ callback: @escaping (FutureValue<T>) -> Void, future: Future<T>, queue: DispatchQueue) {
+    fileprivate init(_ callback: @escaping (FutureResult<T>) -> Void, future: Future<T>, queue: DispatchQueue) {
         self.callback = callback
         self.future = future
         self.queue = queue
@@ -57,7 +57,7 @@ public final class FutureObserver<T>: AnyFutureObserver {
         future?.removeObserver(self)
     }
 
-    fileprivate func invoke(_ value: FutureValue<T>) {
+    fileprivate func invoke(_ value: FutureResult<T>) {
         queue.async {
             self.callback(value)
         }
@@ -136,8 +136,8 @@ public final class Future<T>: AnyFuture {
 
     /// Creates a resolved future
     ///
-    /// - Parameter resolved: `FutureValue<T>`
-    public init(resolved: FutureValue<T>) {
+    /// - Parameter resolved: `FutureResult<T>`
+    public init(resolved: FutureResult<T>) {
         state = .finished(resolved)
     }
 
@@ -174,7 +174,7 @@ public final class Future<T>: AnyFuture {
         }
     }
 
-    fileprivate func setValue(_ value: FutureValue<T>) {
+    fileprivate func setValue(_ value: FutureResult<T>) {
         stateQueue.sync(flags: .barrier) {
 
             guard case .pending = state else {
@@ -222,6 +222,16 @@ public final class Future<T>: AnyFuture {
 
             return true
         }
+    }
+
+    /// Indicates the result of the future.
+    /// Returns `nil` if the future is not resolved yet.
+    public var result: FutureResult<T>? {
+        guard case .finished(let result) = state else {
+            return nil
+        }
+
+        return result
     }
 }
 
@@ -530,12 +540,12 @@ public extension Future {
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.
-    ///   - callback: Callback invoked with the resolved `FutureValue<T>` of this future
+    ///   - callback: Callback invoked with the resolved `FutureResult<T>` of this future
     /// - Returns: A `FutureObserver<T>`, which can be used to remove the observer from this future.
     @discardableResult
     func whenResolved(
         on queue: DispatchQueue = .futures,
-        callback: @escaping (FutureValue<T>) -> Void) -> FutureObserver<T> {
+        callback: @escaping (FutureResult<T>) -> Void) -> FutureObserver<T> {
         let observer = FutureObserver<T>(callback, future: self, queue: queue)
 
         self.addObserver(observer)
@@ -563,8 +573,8 @@ public extension Promise {
 
     /// Resolves the promise, setting either a value or an error to this promise's `Future`
     ///
-    /// - Parameter result: `FutureValue<T>` to resolve with
-    func resolve(_ result: FutureValue<T>) {
+    /// - Parameter result: `FutureResult<T>` to resolve with
+    func resolve(_ result: FutureResult<T>) {
         future.setValue(result)
     }
 }

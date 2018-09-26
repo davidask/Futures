@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		B757AE1520B8921E00850F92 /* Futures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757AE0B20B8921E00850F92 /* Futures.framework */; };
-		B757AE7620B8A5BA00850F92 /* FutureValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureValue.swift */; };
-		B757AE7720B8A5BA00850F92 /* FutureValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureValue.swift */; };
-		B757AE7820B8A5BA00850F92 /* FutureValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureValue.swift */; };
-		B757AE7920B8A5BA00850F92 /* FutureValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureValue.swift */; };
+		B757AE7620B8A5BA00850F92 /* FutureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureResult.swift */; };
+		B757AE7720B8A5BA00850F92 /* FutureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureResult.swift */; };
+		B757AE7820B8A5BA00850F92 /* FutureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureResult.swift */; };
+		B757AE7920B8A5BA00850F92 /* FutureResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7320B8A5BA00850F92 /* FutureResult.swift */; };
 		B757AE7A20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
 		B757AE7B20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
 		B757AE7C20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
@@ -52,7 +52,7 @@
 		B757AE2A20B8924600850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B757AE3720B8926D00850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B757AE4420B8928200850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B757AE7320B8A5BA00850F92 /* FutureValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FutureValue.swift; sourceTree = "<group>"; };
+		B757AE7320B8A5BA00850F92 /* FutureResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FutureResult.swift; sourceTree = "<group>"; };
 		B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Promise.swift"; sourceTree = "<group>"; };
 		B757AE7520B8A5BA00850F92 /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 		B757AE8420B8A5C700850F92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		B757AE7220B8A5BA00850F92 /* Future */ = {
 			isa = PBXGroup;
 			children = (
-				B757AE7320B8A5BA00850F92 /* FutureValue.swift */,
+				B757AE7320B8A5BA00850F92 /* FutureResult.swift */,
 				B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */,
 				B757AE7520B8A5BA00850F92 /* Future.swift */,
 				B79FF3AC20BC6D1E001A625C /* Promise.swift */,
@@ -483,7 +483,7 @@
 				B757AE7E20B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3AD20BC6D1E001A625C /* Promise.swift in Sources */,
 				B768073820C6C02E00402ECB /* FutureProvider.swift in Sources */,
-				B757AE7620B8A5BA00850F92 /* FutureValue.swift in Sources */,
+				B757AE7620B8A5BA00850F92 /* FutureResult.swift in Sources */,
 				B757AE7A20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,7 +503,7 @@
 				B79FF3B820BC6E34001A625C /* AnyFuture.swift in Sources */,
 				B757AE7F20B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3AE20BC6D1E001A625C /* Promise.swift in Sources */,
-				B757AE7720B8A5BA00850F92 /* FutureValue.swift in Sources */,
+				B757AE7720B8A5BA00850F92 /* FutureResult.swift in Sources */,
 				B757AE7B20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,7 +515,7 @@
 				B79FF3B920BC6E34001A625C /* AnyFuture.swift in Sources */,
 				B757AE8020B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3AF20BC6D1E001A625C /* Promise.swift in Sources */,
-				B757AE7820B8A5BA00850F92 /* FutureValue.swift in Sources */,
+				B757AE7820B8A5BA00850F92 /* FutureResult.swift in Sources */,
 				B757AE7C20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,7 +527,7 @@
 				B79FF3BA20BC6E34001A625C /* AnyFuture.swift in Sources */,
 				B757AE8120B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3B020BC6D1E001A625C /* Promise.swift in Sources */,
-				B757AE7920B8A5BA00850F92 /* FutureValue.swift in Sources */,
+				B757AE7920B8A5BA00850F92 /* FutureResult.swift in Sources */,
 				B757AE7D20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

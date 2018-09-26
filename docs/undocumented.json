@@ -22,9 +22,9 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureValue.swift",
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureResult.swift",
       "line": 100,
-      "symbol": "FutureValue.success",
+      "symbol": "FutureResult.success",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
