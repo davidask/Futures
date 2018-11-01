@@ -1,4 +1,5 @@
 import Dispatch
+import Foundation
 
 private enum FutureState<Result> {
     case pending
