@@ -1,5 +1,5 @@
 /// Type-erasure for `Future<T>`
-public protocol AnyFuture: class {
+public protocol AnyFuture: AnyObject {
 
     /// Indicates whether the future is pending
     var isPending: Bool { get }

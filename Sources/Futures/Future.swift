@@ -26,7 +26,7 @@ extension FutureState: CustomStringConvertible {
     }
 }
 
-public protocol AnyFutureObserver: class {
+public protocol AnyFutureObserver: AnyObject {
     func remove()
 }
 
@@ -199,6 +199,15 @@ public final class Future<T>: AnyFuture {
             }
 
             return true
+        }
+    }
+
+    /// Indicates whether the future is resolved
+    public var isResolved: Bool {
+        if case .finished = state {
+            return true
+        } else {
+            return false
         }
     }
 
@@ -483,6 +492,61 @@ public extension Future {
 
             }
         }
+
+        return promise.future
+    }
+
+    enum PollError: Error {
+        case retryCountExceeded
+    }
+
+    /// Returns a new `Future<T>` resolved first after the provided closure returns `true`.
+    ///
+    /// This method is useful for polling a resource which should return first when the received value
+    /// is acceptable.
+    ///
+    /// - Parameters:
+    ///   - dispatchQueue: Dispatch queue to poll on,
+    ///   - future: Future used as the polling function.
+    ///   - interval: Time to wait between invoking subsequent futures.
+    ///   - retryCount: maxRetryCount Maximum number of times to invoke the supplied future
+    ///   - finished: Handler to invoke, resolving whether the result of the given promise is acceptable
+    /// - Returns: A future that will receive the eventual value.
+    static func poll<T>(
+        on dispatchQueue: DispatchQueue = .futures,
+        future: @escaping @autoclosure () -> Future<T>,
+        interval: TimeInterval,
+        maxRetryCount: Int,
+        finished: @escaping (T) -> Bool) -> Future<T> {
+
+        let promise = Promise<T>()
+        var numberOfRetries = 0
+
+        func poll() {
+            let instance = future()
+            instance.whenResolved { result in
+                defer {
+                    numberOfRetries += 1
+                }
+                do {
+                    let value = try result.unwrap()
+                    if finished(value) {
+                        promise.fulfill(value)
+                    } else if numberOfRetries < maxRetryCount {
+                        dispatchQueue.asyncAfter(deadline: .now() + (numberOfRetries < 1 ? 0 : interval)) {
+                            poll()
+                        }
+                    } else {
+                        throw PollError.retryCountExceeded
+                    }
+
+                } catch {
+                    promise.reject(error)
+                }
+            }
+        }
+
+        poll()
 
         return promise.future
     }

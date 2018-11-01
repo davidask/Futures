@@ -285,8 +285,8 @@ class FuturesTests: XCTestCase {
             Future<Int>.reduce(futures, initialResult: 0) { initial, next in
                 return initial + next
             }.whenResolved { result in
+                XCTAssertNil(result.error)
                 expectation.fulfill()
-                XCTAssertNoThrow(result.isError == false)
             }
 
             waitForExpectations(timeout: 5) { _ in

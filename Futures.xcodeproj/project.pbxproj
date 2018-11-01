@@ -337,10 +337,11 @@
 				TargetAttributes = {
 					B757AE0A20B8921E00850F92 = {
 						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1010;
 					};
 					B757AE1320B8921E00850F92 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1010;
 					};
 					B757AE2920B8924600850F92 = {
 						CreatedOnToolsVersion = 9.3.1;
@@ -688,6 +689,7 @@
 				PRODUCT_NAME = Futures;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -714,6 +716,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.Futures;
 				PRODUCT_NAME = Futures;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -732,7 +735,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.FuturesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -751,7 +755,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.FuturesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
