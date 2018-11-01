@@ -2,16 +2,30 @@
   "warnings": [
     {
       "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
-      "line": 29,
+      "line": 30,
       "symbol": "AnyFutureObserver",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
-      "line": 30,
+      "line": 31,
       "symbol": "AnyFutureObserver.remove()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 500,
+      "symbol": "Future.PollError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 501,
+      "symbol": "Future.PollError.retryCountExceeded",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
