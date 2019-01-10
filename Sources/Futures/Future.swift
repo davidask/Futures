@@ -466,7 +466,7 @@ public extension Future {
     /// Note that the provided callback is called regardless of whether this future is fulfilled or rejected.
     /// The returned `Future<T>` is fulfilled **only** if this and the provided future both are fullfilled.
     ///
-    /// In essence, the returned future will forward the result of this future, if the provided future
+    /// In short, the returned future will forward the result of this future, if the provided future
     /// is fulfilled.
     ///
     /// - Parameters:
@@ -474,7 +474,7 @@ public extension Future {
     ///   - initialResult: An initial result to begin the reduction.
     ///   - callback: A callback that returns a `Future<Void>` to be deferred.
     /// - Returns: A future that will receive the eventual value.
-    func `defer`(on queue: DispatchQueue = .futures, callback: @escaping () -> Future<Void>) -> Future<T> {
+    func always(on queue: DispatchQueue = .futures, callback: @escaping () -> Future<Void>) -> Future<T> {
         let promise = Promise<T>()
 
         whenResolved(on: queue) { result1 in
@@ -497,6 +497,29 @@ public extension Future {
         return promise.future
     }
 
+    /// Returns a new `Future<T>` that will resolve with the result of this `Future` **after** the provided callback
+    /// runs.
+    ///
+    /// Note that the provided callback is called regardless of whether this future is fulfilled or rejected.
+    ///
+    /// This method is useful for times you want to execute code at the end of a chain of operations, regarless
+    /// of whether successful or not.
+    ///
+    /// - Parameters:
+    ///   - queue: Dispatch queue to observe on.
+    ///   - callback: Callback to run.
+    /// - Returns: A future that will receive the eventual value.
+    func `defer`(on queue: DispatchQueue = .futures, callback: @escaping () -> Void) -> Future<T> {
+        let promise = Promise<T>()
+
+        whenResolved(on: queue) { result in
+            callback()
+            promise.resolve(result)
+        }
+
+        return promise.future
+    }
+
     enum PollError: Error {
         case retryCountExceeded
     }
@@ -507,14 +530,14 @@ public extension Future {
     /// is acceptable.
     ///
     /// - Parameters:
-    ///   - dispatchQueue: Dispatch queue to poll on,
+    ///   - queue: Dispatch queue to poll on,
     ///   - future: Future used as the polling function.
     ///   - interval: Time to wait between invoking subsequent futures.
     ///   - retryCount: maxRetryCount Maximum number of times to invoke the supplied future
     ///   - finished: Handler to invoke, resolving whether the result of the given promise is acceptable
     /// - Returns: A future that will receive the eventual value.
     static func poll<T>(
-        on dispatchQueue: DispatchQueue = .futures,
+        on queue: DispatchQueue = .futures,
         future: @escaping @autoclosure () -> Future<T>,
         interval: TimeInterval,
         maxRetryCount: Int,
@@ -534,7 +557,7 @@ public extension Future {
                     if finished(value) {
                         promise.fulfill(value)
                     } else if numberOfRetries < maxRetryCount {
-                        dispatchQueue.asyncAfter(deadline: .now() + (numberOfRetries < 1 ? 0 : interval)) {
+                        queue.asyncAfter(deadline: .now() + (numberOfRetries < 1 ? 0 : interval)) {
                             poll()
                         }
                     } else {
@@ -548,6 +571,28 @@ public extension Future {
         }
 
         poll()
+
+        return promise.future
+    }
+
+    /// Returns a new Future<Void>, effectively discarding the result of the caller.
+    ///
+    /// This method is useful when the value of a future is of no consequence.
+    ///
+    /// - Parameter queue: Dispatch queue to discard on.
+    /// - Returns: A future that will receive the eventual value.
+    @discardableResult
+    func discard(on queue: DispatchQueue = .futures) -> Future<Void> {
+
+        let promise = Promise<Void>()
+
+        whenFulfilled(on: queue) { _ in
+            promise.fulfill()
+        }
+
+        whenRejected { error in
+            promise.reject(error)
+        }
 
         return promise.future
     }

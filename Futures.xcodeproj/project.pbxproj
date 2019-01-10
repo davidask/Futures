@@ -129,12 +129,12 @@
 		B757AE7120B8A5BA00850F92 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				B757AE7220B8A5BA00850F92 /* Future */,
+				B757AE7220B8A5BA00850F92 /* Futures */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		B757AE7220B8A5BA00850F92 /* Future */ = {
+		B757AE7220B8A5BA00850F92 /* Futures */ = {
 			isa = PBXGroup;
 			children = (
 				B757AE7320B8A5BA00850F92 /* FutureResult.swift */,
@@ -144,7 +144,6 @@
 				B79FF3B620BC6E34001A625C /* AnyFuture.swift */,
 				B768073720C6C02E00402ECB /* FutureProvider.swift */,
 			);
-			name = Future;
 			path = Futures;
 			sourceTree = "<group>";
 		};
@@ -152,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				B757AE8320B8A5C700850F92 /* FutureTests */,
-				B757AE8520B8A5C700850F92 /* Future */,
+				B757AE8520B8A5C700850F92 /* Futures */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
@@ -166,30 +165,28 @@
 			path = FuturesTests;
 			sourceTree = "<group>";
 		};
-		B757AE8520B8A5C700850F92 /* Future */ = {
+		B757AE8520B8A5C700850F92 /* Futures */ = {
 			isa = PBXGroup;
 			children = (
 				B757AE8620B8A5C700850F92 /* Futures.h */,
 				B757AE8720B8A5C700850F92 /* Info.plist */,
 			);
-			name = Future;
 			path = Futures;
 			sourceTree = "<group>";
 		};
 		B757AE8C20B8A60600850F92 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B757AE8E20B8A60600850F92 /* FutureTests */,
+				B757AE8E20B8A60600850F92 /* FuturesTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		B757AE8E20B8A60600850F92 /* FutureTests */ = {
+		B757AE8E20B8A60600850F92 /* FuturesTests */ = {
 			isa = PBXGroup;
 			children = (
 				B757AE8F20B8A60600850F92 /* FuturesTests.swift */,
 			);
-			name = FutureTests;
 			path = FuturesTests;
 			sourceTree = "<group>";
 		};
