@@ -1,54 +1,54 @@
 {
   "warnings": [
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/Future.swift",
       "line": 30,
       "symbol": "AnyFutureObserver",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/Future.swift",
       "line": 31,
       "symbol": "AnyFutureObserver.remove()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
-      "line": 500,
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 523,
       "symbol": "Future.PollError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Future.swift",
-      "line": 501,
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/Future.swift",
+      "line": 524,
       "symbol": "Future.PollError.retryCountExceeded",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureProvider.swift",
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/FutureProvider.swift",
       "line": 5,
       "symbol": "FutureProvider.source",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/FutureResult.swift",
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/FutureResult.swift",
       "line": 100,
       "symbol": "FutureResult.success",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Formbound/Projects/Futures/Sources/Futures/Promise.swift",
+      "file": "/Users/david/Formbound/Projects/Futures/Sources/Futures/Promise.swift",
       "line": 108,
       "symbol": "Promise.fulfill()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/davidask/Formbound/Projects/Futures"
+  "source_directory": "/Users/david/Formbound/Projects/Futures"
 }

@@ -281,7 +281,7 @@ prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselv
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">fulfilledWith</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">fulfilledWith</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -327,7 +327,7 @@ prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselv
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">rejectedWith</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">rejectedWith</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1074,9 +1074,9 @@ for the provided futures.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures6FutureC5defer2on8callbackACyxGSo17OS_dispatch_queueC_ACyytGyctF"></a>
-                    <a name="//apple_ref/swift/Method/defer(on:callback:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures6FutureC5defer2on8callbackACyxGSo17OS_dispatch_queueC_ACyytGyctF">defer(on:callback:)</a>
+                    <a name="/s:7Futures6FutureC6always2on8callbackACyxGSo17OS_dispatch_queueC_ACyytGyctF"></a>
+                    <a name="//apple_ref/swift/Method/always(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC6always2on8callbackACyxGSo17OS_dispatch_queueC_ACyytGyctF">always(on:callback:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1090,7 +1090,7 @@ has been resolved.</p>
 <p>Note that the provided callback is called regardless of whether this future is fulfilled or rejected.
 The returned <code>Future&lt;T&gt;</code> is fulfilled <strong>only</strong> if this and the provided future both are fullfilled.</p>
 
-<p>In essence, the returned future will forward the result of this future, if the provided future
+<p>In short, the returned future will forward the result of this future, if the provided future
 is fulfilled.</p>
 
                       </div>
@@ -1098,7 +1098,7 @@ is fulfilled.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="err">`</span><span class="k">defer</span><span class="err">`</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">always</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1139,6 +1139,74 @@ is fulfilled.</p>
                               <td>
                                 <div>
                                   <p>A callback that returns a <code>Future&lt;Void&gt;</code> to be deferred.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC5defer2on8callbackACyxGSo17OS_dispatch_queueC_yyctF"></a>
+                    <a name="//apple_ref/swift/Method/defer(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC5defer2on8callbackACyxGSo17OS_dispatch_queueC_yyctF">defer(on:callback:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new <code>Future&lt;T&gt;</code> that will resolve with the result of this <code>Future</code> <strong>after</strong> the provided callback
+runs.</p>
+
+<p>Note that the provided callback is called regardless of whether this future is fulfilled or rejected.</p>
+
+<p>This method is useful for times you want to execute code at the end of a chain of operations, regarless
+of whether successful or not.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="p">`</span><span class="nv">defer</span><span class="p">`(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to observe on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Callback to run.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1204,7 +1272,7 @@ is acceptable.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="n">poll</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">on</span> <span class="nv">dispatchQueue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
     <span class="nv">future</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="nv">interval</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span>
     <span class="nv">maxRetryCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
@@ -1219,7 +1287,7 @@ is acceptable.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>dispatchQueue</em>
+                                <em>queue</em>
                                 </code>
                               </td>
                               <td>
@@ -1273,6 +1341,59 @@ is acceptable.</p>
                               <td>
                                 <div>
                                   <p>Handler to invoke, resolving whether the result of the given promise is acceptable</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC7discard2onACyytGSo17OS_dispatch_queueC_tF"></a>
+                    <a name="//apple_ref/swift/Method/discard(on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC7discard2onACyytGSo17OS_dispatch_queueC_tF">discard(on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a new Future<Void>, effectively discarding the result of the caller.</p>
+
+<p>This method is useful when the value of a future is of no consequence.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">discard</span><span class="p">(</span><span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Dispatch queue to discard on.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1501,8 +1622,8 @@ consider using <code>then()</code>, <code>map()</code>, or some of the other met
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2018-11-01)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-01-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

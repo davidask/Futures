@@ -50,7 +50,9 @@ If you have more asynchronous work to do based on the result of the first future
 * `thenIfRejected()`, to recover from a potential error resulting from the current future
 * `map()`, to transform the fulfilled value of the current future
 * `mapIfRejected()`, to transform an error resulting from the rejection of the current future, as the means of recovering from that error
-* `defer()`, to execute a `Void` returning future regardless of whether the current future is rejected or resolved
+* `always()`, to execute a `Void` returning future regardless of whether the current future 
+is rejected or resolved
+* `defer()`, to execute a `Void` returning closure regardless of whether the current future is rejected or resolved
 * `and()`, to combine the result of two futures into a single tuple
 * `Future<T>.reduce()`, to combine the result of multiple futures into a single future
 
