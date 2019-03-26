@@ -509,12 +509,16 @@ public extension Future {
     ///   - queue: Dispatch queue to observe on.
     ///   - callback: Callback to run.
     /// - Returns: A future that will receive the eventual value.
-    func `defer`(on queue: DispatchQueue = .futures, callback: @escaping () -> Void) -> Future<T> {
+    func `defer`(on queue: DispatchQueue = .futures, callback: @escaping () throws -> Void) -> Future<T> {
         let promise = Promise<T>()
 
         whenResolved(on: queue) { result in
-            callback()
-            promise.resolve(result)
+            do {
+                try callback()
+                promise.resolve(result)
+            } catch {
+                promise.reject(error)
+            }
         }
 
         return promise.future
