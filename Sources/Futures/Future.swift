@@ -1,11 +1,11 @@
 import Dispatch
 import Foundation
 
-private enum FutureState<Result> {
+private enum FutureState<Value> {
     case pending
-    case finished(FutureResult<Result>)
+    case finished(Result<Value, Error>)
 
-    fileprivate func canTransition(to newState: FutureState<Result>) -> Bool {
+    fileprivate func canTransition(to newState: FutureState<Value>) -> Bool {
 
         switch (self, newState) {
         case (.pending, .finished):
@@ -40,13 +40,13 @@ public protocol AnyFutureObserver: AnyObject {
 /// - `Future<T>.whenRejected()`
 public final class FutureObserver<T>: AnyFutureObserver {
 
-    private let callback: (FutureResult<T>) -> Void
+    private let callback: (Result<T, Error>) -> Void
 
     private let queue: DispatchQueue
 
     private weak var future: Future<T>?
 
-    fileprivate init(_ callback: @escaping (FutureResult<T>) -> Void, future: Future<T>, queue: DispatchQueue) {
+    fileprivate init(_ callback: @escaping (Result<T, Error>) -> Void, future: Future<T>, queue: DispatchQueue) {
         self.callback = callback
         self.future = future
         self.queue = queue
@@ -58,7 +58,7 @@ public final class FutureObserver<T>: AnyFutureObserver {
         future?.removeObserver(self)
     }
 
-    fileprivate func invoke(_ value: FutureResult<T>) {
+    fileprivate func invoke(_ value: Result<T, Error>) {
         queue.async {
             self.callback(value)
         }
@@ -110,8 +110,8 @@ extension FutureObserver: Equatable {
 /// Each `Future<T>` can have multiple observers, which are used to both simply return a result, or to queue up other
 /// futures.
 ///
-/// To perform more asynchronous work, once a `Future<T>` is fulfilled, use `then()`. To transform the fulfilled value
-/// of a future into another value, use `map()`.
+/// To perform more asynchronous work, once a `Future<T>` is fulfilled, use `flatMap()`. To transform the fulfilled value
+/// of a future into another value, use `flatMapThrowing()`.
 ///
 /// Options for combining futures into a single future is provided using `and()`, `fold()`, and `Future<T>.reduce()`
 ///
@@ -137,8 +137,8 @@ public final class Future<T>: AnyFuture {
 
     /// Creates a resolved future
     ///
-    /// - Parameter resolved: `FutureResult<T>`
-    public init(resolved: FutureResult<T>) {
+    /// - Parameter resolved: `Result<T, Error>`
+    public init(resolved: Result<T, Error>) {
         state = .finished(resolved)
     }
 
@@ -146,14 +146,14 @@ public final class Future<T>: AnyFuture {
     ///
     /// - Parameter value: Value of the fulfilled future
     public convenience init(fulfilledWith value: T) {
-        self.init(resolved: .fulfilled(value))
+        self.init(resolved: .success(value))
     }
 
     /// Creates a resolved, fulfilled future
     ///
     /// - Parameter error: Error, rejecting the future
     public convenience init(rejectedWith error: Error) {
-        self.init(resolved: .rejected(error))
+        self.init(resolved: .failure(error))
     }
 
     fileprivate func addObserver(_ observer: FutureObserver<T>) {
@@ -175,7 +175,7 @@ public final class Future<T>: AnyFuture {
         }
     }
 
-    fileprivate func setValue(_ value: FutureResult<T>) {
+    fileprivate func setValue(_ value: Result<T, Error>) {
         stateQueue.sync(flags: .barrier) {
 
             guard case .pending = state else {
@@ -215,7 +215,7 @@ public final class Future<T>: AnyFuture {
     /// Indicates whether the future is fulfilled
     public var isFulfilled: Bool {
         return stateQueue.sync {
-            guard case .finished(let result) = state, case .fulfilled = result else {
+            guard case .finished(let result) = state, case .success = result else {
                 return false
             }
 
@@ -226,7 +226,7 @@ public final class Future<T>: AnyFuture {
     /// Indicates whether the future is rejected
     public var isRejected: Bool {
         return stateQueue.sync {
-            guard case .finished(let result) = state, case .rejected = result else {
+            guard case .finished(let result) = state, case .failure = result else {
                 return false
             }
 
@@ -236,7 +236,7 @@ public final class Future<T>: AnyFuture {
 
     /// Indicates the result of the future.
     /// Returns `nil` if the future is not resolved yet.
-    public var result: FutureResult<T>? {
+    public var result: Result<T, Error>? {
         guard case .finished(let result) = state else {
             return nil
         }
@@ -275,7 +275,7 @@ public extension Future {
 
         whenResolved(on: queue) { result in
             do {
-                let future = try callback(result.unwrap())
+                let future = try callback(result.get())
                 future.whenResolved(on: queue) { result in
                     promise.resolve(result)
                 }
@@ -317,9 +317,9 @@ public extension Future {
 
         whenResolved(on: queue) { result in
             switch result {
-            case .fulfilled(let value):
+            case .success(let value):
                 promise.fulfill(value)
-            case .rejected(let error):
+            case .failure(let error):
                 let future = callback(error)
                 future.whenResolved(on: queue) { result in
                     promise.resolve(result)
@@ -382,9 +382,9 @@ public extension Future {
 
         whenResolved(on: queue) { result in
             switch result {
-            case .fulfilled(let value):
+            case .success(let value):
                 promise.fulfill(value)
-            case .rejected(let promiseError):
+            case .failure(let promiseError):
                 promise.fulfill(callback(promiseError))
             }
         }
@@ -415,7 +415,7 @@ public extension Future {
             let promise = Promise<(T, U)>()
             other.whenResolved(on: queue) { result in
                 do {
-                    try promise.fulfill((value, result.unwrap()))
+                    try promise.fulfill((value, result.get()))
                 } catch {
                     promise.reject(error)
                 }
@@ -500,14 +500,14 @@ public extension Future {
         whenResolved(on: queue) { result1 in
             callback().whenResolved(on: queue) { result2 in
                 switch result1 {
-                case .fulfilled(let value):
+                case .success(let value):
                     switch result2 {
-                    case .fulfilled:
+                    case .success:
                         promise.fulfill(value)
-                    case .rejected(let error):
+                    case .failure(let error):
                         promise.reject(error)
                     }
-                case .rejected(let error):
+                case .failure(let error):
                     promise.reject(error)
                 }
 
@@ -573,7 +573,7 @@ public extension Future {
     ///
     /// An observer callback cannot return a value, meaning that this function cannot be chained from.
     /// If you are attempting to create a sequence of operations based on the result of another future,
-    /// consider using `then()`, `map()`, or some of the other methods available.
+    /// consider using `flatMap()`, `flatMapThrowing()`, or some of the other methods available.
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.
@@ -582,7 +582,7 @@ public extension Future {
     @discardableResult
     func whenFulfilled(on queue: DispatchQueue = .futures, callback: @escaping (T) -> Void) -> FutureObserver<T> {
         return whenResolved(on: queue) { result in
-            guard case .fulfilled(let value) = result else {
+            guard case .success(let value) = result else {
                 return
             }
 
@@ -594,7 +594,7 @@ public extension Future {
     ///
     /// An observer callback cannot return a value, meaning that this function cannot be chained from.
     /// If you are attempting to create a sequence of operations based on the result of another future,
-    /// consider using `then()`, `map()`, or some of the other methods available.
+    /// consider using `flatMap()`, `flatMapThrowing()`, or some of the other methods available.
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.
@@ -603,7 +603,7 @@ public extension Future {
     @discardableResult
     func whenRejected(on queue: DispatchQueue = .futures, callback: @escaping (Error) -> Void) -> FutureObserver<T> {
         return whenResolved(on: queue) { result in
-            guard case .rejected(let error) = result else {
+            guard case .failure(let error) = result else {
                 return
             }
 
@@ -615,16 +615,16 @@ public extension Future {
     ///
     /// An observer callback cannot return a value, meaning that this function cannot be chained from.
     /// If you are attempting to create a sequence of operations based on the result of another future,
-    /// consider using `then()`, `map()`, or some of the other methods available.
+    /// consider using `flatMap()`, `flatMapThrowing()`, or some of the other methods available.
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.
-    ///   - callback: Callback invoked with the resolved `FutureResult<T>` of this future
+    ///   - callback: Callback invoked with the resolved `Result<T, Error>` of this future
     /// - Returns: A `FutureObserver<T>`, which can be used to remove the observer from this future.
     @discardableResult
     func whenResolved(
         on queue: DispatchQueue = .futures,
-        callback: @escaping (FutureResult<T>) -> Void) -> FutureObserver<T> {
+        callback: @escaping (Result<T, Error>) -> Void) -> FutureObserver<T> {
         let observer = FutureObserver<T>(callback, future: self, queue: queue)
 
         self.addObserver(observer)
@@ -640,20 +640,20 @@ public extension Promise {
     ///
     /// - Parameter value: Value to fulfill with
     func fulfill(_ value: T) {
-        future.setValue(.fulfilled(value))
+        future.setValue(.success(value))
     }
 
     /// Rejects the promise, setting an error to this promise's `Future`
     ///
     /// - Parameter error: Error to reject with
     func reject(_ error: Error) {
-        future.setValue(.rejected(error))
+        future.setValue(.failure(error))
     }
 
     /// Resolves the promise, setting either a value or an error to this promise's `Future`
     ///
-    /// - Parameter result: `FutureResult<T>` to resolve with
-    func resolve(_ result: FutureResult<T>) {
+    /// - Parameter result: `Result<T, Error>` to resolve with
+    func resolve(_ result: Result<T, Error>) {
         future.setValue(result)
     }
 }

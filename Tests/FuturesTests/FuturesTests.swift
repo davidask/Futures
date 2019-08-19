@@ -29,7 +29,10 @@ class FuturesTests: XCTestCase {
             "Hello World!"
         }.whenResolved { result in
             expectation.fulfill()
-            XCTAssert(result.isError == false)
+            guard case .success = result else {
+                XCTFail("Should not fail")
+                return
+            }
         }
 
         waitForExpectations(timeout: 10, handler: nil)
@@ -40,10 +43,13 @@ class FuturesTests: XCTestCase {
         let expectation = self.expectation(description: #function)
 
         promise(String.self) { completion in
-            completion(.fulfilled("Hello World!"))
+            completion(.success("Hello World!"))
         }.whenResolved { result in
             expectation.fulfill()
-            XCTAssert(result.isError == false)
+            guard case .success = result else {
+                XCTFail("Should not fail")
+                return
+            }
         }
 
         waitForExpectations(timeout: 10, handler: nil)
@@ -119,7 +125,7 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testBasicThen() {
+    func testBasicflatMap() {
 
         let expectation = self.expectation(description: #function)
 
@@ -137,9 +143,9 @@ class FuturesTests: XCTestCase {
             add(value: 5, to: value)
         }.whenResolved { result in
             switch result {
-            case .fulfilled(let value):
+            case .success(let value):
                 XCTAssertEqual(value, 25)
-            case .rejected:
+            case .failure:
                 XCTFail("Rejected")
             }
 
@@ -285,8 +291,11 @@ class FuturesTests: XCTestCase {
             Future<Int>.reduce(futures, initialResult: 0) { initial, next in
                 return initial + next
             }.whenResolved { result in
-                XCTAssertNil(result.error)
                 expectation.fulfill()
+                guard case .success = result else {
+                    XCTFail("Should not fail")
+                    return
+                }
             }
 
             waitForExpectations(timeout: 5) { _ in

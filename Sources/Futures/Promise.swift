@@ -29,20 +29,20 @@ public func promise<T>(on queue: DispatchQueue = .futures, _ body: @escaping () 
 /// - Parameters:
 ///   - type: Type of the future value.
 ///   - queue: Dispatch queue to execute the callback on.
-///   - body: A function with a completion function as its parameter, taking a `FutureResult<T>`, which will be
+///   - body: A function with a completion function as its parameter, taking a `Result<T, Error>`, which will be
 ///     used to resolve the future returned by this method.
-///   - value: `FutureResult<T>` to resolve the future with.
+///   - value: `Result<T, Error>` to resolve the future with.
 /// - Returns: A future that will receive the eventual value.
 public func promise<T>(
     _ type: T.Type,
     on queue: DispatchQueue = .futures,
-    _ body: @escaping (@escaping (_ value: FutureResult<T>) -> Void) throws -> Void) -> Future<T> {
+    _ body: @escaping (@escaping (_ value: Result<T, Error>) -> Void) throws -> Void) -> Future<T> {
 
     let promise = Promise<T>()
 
     queue.async {
         do {
-            let completion = { (value: FutureResult<T>) in
+            let completion = { (value: Result<T, Error>) in
                 promise.resolve(value)
             }
 
