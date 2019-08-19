@@ -267,9 +267,9 @@ public extension Future {
     ///           Throwing an error in this function will result in the rejection of the returned `Future<T>`.
     ///   - value: The fulfilled value of this `Future<T>`.
     /// - Returns: A future that will receive the eventual value.
-    func then<U>(
+    func flatMap<U>(
         on queue: DispatchQueue = .futures,
-        callback: @escaping (_ value: T) throws -> Future<U>) -> Future<U> {
+        callback: @escaping (_ value: T) -> Future<U>) -> Future<U> {
 
         let promise = Promise<U>()
 
@@ -287,6 +287,13 @@ public extension Future {
         return promise.future
     }
 
+    @available(*, deprecated, renamed: "flatMap")
+    func then<U>(
+        on queue: DispatchQueue = .futures,
+        callback: @escaping (_ value: T) -> Future<U>) -> Future<U> {
+        return flatMap(on: queue, callback: callback)
+    }
+
     /// When the current `Future` is rejected, run the provided callback reurning a new `Future<T>`.
     ///
     /// This allows you to proceed with some other operation if the current `Future` was rejected, due to an error
@@ -302,7 +309,10 @@ public extension Future {
     ///           Throwing an error in this function will result in the rejection of the returned `Future<T>`.
     ///           and return a new `Future<T>`.
     /// - Returns: A future that will receive the eventual value.
-    func thenIfRejected(on queue: DispatchQueue = .futures, callback: @escaping(Error) -> Future<T>) -> Future<T> {
+    func flatMapError(
+        on queue: DispatchQueue = .futures,
+        callback: @escaping(Error) -> Future<T>) -> Future<T> {
+
         let promise = Promise<T>()
 
         whenResolved(on: queue) { result in
@@ -320,12 +330,14 @@ public extension Future {
         return promise.future
     }
 
+    @available(*, deprecated, renamed: "flatMapError")
+    func thenIfRejected(on queue: DispatchQueue = .futures, callback: @escaping(Error) -> Future<T>) -> Future<T> {
+        return flatMapError(on: queue, callback: callback)
+    }
+
     /// When the current `Future` is fulfilled, run the provided callback returning a fulfilled value of the
     /// `Future<U>` returned by this method.
     ///
-    /// This method is intended to provide a shorthand way of transforming fulfilled results of other futures.
-    /// It is not intended to be used as `map` in the Swift standard library, however, that function may well
-    /// be used inside the function provided to this method.
     ///
     /// If the calback cannot provide a a new value, an error inside the callback should be thrown.
     /// - Parameters:
@@ -334,15 +346,22 @@ public extension Future {
     ///   - callback: A function that will receive the value of this `Future` and return a new `Future<T>`.
     ///           Throwing an error in this function will result in the rejection of the returned `Future<T>`.
     /// - Returns: A future that will receive the eventual value.
-    func map<U>(
+    func flatMapThrowing<U>(
         on queue: DispatchQueue = .futures,
         callback: @escaping (T) throws -> U) -> Future<U> {
 
-        return then(on: queue) { value in
+        return flatMap(on: queue) { value in
             return promise(on: queue) {
                 return try callback(value)
             }
         }
+    }
+
+    @available(*, deprecated, renamed: "flatMapThrowing")
+    func map<U>(
+        on queue: DispatchQueue = .futures,
+        callback: @escaping (T) throws -> U) -> Future<U> {
+        return flatMapThrowing(on: queue, callback: callback)
     }
 
     /// When the current `Future` is rejected, run the provided callback returning a fulfilled value of the
@@ -357,7 +376,7 @@ public extension Future {
     ///            Defaults to `DispatchQueue.futures`.
     ///   - callback: A function that will receive the value of this `Future<T>`, and return a new value of type `U`.
     /// - Returns: A future that will receive the eventual value.
-    func mapIfRejected(on queue: DispatchQueue = .futures, callback: @escaping (Error) throws -> T) -> Future<T> {
+    func recover(on queue: DispatchQueue = .futures, callback: @escaping (Error) -> T) -> Future<T> {
 
         let promise = Promise<T>()
 
@@ -366,15 +385,16 @@ public extension Future {
             case .fulfilled(let value):
                 promise.fulfill(value)
             case .rejected(let promiseError):
-                do {
-                    try promise.fulfill(callback(promiseError))
-                } catch {
-                    promise.reject(error)
-                }
+                promise.fulfill(callback(promiseError))
             }
         }
 
         return promise.future
+    }
+
+    @available(*, deprecated, renamed: "recover")
+    func mapIfRejected(on queue: DispatchQueue = .futures, callback: @escaping (Error) -> T) -> Future<T> {
+        return recover(on: queue, callback: callback)
     }
 }
 
@@ -391,7 +411,7 @@ public extension Future {
     /// - Returns: A future that will receive the eventual value.
     func and<U>(_ other: Future<U>, on queue: DispatchQueue = .futures) -> Future<(T, U)> {
 
-        return then(on: queue) { value in
+        return flatMap(on: queue) { value in
             let promise = Promise<(T, U)>()
             other.whenResolved(on: queue) { result in
                 do {
@@ -426,7 +446,7 @@ public extension Future {
         with combiningFunction: @escaping (T, U) -> Future<T>) -> Future<T> where S.Element == Future<U> {
 
         return futures.reduce(self) { future1, future2 in
-            return future1.and(future2, on: queue).then(on: queue) { value1, value2 in
+            return future1.and(future2, on: queue).flatMap(on: queue) { value1, value2 in
                 return combiningFunction(value1, value2)
             }
         }
@@ -509,7 +529,7 @@ public extension Future {
     ///   - queue: Dispatch queue to observe on.
     ///   - callback: Callback to run.
     /// - Returns: A future that will receive the eventual value.
-    func `defer`(on queue: DispatchQueue = .futures, callback: @escaping () throws -> Void) -> Future<T> {
+    func alwaysThrowing(on queue: DispatchQueue = .futures, callback: @escaping () throws -> Void) -> Future<T> {
         let promise = Promise<T>()
 
         whenResolved(on: queue) { result in
@@ -520,61 +540,6 @@ public extension Future {
                 promise.reject(error)
             }
         }
-
-        return promise.future
-    }
-
-    enum PollError: Error {
-        case retryCountExceeded
-    }
-
-    /// Returns a new `Future<T>` resolved first after the provided closure returns `true`.
-    ///
-    /// This method is useful for polling a resource which should return first when the received value
-    /// is acceptable.
-    ///
-    /// - Parameters:
-    ///   - queue: Dispatch queue to poll on,
-    ///   - future: Future used as the polling function.
-    ///   - interval: Time to wait between invoking subsequent futures.
-    ///   - retryCount: maxRetryCount Maximum number of times to invoke the supplied future
-    ///   - finished: Handler to invoke, resolving whether the result of the given promise is acceptable
-    /// - Returns: A future that will receive the eventual value.
-    static func poll<T>(
-        on queue: DispatchQueue = .futures,
-        future: @escaping @autoclosure () -> Future<T>,
-        interval: TimeInterval,
-        maxRetryCount: Int,
-        finished: @escaping (T) -> Bool) -> Future<T> {
-
-        let promise = Promise<T>()
-        var numberOfRetries = 0
-
-        func poll() {
-            let instance = future()
-            instance.whenResolved { result in
-                defer {
-                    numberOfRetries += 1
-                }
-                do {
-                    let value = try result.unwrap()
-                    if finished(value) {
-                        promise.fulfill(value)
-                    } else if numberOfRetries < maxRetryCount {
-                        queue.asyncAfter(deadline: .now() + (numberOfRetries < 1 ? 0 : interval)) {
-                            poll()
-                        }
-                    } else {
-                        throw PollError.retryCountExceeded
-                    }
-
-                } catch {
-                    promise.reject(error)
-                }
-            }
-        }
-
-        poll()
 
         return promise.future
     }

@@ -131,9 +131,9 @@ class FuturesTests: XCTestCase {
 
         promise {
             10
-        }.then { value in
+        }.flatMap { value in
             add(value: 10, to: value)
-        }.then { value in
+        }.flatMap { value in
             add(value: 5, to: value)
         }.whenResolved { result in
             switch result {
@@ -155,9 +155,9 @@ class FuturesTests: XCTestCase {
 
         promise {
             999
-        }.map { errorCode -> String in
+        }.flatMapThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
-        }.thenIfRejected { _ in
+        }.flatMapError { _ in
             return promise {
                 return "Recovered"
             }
@@ -175,9 +175,9 @@ class FuturesTests: XCTestCase {
 
         promise {
             999
-        }.map { errorCode -> String in
+        }.flatMapThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
-        }.mapIfRejected { _ in
+        }.recover { _ in
             return "Recovered"
         }.whenFulfilled { string in
             XCTAssertEqual(string, "Recovered")
@@ -190,15 +190,15 @@ class FuturesTests: XCTestCase {
     func testDeferred() {
         let expectation = self.expectation(description: #function)
 
-        func throwError() throws -> Future<Int> {
+        func throwError() throws -> Int {
             throw NSError(domain: "", code: 0, userInfo: nil)
         }
 
         _ = promise {
             true
-        }.then { _ in
+        }.flatMapThrowing { _ in
             try throwError()
-        }.defer {
+        }.always {
             promise {
                 expectation.fulfill()
             }
@@ -261,7 +261,7 @@ class FuturesTests: XCTestCase {
 
         promise {
             ["Hello", "World!"]
-        }.map { strings in
+        }.flatMapThrowing { strings in
             strings.joined(separator: " ")
         }.whenFulfilled { string in
             XCTAssertEqual(string, "Hello World!")
