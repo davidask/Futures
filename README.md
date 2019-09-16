@@ -5,8 +5,6 @@ Futures is a cross-platform framework for simplifying asynchronous programming, 
 
 ### Supported Platforms
 
-Futures supports all platforms where Swift 3 and later is supported.
-
 * Ubuntu 14.04
 * macOS 10.9
 * tvOS 9.0
@@ -37,7 +35,7 @@ A future is regarded as:
 
 ## Usage
 
-When a function returns a `Future<T>`, you can either decide to observe it directly, or continue with more asynchronous tasks. For observing, you use:
+When a function returns a `Future<Value>`, you can either decide to observe it directly, or continue with more asynchronous tasks. For observing, you use:
 
 * `whenResolved`, if you're interested in both a value and a rejection error 
 * `whenFulfilled`, if you only care about the values
@@ -48,11 +46,10 @@ If you have more asynchronous work to do based on the result of the first future
 
 * `then()`, to execute another future based on the result of the current one
 * `thenIfRejected()`, to recover from a potential error resulting from the current future
+* `thenThrowing()`, to transform the fulfilled value of the current future or return a rejected future
 * `map()`, to transform the fulfilled value of the current future
-* `mapIfRejected()`, to transform an error resulting from the rejection of the current future, as the means of recovering from that error
-* `always()`, to execute a `Void` returning future regardless of whether the current future 
-is rejected or resolved
-* `defer()`, to execute a `Void` returning closure regardless of whether the current future is rejected or resolved
+* `recover()`,to transform a rejected future into a fulfilled future
+* `always()`, to execute a `Void` returning closure regardless of whether the current future is rejected or resolved
 * `and()`, to combine the result of two futures into a single tuple
 * `Future<T>.reduce()`, to combine the result of multiple futures into a single future
 
@@ -64,9 +61,9 @@ As a simple example, this is how some code may look:
 ```swift
 let future = loadNetworkResource(
     from: URL("http://someHost/resource")!
-).map { data in
+).thenThrowing { data in
     try jsonDecoder.decode(SomeType.self, from: data)
-}.defer {
+}.always {
     someFunctionToExecuteRegardless()
 }
 
@@ -128,7 +125,7 @@ If you want to depend on Futures in your project, it's as simple as adding a `d
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/formbound/Futures.git", from: "1.4.0")
+    .package(url: "https://github.com/formbound/Futures.git", from: "2.0.0")
 ]
 ```
 

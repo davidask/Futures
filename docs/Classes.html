@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -57,18 +57,7 @@
                 <a class="nav-group-task-link" href="Classes/Future.html">Future</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/Future/PollError.html">– PollError</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/FutureObserver.html">FutureObserver</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/FutureResult.html">FutureResult</a>
               </li>
             </ul>
           </li>
@@ -84,7 +73,7 @@
             <a class="nav-group-name-link" href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyyAA0D6ResultOyxGcKctlF">promise(_:on:_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyys6ResultOyxs5Error_pGcKctlF">promise(_:on:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:7Futures7promise2on_AA6FutureCyxGSo17OS_dispatch_queueC_xyKctlF">promise(on:_:)</a>
@@ -101,7 +90,7 @@
                 <a class="nav-group-task-link" href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/FutureSupport.html">FutureSupport</a>
+                <a class="nav-group-task-link" href="Protocols/PromisesSubject.html">PromisesSubject</a>
               </li>
             </ul>
           </li>
@@ -109,10 +98,10 @@
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/FutureProvider.html">FutureProvider</a>
+                <a class="nav-group-task-link" href="Structs/Promise.html">Promise</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/Promise.html">Promise</a>
+                <a class="nav-group-task-link" href="Structs/Promises.html">Promises</a>
               </li>
             </ul>
           </li>
@@ -151,9 +140,9 @@ remove observers from a future, if the result of a future is no longer interesti
 <p>The following methods return a <code>FutureObserver</code>:</p>
 
 <ul>
-<li><code>Future&lt;T&gt;.whenResolved()</code></li>
-<li><code>Future&lt;T&gt;.whenFulfilled()</code></li>
-<li><code>Future&lt;T&gt;.whenRejected()</code></li>
+<li><code>Future&lt;Value&gt;.whenResolved()</code></li>
+<li><code>Future&lt;Value&gt;.whenFulfilled()</code></li>
+<li><code>Future&lt;Value&gt;.whenRejected()</code></li>
 </ul>
 
                         <a href="Classes/FutureObserver.html" class="slightly-smaller">See more</a>
@@ -162,7 +151,7 @@ remove observers from a future, if the result of a future is no longer interesti
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">FutureObserver</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">FutureObserver</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a></span></code></pre>
 
                         </div>
                       </div>
@@ -184,10 +173,10 @@ remove observers from a future, if the result of a future is no longer interesti
                       <div class="abstract">
                         <p>Container for a result that will be provided later.</p>
 
-<p>Functions that promise to do work asynchronously return a <code>Future&lt;T&gt;</code>. The receipient of a future can
+<p>Functions that promise to do work asynchronously return a <code>Future&lt;Value&gt;</code>. The receipient of a future can
 observe it to be notified, or to queue more asynchronous work, when the operation completes.</p>
 
-<p>A <code>Future&lt;T&gt;</code> is regarded as:</p>
+<p>A <code>Future&lt;Value&gt;</code> is regarded as:</p>
 
 <ul>
 <li><code>resolved</code>, when a value is set</li>
@@ -195,7 +184,7 @@ observe it to be notified, or to queue more asynchronous work, when the operatio
 <li><code>rejected</code>, when a value is not set, and an error occured</li>
 </ul>
 
-<p>The provider of a <code>Future&lt;T&gt;</code> creates a placeholder object before the actual result is available,
+<p>The provider of a <code>Future&lt;Value&gt;</code> creates a placeholder object before the actual result is available,
 immeadiately returning the object, providing a dynamic way of structuring complex dependencies
 for asynchronous work. This is common behavior in Future/Promise implementation across many languages.
 Referencing these resources may be useful if you&rsquo;re unfamilliar with the concept of Promises/Futures:</p>
@@ -206,7 +195,7 @@ Referencing these resources may be useful if you&rsquo;re unfamilliar with the c
 <li><a href="https://docs.google.com/document/d/10WOZgLQaYNpOrag-eTbUm-JUCCfdyfravZ4qSOQPg1M/edit">Python</a></li>
 </ul>
 
-<p>The provider of a <code>Future&lt;T&gt;</code> may be implemented as follows:</p>
+<p>The provider of a <code>Future&lt;Value&gt;</code> may be implemented as follows:</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">performAsynchronousWork</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span><span class="p">()</span>
     <span class="kt">DispatchQueue</span><span class="o">.</span><span class="nf">global</span><span class="p">()</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
@@ -219,20 +208,21 @@ Referencing these resources may be useful if you&rsquo;re unfamilliar with the c
 <span class="p">}</span>
 </code></pre>
 
-<p>When receiving a <code>Future&lt;T&gt;</code>, you have a number of options. You can immediately observe the result of the future
+<p>When receiving a <code>Future&lt;Value&gt;</code>, you have a number of options. You can immediately observe the result of the future
 using <code>whenResolved()</code>, <code>whenFulfilled()</code>, or <code>whenRjected()</code>, or choose to do more asyncrhonous work before, or
 parallel to observing.
-Each <code>Future&lt;T&gt;</code> can have multiple observers, which are used to both simply return a result, or to queue up other
-futures.</p>
+Each <code>Future&lt;Value&gt;</code> can have multiple observers, which are used to both simply return
+a result, or to queue up other futures.</p>
 
-<p>To perform more asynchronous work, once a <code>Future&lt;T&gt;</code> is fulfilled, use <code>then()</code>. To transform the fulfilled value
-of a future into another value, use <code>map()</code>.</p>
+<p>To perform more asynchronous work, once a <code>Future&lt;Value&gt;</code> is fulfilled,
+use <code>then()</code>. To transform the fulfilled value of a future into another value, use <code>thenThrowing()</code>.</p>
 
-<p>Options for combining futures into a single future is provided using <code>and()</code>, <code>fold()</code>, and <code>Future&lt;T&gt;.reduce()</code></p>
+<p>Options for combining futures into a single future is provided using <code>and()</code>, <code>fold()</code>, and <code>Future&lt;Value&gt;.reduce()</code></p>
 
-<p>A <code>Future&lt;T&gt;</code> differs from a <code><a href="Structs/Promise.html">Promise&lt;T&gt;</a></code> in that a future is the container of a result; the promise being the
-function that sets that result. This design decision was made, in this library as well as in many others, to
-prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselves.</p>
+<p>A <code>Future&lt;Value&gt;</code> differs from a <code><a href="Structs/Promise.html">Promise&lt;Value&gt;</a></code> in that a future is the
+container of a result; the promise being the function that sets that result.
+This design decision was made, in this library as well as in many others, to
+prevent receivers of <code>Future&lt;Value&gt;</code> to resolve the future themselves.</p>
 
                         <a href="Classes/Future.html" class="slightly-smaller">See more</a>
                       </div>
@@ -240,7 +230,7 @@ prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselv
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="Protocols/AnyFuture.html">AnyFuture</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="Protocols/AnyFuture.html">AnyFuture</a></span></code></pre>
 
                         </div>
                       </div>
@@ -255,7 +245,7 @@ prevent receivers of <code>Future&lt;T&gt;</code> to resolve the future themselv
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-03-26)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-09-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

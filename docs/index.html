@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -56,18 +56,7 @@
                 <a class="nav-group-task-link" href="Classes/Future.html">Future</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/Future/PollError.html">– PollError</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/FutureObserver.html">FutureObserver</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/FutureResult.html">FutureResult</a>
               </li>
             </ul>
           </li>
@@ -83,7 +72,7 @@
             <a class="nav-group-name-link" href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyyAA0D6ResultOyxGcKctlF">promise(_:on:_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyys6ResultOyxs5Error_pGcKctlF">promise(_:on:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:7Futures7promise2on_AA6FutureCyxGSo17OS_dispatch_queueC_xyKctlF">promise(on:_:)</a>
@@ -100,7 +89,7 @@
                 <a class="nav-group-task-link" href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/FutureSupport.html">FutureSupport</a>
+                <a class="nav-group-task-link" href="Protocols/PromisesSubject.html">PromisesSubject</a>
               </li>
             </ul>
           </li>
@@ -108,10 +97,10 @@
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/FutureProvider.html">FutureProvider</a>
+                <a class="nav-group-task-link" href="Structs/Promise.html">Promise</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/Promise.html">Promise</a>
+                <a class="nav-group-task-link" href="Structs/Promises.html">Promises</a>
               </li>
             </ul>
           </li>
@@ -128,8 +117,6 @@
 
 <p>Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It&rsquo;s lightweight, fast, and easy to understand.</p>
 <h3 id='supported-platforms' class='heading'>Supported Platforms</h3>
-
-<p>Futures supports all platforms where Swift 3 and later is supported.</p>
 
 <ul>
 <li>Ubuntu 14.04</li>
@@ -160,7 +147,7 @@
 </ul>
 <h2 id='usage' class='heading'>Usage</h2>
 
-<p>When a function returns a <code><a href="Classes/Future.html">Future&lt;T&gt;</a></code>, you can either decide to observe it directly, or continue with more asynchronous tasks. For observing, you use:</p>
+<p>When a function returns a <code><a href="Classes/Future.html">Future&lt;Value&gt;</a></code>, you can either decide to observe it directly, or continue with more asynchronous tasks. For observing, you use:</p>
 
 <ul>
 <li><code>whenResolved</code>, if you&rsquo;re interested in both a value and a rejection error</li>
@@ -173,11 +160,10 @@
 <ul>
 <li><code>then()</code>, to execute another future based on the result of the current one</li>
 <li><code>thenIfRejected()</code>, to recover from a potential error resulting from the current future</li>
+<li><code>thenThrowing()</code>, to transform the fulfilled value of the current future or return a rejected future</li>
 <li><code>map()</code>, to transform the fulfilled value of the current future</li>
-<li><code>mapIfRejected()</code>, to transform an error resulting from the rejection of the current future, as the means of recovering from that error</li>
-<li><code>always()</code>, to execute a <code>Void</code> returning future regardless of whether the current future 
-is rejected or resolved</li>
-<li><code>defer()</code>, to execute a <code>Void</code> returning closure regardless of whether the current future is rejected or resolved</li>
+<li><code>recover()</code>,to transform a rejected future into a fulfilled future</li>
+<li><code>always()</code>, to execute a <code>Void</code> returning closure regardless of whether the current future is rejected or resolved</li>
 <li><code>and()</code>, to combine the result of two futures into a single tuple</li>
 <li><code>Future&lt;T&gt;.reduce()</code>, to combine the result of multiple futures into a single future</li>
 </ul>
@@ -187,9 +173,9 @@ is rejected or resolved</li>
 <p>As a simple example, this is how some code may look:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">future</span> <span class="o">=</span> <span class="nf">loadNetworkResource</span><span class="p">(</span>
     <span class="nv">from</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="s">"http://someHost/resource"</span><span class="p">)</span><span class="o">!</span>
-<span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">data</span> <span class="k">in</span>
+<span class="p">)</span><span class="o">.</span><span class="n">thenThrowing</span> <span class="p">{</span> <span class="n">data</span> <span class="k">in</span>
     <span class="k">try</span> <span class="n">jsonDecoder</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">SomeType</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
-<span class="p">}</span><span class="o">.</span><span class="k">defer</span> <span class="p">{</span>
+<span class="p">}</span><span class="o">.</span><span class="n">always</span> <span class="p">{</span>
     <span class="nf">someFunctionToExecuteRegardless</span><span class="p">()</span>
 <span class="p">}</span>
 
@@ -240,7 +226,7 @@ is rejected or resolved</li>
 
 <p>If you want to depend on Futures in your project, it&rsquo;s as simple as adding a <code>dependencies</code> clause to your <code>Package.swift</code>:</p>
 <pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
-    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/formbound/Futures.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.4.0"</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/formbound/Futures.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"2.0.0"</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre>
 
@@ -261,7 +247,7 @@ is rejected or resolved</li>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-03-26)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-09-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

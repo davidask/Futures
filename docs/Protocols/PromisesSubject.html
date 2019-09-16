@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>FutureSupport Protocol Reference</title>
+    <title>PromisesSubject Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,16 +14,16 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/FutureSupport" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/PromisesSubject" class="dashAnchor"></a>
 
-    <a title="FutureSupport Protocol Reference"></a>
+    <a title="PromisesSubject Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html"> Reference</a>
       <img class="carat" src="../img/carat.png" />
-      FutureSupport Protocol Reference
+      PromisesSubject Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -57,18 +57,7 @@
                 <a class="nav-group-task-link" href="../Classes/Future.html">Future</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Future/PollError.html">– PollError</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/FutureObserver.html">FutureObserver</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/FutureResult.html">FutureResult</a>
               </li>
             </ul>
           </li>
@@ -84,7 +73,7 @@
             <a class="nav-group-name-link" href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyyAA0D6ResultOyxGcKctlF">promise(_:on:_:)</a>
+                <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyys6ResultOyxs5Error_pGcKctlF">promise(_:on:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promise2on_AA6FutureCyxGSo17OS_dispatch_queueC_xyKctlF">promise(on:_:)</a>
@@ -101,7 +90,7 @@
                 <a class="nav-group-task-link" href="../Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/FutureSupport.html">FutureSupport</a>
+                <a class="nav-group-task-link" href="../Protocols/PromisesSubject.html">PromisesSubject</a>
               </li>
             </ul>
           </li>
@@ -109,10 +98,10 @@
             <a class="nav-group-name-link" href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/FutureProvider.html">FutureProvider</a>
+                <a class="nav-group-task-link" href="../Structs/Promise.html">Promise</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/Promise.html">Promise</a>
+                <a class="nav-group-task-link" href="../Structs/Promises.html">Promises</a>
               </li>
             </ul>
           </li>
@@ -122,32 +111,32 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>FutureSupport</h1>
+            <h1>PromisesSubject</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FutureSupport</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PromisesSubject</span></code></pre>
 
                 </div>
               </div>
             <p>A protocol that can be used to add support for futures to a type of your choice.</p>
 
 <p>When you want an API that supports futures, i types that already have methods with callbacks,
-the signatures of the method providing the <code><a href="../Classes/Future.html">Future&lt;T&gt;</a></code> and the original function can conflict, especially
+the signatures of the method providing the <code><a href="../Classes/Future.html">Future&lt;Value&gt;</a></code> and the original function can conflict, especially
 when working with methods where a completion callback is optional.
 To get around this, when this protocol is conformed to by a type, it will expose one instance property, <code>futures</code>,
-and one static property also named <code>futures</code>. These properties both return a <code><a href="../Structs/FutureProvider.html">FutureProvider&lt;Source&gt;</a></code> which you
-can extend to provide support for futures to any type. The returned <code><a href="../Structs/FutureProvider.html">FutureProvider&lt;Source&gt;</a></code> provides the property
+and one static property also named <code>futures</code>. These properties both return a <code>FutureProvider&lt;Source&gt;</code> which you
+can extend to provide support for futures to any type. The returned <code>FutureProvider&lt;Source&gt;</code> provides the property
 <code>source</code> for access to the instance it should be acting on.</p>
 
 <p>As an example, here&rsquo;s how we implement support for presenting view controllers:</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIViewController</span><span class="p">:</span> <span class="kt">FutureSupport</span> <span class="p">{}</span>
 
-<span class="kd">extension</span> <span class="kt">FutureProvider</span> <span class="k">where</span> <span class="kt">Source</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+<span class="kd">extension</span> <span class="kt">Promises</span> <span class="k">where</span> <span class="kt">Subject</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">present</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewControllerToPresent</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span> <span class="p">{</span>
 
         <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">()</span>
         <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
-            <span class="k">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">viewControllerToPresent</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="n">animated</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">subject</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">viewControllerToPresent</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="n">animated</span><span class="p">)</span> <span class="p">{</span>
                 <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">()</span>
             <span class="p">}</span>
         <span class="p">}</span>
@@ -158,7 +147,7 @@ can extend to provide support for futures to any type. The returned <code><a hre
 </code></pre>
 
 <p>Using this implementation is now possible.</p>
-<pre class="highlight swift"><code><span class="n">viewController</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span>
+<pre class="highlight swift"><code><span class="n">viewController</span><span class="o">.</span><span class="n">promise</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span>
     <span class="n">otherViewController</span><span class="p">,</span>
     <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">)</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span>
@@ -176,9 +165,9 @@ can extend to provide support for futures to any type. The returned <code><a hre
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures13FutureSupportPAAE7futuresAA0B8ProviderVyxGvp"></a>
-                    <a name="//apple_ref/swift/Property/futures" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures13FutureSupportPAAE7futuresAA0B8ProviderVyxGvp">futures</a>
+                    <a name="/s:7Futures15PromisesSubjectPAAE7promiseAA0B0VyxGvp"></a>
+                    <a name="//apple_ref/swift/Property/promise" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures15PromisesSubjectPAAE7promiseAA0B0VyxGvp">promise</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -189,14 +178,14 @@ can extend to provide support for futures to any type. The returned <code><a hre
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns an instance of <code><a href="../Structs/FutureProvider.html">FutureProvider&lt;Self&gt;</a></code></p>
+                        <p>Returns an instance of <code><a href="../Structs/Promises.html">Promises&lt;Self&gt;</a></code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">futures</span><span class="p">:</span> <span class="kt"><a href="../Structs/FutureProvider.html">FutureProvider</a></span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">promise</span><span class="p">:</span> <span class="kt"><a href="../Structs/Promises.html">Promises</a></span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -206,9 +195,9 @@ can extend to provide support for futures to any type. The returned <code><a hre
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures13FutureSupportPAAE7futuresAA0B8ProviderVyxGmvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/futures" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures13FutureSupportPAAE7futuresAA0B8ProviderVyxGmvpZ">futures</a>
+                    <a name="/s:7Futures15PromisesSubjectPAAE7promiseAA0B0VyxGmvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/promise" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures15PromisesSubjectPAAE7promiseAA0B0VyxGmvpZ">promise</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -219,14 +208,14 @@ can extend to provide support for futures to any type. The returned <code><a hre
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the type of <code><a href="../Structs/FutureProvider.html">FutureProvider&lt;Self&gt;</a></code></p>
+                        <p>Returns the type of <code><a href="../Structs/Promises.html">Promises&lt;Self&gt;</a></code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">futures</span><span class="p">:</span> <span class="kt"><a href="../Structs/FutureProvider.html">FutureProvider</a></span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;.</span><span class="k">Type</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">promise</span><span class="p">:</span> <span class="kt"><a href="../Structs/Promises.html">Promises</a></span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;.</span><span class="k">Type</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -241,7 +230,7 @@ can extend to provide support for futures to any type. The returned <code><a hre
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-03-26)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-09-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

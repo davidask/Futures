@@ -307,7 +307,7 @@ public extension Future {
     ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
     ///           and return a new `Future<Value>`.
     /// - Returns: A future that will receive the eventual value.
-    func thenIfError(
+    func thenIfRejected(
         on queue: DispatchQueue = .futures,
         callback: @escaping(Error) -> Future<Value>) -> Future<Value> {
 
@@ -326,13 +326,6 @@ public extension Future {
         }
 
         return promise.future
-    }
-
-    @available(*, deprecated, renamed: "thenIfError")
-    func thenIfRejected(
-        on queue: DispatchQueue = .futures,
-        callback: @escaping(Error) -> Future<Value>) -> Future<Value> {
-        return thenIfError(on: queue, callback: callback)
     }
 
     /// When the current `Future` is fulfilled, run the provided callback returning a fulfilled value of the

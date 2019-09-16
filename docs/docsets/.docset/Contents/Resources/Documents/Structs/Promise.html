@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -57,18 +57,7 @@
                 <a class="nav-group-task-link" href="../Classes/Future.html">Future</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/Future/PollError.html">– PollError</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/FutureObserver.html">FutureObserver</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/FutureResult.html">FutureResult</a>
               </li>
             </ul>
           </li>
@@ -84,7 +73,7 @@
             <a class="nav-group-name-link" href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyyAA0D6ResultOyxGcKctlF">promise(_:on:_:)</a>
+                <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promise_2on_AA6FutureCyxGxm_So17OS_dispatch_queueCyys6ResultOyxs5Error_pGcKctlF">promise(_:on:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:7Futures7promise2on_AA6FutureCyxGSo17OS_dispatch_queueC_xyKctlF">promise(on:_:)</a>
@@ -101,7 +90,7 @@
                 <a class="nav-group-task-link" href="../Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/FutureSupport.html">FutureSupport</a>
+                <a class="nav-group-task-link" href="../Protocols/PromisesSubject.html">PromisesSubject</a>
               </li>
             </ul>
           </li>
@@ -109,10 +98,10 @@
             <a class="nav-group-name-link" href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/FutureProvider.html">FutureProvider</a>
+                <a class="nav-group-task-link" href="../Structs/Promise.html">Promise</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/Promise.html">Promise</a>
+                <a class="nav-group-task-link" href="../Structs/Promises.html">Promises</a>
               </li>
             </ul>
           </li>
@@ -125,15 +114,15 @@
             <h1>Promise</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
 
                 </div>
               </div>
             <p>A promise to provide a result later.</p>
 
-<p>This is the provider API for <code><a href="../Classes/Future.html">Future&lt;T&gt;</a></code>. If you want to return a <code><a href="../Classes/Future.html">Future&lt;T&gt;</a></code>, you can use the global functions
-<code>promise()</code>, or create a new <code>Promise&lt;T&gt;</code> to fulfill in an asynchronous fashion.
-To create a new promise, returning a <code><a href="../Classes/Future.html">Future&lt;T&gt;</a></code>, follow this pattern:</p>
+<p>This is the provider API for <code><a href="../Classes/Future.html">Future&lt;Value&gt;</a></code>. If you want to return a <code><a href="../Classes/Future.html">Future&lt;Value&gt;</a></code>, you can use
+the global functions <code>promise()</code>, or create a new <code>Promise&lt;Value&gt;</code> to fulfill in an asynchronous fashion.
+To create a new promise, returning a <code><a href="../Classes/Future.html">Future&lt;Value&gt;</a></code>, follow this pattern:</p>
 <pre class="highlight swift"><code><span class="n">promise</span> <span class="p">{</span>
     <span class="s">"Hello World!"</span>
 <span class="p">}</span>
@@ -151,7 +140,7 @@ To create a new promise, returning a <code><a href="../Classes/Future.html">Futu
 
 </code></pre>
 
-<p>If you want to provide a <code><a href="../Classes/Future.html">Future&lt;T&gt;</a></code> in a completely custom manner, you can create a pending promise, resolve it
+<p>If you want to provide a <code><a href="../Classes/Future.html">Future&lt;Value&gt;</a></code> in a completely custom manner, you can create a pending promise, resolve it
 when convenient, and then return its <code><a href="../Classes/Future.html">Future</a></code>:</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">someAsynOperation</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">ResultType</span><span class="o">&gt;</span><span class="p">()</span>
@@ -197,7 +186,7 @@ when convenient, and then return its <code><a href="../Classes/Future.html">Futu
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">future</span><span class="p">:</span> <span class="kt"><a href="../Classes/Future.html">Future</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">future</span><span class="p">:</span> <span class="kt"><a href="../Classes/Future.html">Future</a></span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -255,7 +244,7 @@ when convenient, and then return its <code><a href="../Classes/Future.html">Futu
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">fulfill</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">fulfill</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Value</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -330,9 +319,9 @@ when convenient, and then return its <code><a href="../Classes/Future.html">Futu
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures7PromiseV7resolveyyAA12FutureResultOyxGF"></a>
+                    <a name="/s:7Futures7PromiseV7resolveyys6ResultOyxs5Error_pGF"></a>
                     <a name="//apple_ref/swift/Method/resolve(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures7PromiseV7resolveyyAA12FutureResultOyxGF">resolve(_:)</a>
+                    <a class="token" href="#/s:7Futures7PromiseV7resolveyys6ResultOyxs5Error_pGF">resolve(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -347,7 +336,7 @@ when convenient, and then return its <code><a href="../Classes/Future.html">Futu
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">resolve</span><span class="p">(</span><span class="n">_</span> <span class="nv">result</span><span class="p">:</span> <span class="kt"><a href="../Enums/FutureResult.html">FutureResult</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">resolve</span><span class="p">(</span><span class="n">_</span> <span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Value</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -363,7 +352,7 @@ when convenient, and then return its <code><a href="../Classes/Future.html">Futu
                               </td>
                               <td>
                                 <div>
-                                  <p><code><a href="../Enums/FutureResult.html">FutureResult&lt;T&gt;</a></code> to resolve with</p>
+                                  <p><code>Result&lt;Value, Error&gt;</code> to resolve with</p>
                                 </div>
                               </td>
                             </tr>
@@ -412,7 +401,7 @@ when convenient, and then return its <code><a href="../Classes/Future.html">Futu
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-03-26)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-09-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
