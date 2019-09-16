@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63921236232F86CD00BC1BB3 /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
+		63921237232F86CE00BC1BB3 /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
+		63921238232F86CE00BC1BB3 /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
 		B757AE1520B8921E00850F92 /* Futures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757AE0B20B8921E00850F92 /* Futures.framework */; };
 		B757AE7A20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
 		B757AE7B20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
@@ -496,6 +499,7 @@
 				B757AE7F20B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3AE20BC6D1E001A625C /* Promise.swift in Sources */,
 				B757AE7B20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
+				63921236232F86CD00BC1BB3 /* Promises.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +511,7 @@
 				B757AE8020B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3AF20BC6D1E001A625C /* Promise.swift in Sources */,
 				B757AE7C20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
+				63921237232F86CE00BC1BB3 /* Promises.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +523,7 @@
 				B757AE8120B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3B020BC6D1E001A625C /* Promise.swift in Sources */,
 				B757AE7D20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
+				63921238232F86CE00BC1BB3 /* Promises.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
