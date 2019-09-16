@@ -125,7 +125,7 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testBasicflatMap() {
+    func testBasicThen() {
 
         let expectation = self.expectation(description: #function)
 
@@ -137,9 +137,9 @@ class FuturesTests: XCTestCase {
 
         promise {
             10
-        }.flatMap { value in
+        }.then { value in
             add(value: 10, to: value)
-        }.flatMap { value in
+        }.then { value in
             add(value: 5, to: value)
         }.whenResolved { result in
             switch result {
@@ -155,15 +155,15 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testThenIfRejected() {
+    func testThenIfError() {
 
         let expectation = self.expectation(description: #function)
 
         promise {
             999
-        }.flatMapThrowing { errorCode -> String in
+        }.thenThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
-        }.flatMapError { _ in
+        }.thenIfError { _ in
             return promise {
                 return "Recovered"
             }
@@ -175,13 +175,13 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testMapIfRejected() {
+    func testRecover() {
 
         let expectation = self.expectation(description: #function)
 
         promise {
             999
-        }.flatMapThrowing { errorCode -> String in
+        }.thenThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
         }.recover { _ in
             return "Recovered"
@@ -193,7 +193,7 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testDeferred() {
+    func testAlways() {
         let expectation = self.expectation(description: #function)
 
         func throwError() throws -> Int {
@@ -202,7 +202,7 @@ class FuturesTests: XCTestCase {
 
         _ = promise {
             true
-        }.flatMapThrowing { _ in
+        }.thenThrowing { _ in
             try throwError()
         }.always {
             promise {
@@ -267,7 +267,7 @@ class FuturesTests: XCTestCase {
 
         promise {
             ["Hello", "World!"]
-        }.flatMapThrowing { strings in
+        }.map { strings in
             strings.joined(separator: " ")
         }.whenFulfilled { string in
             XCTAssertEqual(string, "Hello World!")
@@ -311,10 +311,10 @@ class FuturesTests: XCTestCase {
         ("testBasicObserving", testBasicObserving),
         ("testBasicReject", testBasicReject),
         ("testBasicThen", testBasicThen),
-        ("testThenIfRejected", testThenIfRejected),
-        ("testMapIfRejected", testMapIfRejected),
+        ("testThenIfError", testThenIfError),
+        ("testRecover", testRecover),
         ("testBasicAnd", testBasicAnd),
         ("testBasicMap", testBasicMap),
-        ("testDeferred", testDeferred)
+        ("testAlways", testAlways)
     ]
 }

@@ -21,7 +21,7 @@
 		B757AE8A20B8A5CF00850F92 /* Futures.h in Headers */ = {isa = PBXBuildFile; fileRef = B757AE8620B8A5C700850F92 /* Futures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B757AE8B20B8A5D000850F92 /* Futures.h in Headers */ = {isa = PBXBuildFile; fileRef = B757AE8620B8A5C700850F92 /* Futures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B757AE9120B8A60600850F92 /* FuturesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE8F20B8A60600850F92 /* FuturesTests.swift */; };
-		B768073820C6C02E00402ECB /* FutureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* FutureProvider.swift */; };
+		B768073820C6C02E00402ECB /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
 		B79FF3AD20BC6D1E001A625C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79FF3AC20BC6D1E001A625C /* Promise.swift */; };
 		B79FF3AE20BC6D1E001A625C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79FF3AC20BC6D1E001A625C /* Promise.swift */; };
 		B79FF3AF20BC6D1E001A625C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79FF3AC20BC6D1E001A625C /* Promise.swift */; };
@@ -54,7 +54,7 @@
 		B757AE8620B8A5C700850F92 /* Futures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Futures.h; sourceTree = "<group>"; };
 		B757AE8720B8A5C700850F92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B757AE8F20B8A60600850F92 /* FuturesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuturesTests.swift; sourceTree = "<group>"; };
-		B768073720C6C02E00402ECB /* FutureProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureProvider.swift; sourceTree = "<group>"; };
+		B768073720C6C02E00402ECB /* Promises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promises.swift; sourceTree = "<group>"; };
 		B79FF3AC20BC6D1E001A625C /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		B79FF3B620BC6E34001A625C /* AnyFuture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyFuture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,7 +136,7 @@
 				B757AE7520B8A5BA00850F92 /* Future.swift */,
 				B79FF3AC20BC6D1E001A625C /* Promise.swift */,
 				B79FF3B620BC6E34001A625C /* AnyFuture.swift */,
-				B768073720C6C02E00402ECB /* FutureProvider.swift */,
+				B768073720C6C02E00402ECB /* Promises.swift */,
 			);
 			path = Futures;
 			sourceTree = "<group>";
@@ -354,6 +354,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = B757AE0120B8921E00850F92;
 			productRefGroup = B757AE0C20B8921E00850F92 /* Products */;
@@ -474,7 +475,7 @@
 				B79FF3B720BC6E34001A625C /* AnyFuture.swift in Sources */,
 				B757AE7E20B8A5BA00850F92 /* Future.swift in Sources */,
 				B79FF3AD20BC6D1E001A625C /* Promise.swift in Sources */,
-				B768073820C6C02E00402ECB /* FutureProvider.swift in Sources */,
+				B768073820C6C02E00402ECB /* Promises.swift in Sources */,
 				B757AE7A20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -589,7 +590,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -646,7 +648,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -676,7 +679,6 @@
 				PRODUCT_NAME = Futures;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -703,7 +705,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.Futures;
 				PRODUCT_NAME = Futures;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -772,7 +773,6 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -801,7 +801,6 @@
 				PRODUCT_NAME = Futures;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -830,7 +829,6 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -858,7 +856,6 @@
 				PRODUCT_NAME = Futures;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -890,7 +887,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -919,7 +915,6 @@
 				PRODUCT_NAME = Futures;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -1,4 +1,4 @@
-/// Type-erasure for `Future<T>`
+/// Type-erasure for `Future<Value>`
 public protocol AnyFuture: AnyObject {
 
     /// Indicates whether the future is pending
