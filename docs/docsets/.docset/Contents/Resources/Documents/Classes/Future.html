@@ -110,11 +110,12 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             <h1>Future</h1>
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/AnyFuture.html">AnyFuture</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Future</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
@@ -162,7 +163,7 @@ Each <code>Future&lt;Value&gt;</code> can have multiple observers, which are use
 a result, or to queue up other futures.</p>
 
 <p>To perform more asynchronous work, once a <code>Future&lt;Value&gt;</code> is fulfilled,
-use <code>then()</code>. To transform the fulfilled value of a future into another value, use <code>thenThrowing()</code>.</p>
+use <code>flatMap()</code>. To transform the fulfilled value of a future into another value, use <code>flatMapThrowing()</code>.</p>
 
 <p>Options for combining futures into a single future is provided using <code>and()</code>, <code>fold()</code>, and <code>Future&lt;Value&gt;.reduce()</code></p>
 
@@ -479,10 +480,6 @@ Returns <code>nil</code> if the future is not resolved yet.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -509,16 +506,12 @@ Returns <code>nil</code> if the future is not resolved yet.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures6FutureC4then2on8callbackACyqd__GSo17OS_dispatch_queueC_AGxctlF"></a>
-                    <a name="//apple_ref/swift/Method/then(on:callback:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures6FutureC4then2on8callbackACyqd__GSo17OS_dispatch_queueC_AGxctlF">then(on:callback:)</a>
+                    <a name="/s:7Futures6FutureC7flatMap2on8callbackACyqd__GSo17OS_dispatch_queueC_AGxctlF"></a>
+                    <a name="//apple_ref/swift/Method/flatMap(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC7flatMap2on8callbackACyqd__GSo17OS_dispatch_queueC_AGxctlF">flatMap(on:callback:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -538,7 +531,7 @@ Note that, based on the result, you can decide what asynchronous work to perform
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">then</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">(</span>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
     <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span></code></pre>
 
@@ -599,9 +592,9 @@ Note that, based on the result, you can decide what asynchronous work to perform
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures6FutureC14thenIfRejected2on8callbackACyxGSo17OS_dispatch_queueC_AGs5Error_pctF"></a>
-                    <a name="//apple_ref/swift/Method/thenIfRejected(on:callback:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures6FutureC14thenIfRejected2on8callbackACyxGSo17OS_dispatch_queueC_AGs5Error_pctF">thenIfRejected(on:callback:)</a>
+                    <a name="/s:7Futures6FutureC17flatMapIfRejected2on8callbackACyxGSo17OS_dispatch_queueC_AGs5Error_pctF"></a>
+                    <a name="//apple_ref/swift/Method/flatMapIfRejected(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC17flatMapIfRejected2on8callbackACyxGSo17OS_dispatch_queueC_AGs5Error_pctF">flatMapIfRejected(on:callback:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -622,9 +615,9 @@ thrown, or a <code>Future</code> which is rejected should be returned.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">thenIfRejected</span><span class="p">(</span>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">flatMapIfRejected</span><span class="p">(</span>
     <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
-    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping(Error)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
+    <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -672,9 +665,9 @@ thrown, or a <code>Future</code> which is rejected should be returned.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures6FutureC12thenThrowing2on8callbackACyqd__GSo17OS_dispatch_queueC_qd__xKctlF"></a>
-                    <a name="//apple_ref/swift/Method/thenThrowing(on:callback:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures6FutureC12thenThrowing2on8callbackACyqd__GSo17OS_dispatch_queueC_qd__xKctlF">thenThrowing(on:callback:)</a>
+                    <a name="/s:7Futures6FutureC15flatMapThrowing2on8callbackACyqd__GSo17OS_dispatch_queueC_qd__xKctlF"></a>
+                    <a name="//apple_ref/swift/Method/flatMapThrowing(on:callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC15flatMapThrowing2on8callbackACyqd__GSo17OS_dispatch_queueC_qd__xKctlF">flatMapThrowing(on:callback:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -692,7 +685,7 @@ thrown, or a <code>Future</code> which is rejected should be returned.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">thenThrowing</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">(</span>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">flatMapThrowing</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">,</span>
     <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Value</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">NewValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span></code></pre>
 
@@ -900,10 +893,6 @@ to an error you can recover from.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -1358,10 +1347,6 @@ of whether successful or not.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -1379,7 +1364,7 @@ of whether successful or not.</p>
 
 <p>An observer callback cannot return a value, meaning that this function cannot be chained from.
 If you are attempting to create a sequence of operations based on the result of another future,
-consider using <code>then()</code>, <code>thenThrowing()</code>, or some of the other methods available.</p>
+consider using <code>flatMap()</code>, <code>flatMapThrowing()</code>, or some of the other methods available.</p>
 
                       </div>
                       <div class="declaration">
@@ -1448,7 +1433,7 @@ consider using <code>then()</code>, <code>thenThrowing()</code>, or some of the 
 
 <p>An observer callback cannot return a value, meaning that this function cannot be chained from.
 If you are attempting to create a sequence of operations based on the result of another future,
-consider using <code>then()</code>, <code>thenThrowing()</code>, or some of the other methods available.</p>
+consider using <code>flatMap()</code>, <code>flatMapThrowing()</code>, or some of the other methods available.</p>
 
                       </div>
                       <div class="declaration">
@@ -1517,7 +1502,7 @@ consider using <code>then()</code>, <code>thenThrowing()</code>, or some of the 
 
 <p>An observer callback cannot return a value, meaning that this function cannot be chained from.
 If you are attempting to create a sequence of operations based on the result of another future,
-consider using <code>then()</code>, <code>thenThrowing()</code>, or some of the other methods available.</p>
+consider using <code>flatMap()</code>, <code>flatMapThrowing()</code>, or some of the other methods available.</p>
 
                       </div>
                       <div class="declaration">
@@ -1577,8 +1562,8 @@ consider using <code>then()</code>, <code>thenThrowing()</code>, or some of the 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2019-09-16)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2020-01-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
