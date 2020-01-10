@@ -163,7 +163,7 @@ class FuturesTests: XCTestCase {
             999
         }.thenThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
-        }.thenIfError { _ in
+        }.thenIfRejected { _ in
             return promise {
                 return "Recovered"
             }
