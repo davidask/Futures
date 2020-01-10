@@ -2,7 +2,7 @@ name: Test
 on: push
 
 jobs:
-  iOS:
+  macOS:
     name: Test macOS
     runs-on: macos-latest
     strategy:
