@@ -11,7 +11,6 @@ jobs:
             - Futures iOS
           destination: 
             - platform=iOS Simulator,OS=13.2.2,name=iPhone 11 Pro
-            - platform=iOS,OS=13.2.2,name=Generic iOS Device
     steps:
       - name: Checkout
         uses: actions/checkout@v1
