@@ -61,21 +61,21 @@ jobs:
         run: |
           xcodebuild clean test -project Futures.xcodeproj -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}"
 
-    spm-macOS:
-      name: Swift Package manager
-      runs-on: macos-latest    
-      needs:
-        - macOS
-      steps:
-        - uses: actions/checkout@v1
-        - name: swift test
-          run: swift test
+  spm-macOS:
+    name: Swift Package manager
+    runs-on: macos-latest    
+    needs:
+      - macOS
+    steps:
+      - uses: actions/checkout@v1
+      - name: swift test
+        run: swift test
 
-    spm-linux:
-      name: Swift Package manager
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v1
-        - name: swift test
-          run: swift test
+  spm-linux:
+    name: Swift Package manager
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: swift test
+        run: swift test
           
