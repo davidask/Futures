@@ -115,7 +115,7 @@ extension FutureObserver: Equatable {
 /// a result, or to queue up other futures.
 ///
 /// To perform more asynchronous work, once a `Future<Value>` is fulfilled,
-/// use `then()`. To transform the fulfilled value of a future into another value, use `thenThrowing()`.
+/// use `flatMap()`. To transform the fulfilled value of a future into another value, use `flatMapThrowing()`.
 ///
 /// Options for combining futures into a single future is provided using `and()`, `fold()`, and `Future<Value>.reduce()`
 ///
@@ -272,7 +272,7 @@ public extension Future {
     ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
     ///   - value: The fulfilled value of this `Future<Value>`.
     /// - Returns: A future that will receive the eventual value.
-    func then<NewValue>(
+    func flatMap<NewValue>(
         on queue: DispatchQueue = .futures,
         callback: @escaping (_ value: Value) -> Future<NewValue>) -> Future<NewValue> {
 
@@ -307,7 +307,7 @@ public extension Future {
     ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
     ///           and return a new `Future<Value>`.
     /// - Returns: A future that will receive the eventual value.
-    func thenIfRejected(
+    func flatMapIfRejected(
         on queue: DispatchQueue = .futures,
         callback: @escaping(Error) -> Future<Value>) -> Future<Value> {
 
@@ -339,11 +339,11 @@ public extension Future {
     ///   - callback: A function that will receive the value of this `Future` and return a new `Future<Value>`.
     ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
     /// - Returns: A future that will receive the eventual value.
-    func thenThrowing<NewValue>(
+    func flatMapThrowing<NewValue>(
         on queue: DispatchQueue = .futures,
         callback: @escaping (Value) throws -> NewValue) -> Future<NewValue> {
 
-        return then(on: queue) { value in
+        return flatMap(on: queue) { value in
             return promise(on: queue) {
                 return try callback(value)
             }
@@ -419,7 +419,7 @@ public extension Future {
     /// - Returns: A future that will receive the eventual value.
     func and<NewValue>(_ other: Future<NewValue>, on queue: DispatchQueue = .futures) -> Future<(Value, NewValue)> {
 
-        return then(on: queue) { value in
+        return flatMap(on: queue) { value in
             let promise = Promise<(Value, NewValue)>()
             other.whenResolved(on: queue) { result in
                 do {
@@ -457,7 +457,7 @@ public extension Future {
         where S.Element == Future<NewValue> {
 
         return futures.reduce(self) { future1, future2 in
-            return future1.and(future2, on: queue).then(on: queue) { value1, value2 in
+            return future1.and(future2, on: queue).flatMap(on: queue) { value1, value2 in
                 return combiningFunction(value1, value2)
             }
         }
@@ -585,7 +585,7 @@ public extension Future {
     ///
     /// An observer callback cannot return a value, meaning that this function cannot be chained from.
     /// If you are attempting to create a sequence of operations based on the result of another future,
-    /// consider using `then()`, `thenThrowing()`, or some of the other methods available.
+    /// consider using `flatMap()`, `flatMapThrowing()`, or some of the other methods available.
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.
@@ -609,7 +609,7 @@ public extension Future {
     ///
     /// An observer callback cannot return a value, meaning that this function cannot be chained from.
     /// If you are attempting to create a sequence of operations based on the result of another future,
-    /// consider using `then()`, `thenThrowing()`, or some of the other methods available.
+    /// consider using `flatMap()`, `flatMapThrowing()`, or some of the other methods available.
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.
@@ -633,7 +633,7 @@ public extension Future {
     ///
     /// An observer callback cannot return a value, meaning that this function cannot be chained from.
     /// If you are attempting to create a sequence of operations based on the result of another future,
-    /// consider using `then()`, `thenThrowing()`, or some of the other methods available.
+    /// consider using `flatMap()`, `flatMapThrowing()`, or some of the other methods available.
     ///
     /// - Parameters:
     ///   - queue: Dispatch queue to observe on.

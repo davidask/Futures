@@ -43,6 +43,27 @@
 			remoteGlobalIDString = B757AE0A20B8921E00850F92;
 			remoteInfo = "Futures iOS";
 		};
+		B78DB35D23C92DCF00AC2DB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B757AE4320B8928200850F92;
+			remoteInfo = "Futures macOS";
+		};
+		B78DB35F23C92DCF00AC2DB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B757AE3620B8926D00850F92;
+			remoteInfo = "Futures tvOS";
+		};
+		B78DB36123C92DCF00AC2DB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B757AE2920B8924600850F92;
+			remoteInfo = "Futures watchOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -255,6 +276,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				B78DB35E23C92DCF00AC2DB7 /* PBXTargetDependency */,
+				B78DB36023C92DCF00AC2DB7 /* PBXTargetDependency */,
+				B78DB36223C92DCF00AC2DB7 /* PBXTargetDependency */,
 				B741F2AA20B964CE0016B886 /* PBXTargetDependency */,
 			);
 			name = FuturesTests;
@@ -535,6 +559,21 @@
 			target = B757AE0A20B8921E00850F92 /* Futures iOS */;
 			targetProxy = B741F2A920B964CE0016B886 /* PBXContainerItemProxy */;
 		};
+		B78DB35E23C92DCF00AC2DB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B757AE4320B8928200850F92 /* Futures macOS */;
+			targetProxy = B78DB35D23C92DCF00AC2DB7 /* PBXContainerItemProxy */;
+		};
+		B78DB36023C92DCF00AC2DB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B757AE3620B8926D00850F92 /* Futures tvOS */;
+			targetProxy = B78DB35F23C92DCF00AC2DB7 /* PBXContainerItemProxy */;
+		};
+		B78DB36223C92DCF00AC2DB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B757AE2920B8924600850F92 /* Futures watchOS */;
+			targetProxy = B78DB36123C92DCF00AC2DB7 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -720,6 +759,7 @@
 		B757AE2320B8921F00850F92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "watchOS tvOS macOS";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XPHB8XN6PN;
@@ -729,17 +769,21 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.FuturesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchos watchossimulator macosx appletvos appletvsimulator";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
 		B757AE2420B8921F00850F92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "watchOS tvOS macOS";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XPHB8XN6PN;
@@ -751,9 +795,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.FuturesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchos watchossimulator macosx appletvos appletvsimulator";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};

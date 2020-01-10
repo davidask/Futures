@@ -78,7 +78,7 @@ public func promise<Value>(
 ///
 /// ```
 /// If you want to provide a `Future<Value>` in a completely custom manner, you can create a pending promise, resolve it
-/// when convenient, and then return its `Future`:
+/// when convenient, and flatMap return its `Future`:
 /// ```
 /// func someAsynOperation(args) -> Future<ResultType> {
 ///     let promise = Promise<ResultType>()

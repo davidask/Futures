@@ -3,6 +3,19 @@ on: push
 
 jobs:
   iOS:
+    name: Test macOS
+    runs-on: macos-latest
+    strategy:
+        matrix:
+          scheme:
+            - Futures macOS
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: |
+          xcodebuild clean test -project Futures.xcodeproj -scheme "${{ matrix.scheme }}"
+  iOS:
     name: Test iOS
     runs-on: macos-latest
     strategy:
@@ -17,3 +30,52 @@ jobs:
       - name: Build and test
         run: |
           xcodebuild clean test -project Futures.xcodeproj -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}"
+  tvOS:
+    name: Test tvOS
+    runs-on: macos-latest
+    strategy:
+        matrix:
+          scheme:
+            - Futures tvOS
+          destination: 
+            - platform=OS=13.2,name=Apple TV 4K
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: |
+          xcodebuild clean test -project Futures.xcodeproj -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}"
+  watchOS:
+    name: Test watchOS
+    runs-on: macos-latest
+    strategy:
+        matrix:
+          scheme:
+            - Futures watchOS
+          destination: 
+            - OS=6.0,name=Apple Watch Series 5 - 44mm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: |
+          xcodebuild clean test -project Futures.xcodeproj -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}"
+
+    spm-macOS:
+      name: Swift Package manager
+      runs-on: macos-latest    
+      needs:
+        - macOS
+      steps:
+        - uses: actions/checkout@v1
+        - name: swift test
+          run: swift test
+
+    spm-linux:
+      name: Swift Package manager
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - name: swift test
+          run: swift test
+          

@@ -44,9 +44,9 @@ When a function returns a `Future<Value>`, you can either decide to observe it d
 
 If you have more asynchronous work to do based on the result of the first future, you can use
 
-* `then()`, to execute another future based on the result of the current one
-* `thenIfRejected()`, to recover from a potential error resulting from the current future
-* `thenThrowing()`, to transform the fulfilled value of the current future or return a rejected future
+* `flatMap()`, to execute another future based on the result of the current one
+* `flatMapIfRejected()`, to recover from a potential error resulting from the current future
+* `flatMapThrowing()`, to transform the fulfilled value of the current future or return a rejected future
 * `map()`, to transform the fulfilled value of the current future
 * `recover()`,to transform a rejected future into a fulfilled future
 * `always()`, to execute a `Void` returning closure regardless of whether the current future is rejected or resolved
@@ -54,14 +54,14 @@ If you have more asynchronous work to do based on the result of the first future
 * `Future<T>.reduce()`, to combine the result of multiple futures into a single future
 
 
-Note that you can specify an observation dispatch queue for all these functions. For instance, you can use `then(on: .main)`, or `.map(on: .global())`. By default, the queue is `DispatchQueue.futures`.
+Note that you can specify an observation dispatch queue for all these functions. For instance, you can use `flatMap(on: .main)`, or `.map(on: .global())`. By default, the queue is `DispatchQueue.futures`.
 
 As a simple example, this is how some code may look:
 
 ```swift
 let future = loadNetworkResource(
     from: URL("http://someHost/resource")!
-).thenThrowing { data in
+).flatMapThrowing { data in
     try jsonDecoder.decode(SomeType.self, from: data)
 }.always {
     someFunctionToExecuteRegardless()

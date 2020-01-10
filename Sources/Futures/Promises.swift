@@ -38,7 +38,7 @@ public struct Promises<Subject> {
 /// viewController.promise.present(
 ///     otherViewController,
 ///     animated: true
-/// ).then {
+/// ).flatMap {
 ///     someOtherFutureReturningMethod()
 /// }
 /// ```

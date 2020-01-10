@@ -125,7 +125,7 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testBasicThen() {
+    func testBasicFlatMap() {
 
         let expectation = self.expectation(description: #function)
 
@@ -137,9 +137,9 @@ class FuturesTests: XCTestCase {
 
         promise {
             10
-        }.then { value in
+        }.flatMap { value in
             add(value: 10, to: value)
-        }.then { value in
+        }.flatMap { value in
             add(value: 5, to: value)
         }.whenResolved { result in
             switch result {
@@ -155,15 +155,15 @@ class FuturesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testThenIfError() {
+    func testFlatMapIfError() {
 
         let expectation = self.expectation(description: #function)
 
         promise {
             999
-        }.thenThrowing { errorCode -> String in
+        }.flatMapThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
-        }.thenIfRejected { _ in
+        }.flatMapIfRejected { _ in
             return promise {
                 return "Recovered"
             }
@@ -181,7 +181,7 @@ class FuturesTests: XCTestCase {
 
         promise {
             999
-        }.thenThrowing { errorCode -> String in
+        }.flatMapThrowing { errorCode -> String in
             throw NSError(domain: "", code: errorCode, userInfo: nil)
         }.recover { _ in
             return "Recovered"
@@ -202,7 +202,7 @@ class FuturesTests: XCTestCase {
 
         _ = promise {
             true
-        }.thenThrowing { _ in
+        }.flatMapThrowing { _ in
             try throwError()
         }.always {
             promise {
@@ -310,8 +310,8 @@ class FuturesTests: XCTestCase {
         ("testBasicFulfill", testBasicFulfill),
         ("testBasicObserving", testBasicObserving),
         ("testBasicReject", testBasicReject),
-        ("testBasicThen", testBasicThen),
-        ("testThenIfError", testThenIfError),
+        ("testBasicFlatMap", testBasicFlatMap),
+        ("testFlatMapIfError", testFlatMapIfError),
         ("testRecover", testRecover),
         ("testBasicAnd", testBasicAnd),
         ("testBasicMap", testBasicMap),
