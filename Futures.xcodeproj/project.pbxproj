@@ -762,7 +762,7 @@
 				ADDITIONAL_SDKS = "watchOS tvOS macOS";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XPHB8XN6PN;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Framework/FuturesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -786,7 +786,7 @@
 				ADDITIONAL_SDKS = "watchOS tvOS macOS";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XPHB8XN6PN;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Framework/FuturesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
