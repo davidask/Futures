@@ -1,0 +1,19 @@
+name: Test
+on: push
+
+jobs:
+  test:
+    name: Test iOS
+    runs-on: macos-latest
+    strategy:
+        matrix:
+          scheme:
+            - Futures iOS
+          destination: 
+            - platform=iOS Simulator,OS=12.2,name=iPhone X
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: |
+          xcodebuild clean test -project Futures.xcodeproj -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}"
