@@ -1,5 +1,5 @@
 # Futures
-![](https://github.com/formbound/futures/workflows/test/badge.svg)
+![Build & Test](https://github.com/formbound/Futures/workflows/Build%20&%20Test/badge.svg)
 
 Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It's lightweight, fast, and easy to understand.
 
