@@ -29,14 +29,12 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B757AE1320B8921E00850F92"
-               BuildableName = "FuturesTests.xctest"
-               BlueprintName = "FuturesTests"
+               BlueprintIdentifier = "B72B72302416DBAE007B7C10"
+               BuildableName = "Futures tvOS Tests.xctest"
+               BlueprintName = "Futures tvOS Tests"
                ReferencedContainer = "container:Futures.xcodeproj">
             </BuildableReference>
          </TestableReference>

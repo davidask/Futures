@@ -38,14 +38,12 @@
       </MacroExpansion>
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B757AE1320B8921E00850F92"
-               BuildableName = "FuturesTests.xctest"
-               BlueprintName = "FuturesTests"
+               BlueprintIdentifier = "B72B72202416DB8D007B7C10"
+               BuildableName = "Futures iOS Tests.xctest"
+               BlueprintName = "Futures iOS Tests"
                ReferencedContainer = "container:Futures.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -1,0 +1,48 @@
+name: Build & Test
+on:
+  - push
+  - pull_request
+
+jobs:
+  macOS:
+    name: Test macOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: .github/ci test macOS
+  iOS:
+    name: Test iOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: .github/ci test iOS "iPhone"
+  tvOS:
+    name: Test tvOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build and test
+        run: .github/ci test tvOS "Apple TV"
+  watchOS:
+    name: Build watchOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Build
+        run: .github/ci build watchOS "Apple Watch"
+
+  spm-macOS:
+    name: Test Swift Package manager (macOS)
+    runs-on: macos-latest    
+    needs:
+      - macOS
+    steps:
+      - uses: actions/checkout@v1
+      - name: swift test
+        run: swift test

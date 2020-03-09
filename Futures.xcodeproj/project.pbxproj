@@ -10,7 +10,12 @@
 		63921236232F86CD00BC1BB3 /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
 		63921237232F86CE00BC1BB3 /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
 		63921238232F86CE00BC1BB3 /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
-		B757AE1520B8921E00850F92 /* Futures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757AE0B20B8921E00850F92 /* Futures.framework */; };
+		B72B72262416DB8D007B7C10 /* Futures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757AE0B20B8921E00850F92 /* Futures.framework */; };
+		B72B722C2416DB9A007B7C10 /* FuturesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE8F20B8A60600850F92 /* FuturesTests.swift */; };
+		B72B72362416DBAE007B7C10 /* Futures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757AE3720B8926D00850F92 /* Futures.framework */; };
+		B72B72452416DBBF007B7C10 /* Futures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757AE4420B8928200850F92 /* Futures.framework */; };
+		B72B724D2416DCE1007B7C10 /* FuturesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE8F20B8A60600850F92 /* FuturesTests.swift */; };
+		B72B724E2416DCE2007B7C10 /* FuturesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE8F20B8A60600850F92 /* FuturesTests.swift */; };
 		B757AE7A20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
 		B757AE7B20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
 		B757AE7C20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */; };
@@ -23,7 +28,6 @@
 		B757AE8920B8A5CE00850F92 /* Futures.h in Headers */ = {isa = PBXBuildFile; fileRef = B757AE8620B8A5C700850F92 /* Futures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B757AE8A20B8A5CF00850F92 /* Futures.h in Headers */ = {isa = PBXBuildFile; fileRef = B757AE8620B8A5C700850F92 /* Futures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B757AE8B20B8A5D000850F92 /* Futures.h in Headers */ = {isa = PBXBuildFile; fileRef = B757AE8620B8A5C700850F92 /* Futures.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B757AE9120B8A60600850F92 /* FuturesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B757AE8F20B8A60600850F92 /* FuturesTests.swift */; };
 		B768073820C6C02E00402ECB /* Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768073720C6C02E00402ECB /* Promises.swift */; };
 		B79FF3AD20BC6D1E001A625C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79FF3AC20BC6D1E001A625C /* Promise.swift */; };
 		B79FF3AE20BC6D1E001A625C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79FF3AC20BC6D1E001A625C /* Promise.swift */; };
@@ -36,45 +40,40 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B741F2A920B964CE0016B886 /* PBXContainerItemProxy */ = {
+		B72B72272416DB8D007B7C10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B757AE0A20B8921E00850F92;
 			remoteInfo = "Futures iOS";
 		};
-		B78DB35D23C92DCF00AC2DB7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B757AE4320B8928200850F92;
-			remoteInfo = "Futures macOS";
-		};
-		B78DB35F23C92DCF00AC2DB7 /* PBXContainerItemProxy */ = {
+		B72B72372416DBAE007B7C10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B757AE3620B8926D00850F92;
 			remoteInfo = "Futures tvOS";
 		};
-		B78DB36123C92DCF00AC2DB7 /* PBXContainerItemProxy */ = {
+		B72B72462416DBBF007B7C10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B757AE0220B8921E00850F92 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B757AE2920B8924600850F92;
-			remoteInfo = "Futures watchOS";
+			remoteGlobalIDString = B757AE4320B8928200850F92;
+			remoteInfo = "Futures macOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B72B72212416DB8D007B7C10 /* Futures iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Futures iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B72B72312416DBAE007B7C10 /* Futures tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Futures tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B72B72402416DBBF007B7C10 /* Futures macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Futures macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B72B724C2416DBF4007B7C10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B757AE0B20B8921E00850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B757AE1420B8921E00850F92 /* FuturesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuturesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B757AE2A20B8924600850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B757AE3720B8926D00850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B757AE4420B8928200850F92 /* Futures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B757AE7420B8A5BA00850F92 /* DispatchQueue+Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Promise.swift"; sourceTree = "<group>"; };
 		B757AE7520B8A5BA00850F92 /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
-		B757AE8420B8A5C700850F92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B757AE8620B8A5C700850F92 /* Futures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Futures.h; sourceTree = "<group>"; };
 		B757AE8720B8A5C700850F92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B757AE8F20B8A60600850F92 /* FuturesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuturesTests.swift; sourceTree = "<group>"; };
@@ -84,18 +83,34 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B72B721E2416DB8D007B7C10 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B72B72262416DB8D007B7C10 /* Futures.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B72B722E2416DBAE007B7C10 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B72B72362416DBAE007B7C10 /* Futures.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B72B723D2416DBBF007B7C10 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B72B72452416DBBF007B7C10 /* Futures.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B757AE0720B8921E00850F92 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B757AE1120B8921E00850F92 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B757AE1520B8921E00850F92 /* Futures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +138,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B72B724B2416DBF4007B7C10 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B72B724C2416DBF4007B7C10 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		B757AE0120B8921E00850F92 = {
 			isa = PBXGroup;
 			children = (
@@ -137,10 +160,12 @@
 			isa = PBXGroup;
 			children = (
 				B757AE0B20B8921E00850F92 /* Futures.framework */,
-				B757AE1420B8921E00850F92 /* FuturesTests.xctest */,
 				B757AE2A20B8924600850F92 /* Futures.framework */,
 				B757AE3720B8926D00850F92 /* Futures.framework */,
 				B757AE4420B8928200850F92 /* Futures.framework */,
+				B72B72212416DB8D007B7C10 /* Futures iOS Tests.xctest */,
+				B72B72312416DBAE007B7C10 /* Futures tvOS Tests.xctest */,
+				B72B72402416DBBF007B7C10 /* Futures macOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,19 +193,10 @@
 		B757AE8220B8A5C700850F92 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				B757AE8320B8A5C700850F92 /* FutureTests */,
+				B72B724B2416DBF4007B7C10 /* Tests */,
 				B757AE8520B8A5C700850F92 /* Futures */,
 			);
 			path = Framework;
-			sourceTree = "<group>";
-		};
-		B757AE8320B8A5C700850F92 /* FutureTests */ = {
-			isa = PBXGroup;
-			children = (
-				B757AE8420B8A5C700850F92 /* Info.plist */,
-			);
-			name = FutureTests;
-			path = FuturesTests;
 			sourceTree = "<group>";
 		};
 		B757AE8520B8A5C700850F92 /* Futures */ = {
@@ -246,6 +262,60 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B72B72202416DB8D007B7C10 /* Futures iOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B72B72292416DB8D007B7C10 /* Build configuration list for PBXNativeTarget "Futures iOS Tests" */;
+			buildPhases = (
+				B72B721D2416DB8D007B7C10 /* Sources */,
+				B72B721E2416DB8D007B7C10 /* Frameworks */,
+				B72B721F2416DB8D007B7C10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B72B72282416DB8D007B7C10 /* PBXTargetDependency */,
+			);
+			name = "Futures iOS Tests";
+			productName = "Futures iOS Tests";
+			productReference = B72B72212416DB8D007B7C10 /* Futures iOS Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B72B72302416DBAE007B7C10 /* Futures tvOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B72B72392416DBAE007B7C10 /* Build configuration list for PBXNativeTarget "Futures tvOS Tests" */;
+			buildPhases = (
+				B72B722D2416DBAE007B7C10 /* Sources */,
+				B72B722E2416DBAE007B7C10 /* Frameworks */,
+				B72B722F2416DBAE007B7C10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B72B72382416DBAE007B7C10 /* PBXTargetDependency */,
+			);
+			name = "Futures tvOS Tests";
+			productName = "Futures tvOS Tests";
+			productReference = B72B72312416DBAE007B7C10 /* Futures tvOS Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B72B723F2416DBBF007B7C10 /* Futures macOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B72B72482416DBBF007B7C10 /* Build configuration list for PBXNativeTarget "Futures macOS Tests" */;
+			buildPhases = (
+				B72B723C2416DBBF007B7C10 /* Sources */,
+				B72B723D2416DBBF007B7C10 /* Frameworks */,
+				B72B723E2416DBBF007B7C10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B72B72472416DBBF007B7C10 /* PBXTargetDependency */,
+			);
+			name = "Futures macOS Tests";
+			productName = "Futures macOS Tests";
+			productReference = B72B72402416DBBF007B7C10 /* Futures macOS Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B757AE0A20B8921E00850F92 /* Futures iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B757AE1F20B8921F00850F92 /* Build configuration list for PBXNativeTarget "Futures iOS" */;
@@ -264,27 +334,6 @@
 			productName = Future;
 			productReference = B757AE0B20B8921E00850F92 /* Futures.framework */;
 			productType = "com.apple.product-type.framework";
-		};
-		B757AE1320B8921E00850F92 /* FuturesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B757AE2220B8921F00850F92 /* Build configuration list for PBXNativeTarget "FuturesTests" */;
-			buildPhases = (
-				B757AE1020B8921E00850F92 /* Sources */,
-				B757AE1120B8921E00850F92 /* Frameworks */,
-				B757AE1220B8921E00850F92 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B78DB35E23C92DCF00AC2DB7 /* PBXTargetDependency */,
-				B78DB36023C92DCF00AC2DB7 /* PBXTargetDependency */,
-				B78DB36223C92DCF00AC2DB7 /* PBXTargetDependency */,
-				B741F2AA20B964CE0016B886 /* PBXTargetDependency */,
-			);
-			name = FuturesTests;
-			productName = FutureTests;
-			productReference = B757AE1420B8921E00850F92 /* FuturesTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		B757AE2920B8924600850F92 /* Futures watchOS */ = {
 			isa = PBXNativeTarget;
@@ -349,15 +398,20 @@
 		B757AE0220B8921E00850F92 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Formbound;
 				TargetAttributes = {
-					B757AE0A20B8921E00850F92 = {
-						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 1010;
+					B72B72202416DB8D007B7C10 = {
+						CreatedOnToolsVersion = 11.3.1;
 					};
-					B757AE1320B8921E00850F92 = {
+					B72B72302416DBAE007B7C10 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					B72B723F2416DBBF007B7C10 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					B757AE0A20B8921E00850F92 = {
 						CreatedOnToolsVersion = 9.3.1;
 						LastSwiftMigration = 1010;
 					};
@@ -389,23 +443,39 @@
 			projectRoot = "";
 			targets = (
 				B757AE0A20B8921E00850F92 /* Futures iOS */,
-				B757AE1320B8921E00850F92 /* FuturesTests */,
 				B757AE2920B8924600850F92 /* Futures watchOS */,
 				B757AE3620B8926D00850F92 /* Futures tvOS */,
 				B757AE4320B8928200850F92 /* Futures macOS */,
+				B72B72202416DB8D007B7C10 /* Futures iOS Tests */,
+				B72B72302416DBAE007B7C10 /* Futures tvOS Tests */,
+				B72B723F2416DBBF007B7C10 /* Futures macOS Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B757AE0920B8921E00850F92 /* Resources */ = {
+		B72B721F2416DB8D007B7C10 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B757AE1220B8921E00850F92 /* Resources */ = {
+		B72B722F2416DBAE007B7C10 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B72B723E2416DBBF007B7C10 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B757AE0920B8921E00850F92 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -495,6 +565,30 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B72B721D2416DB8D007B7C10 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B72B722C2416DB9A007B7C10 /* FuturesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B72B722D2416DBAE007B7C10 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B72B724D2416DCE1007B7C10 /* FuturesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B72B723C2416DBBF007B7C10 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B72B724E2416DCE2007B7C10 /* FuturesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B757AE0620B8921E00850F92 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -504,14 +598,6 @@
 				B79FF3AD20BC6D1E001A625C /* Promise.swift in Sources */,
 				B768073820C6C02E00402ECB /* Promises.swift in Sources */,
 				B757AE7A20B8A5BA00850F92 /* DispatchQueue+Promise.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B757AE1020B8921E00850F92 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B757AE9120B8A60600850F92 /* FuturesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,29 +640,163 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B741F2AA20B964CE0016B886 /* PBXTargetDependency */ = {
+		B72B72282416DB8D007B7C10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B757AE0A20B8921E00850F92 /* Futures iOS */;
-			targetProxy = B741F2A920B964CE0016B886 /* PBXContainerItemProxy */;
+			targetProxy = B72B72272416DB8D007B7C10 /* PBXContainerItemProxy */;
 		};
-		B78DB35E23C92DCF00AC2DB7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B757AE4320B8928200850F92 /* Futures macOS */;
-			targetProxy = B78DB35D23C92DCF00AC2DB7 /* PBXContainerItemProxy */;
-		};
-		B78DB36023C92DCF00AC2DB7 /* PBXTargetDependency */ = {
+		B72B72382416DBAE007B7C10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B757AE3620B8926D00850F92 /* Futures tvOS */;
-			targetProxy = B78DB35F23C92DCF00AC2DB7 /* PBXContainerItemProxy */;
+			targetProxy = B72B72372416DBAE007B7C10 /* PBXContainerItemProxy */;
 		};
-		B78DB36223C92DCF00AC2DB7 /* PBXTargetDependency */ = {
+		B72B72472416DBBF007B7C10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B757AE2920B8924600850F92 /* Futures watchOS */;
-			targetProxy = B78DB36123C92DCF00AC2DB7 /* PBXContainerItemProxy */;
+			target = B757AE4320B8928200850F92 /* Futures macOS */;
+			targetProxy = B72B72462416DBBF007B7C10 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		B72B722A2416DB8D007B7C10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Framework/Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.formbound.Futures-iOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B72B722B2416DB8D007B7C10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Framework/Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.formbound.Futures-iOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B72B723A2416DBAE007B7C10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Framework/Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.formbound.Futures-tvOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.2;
+			};
+			name = Debug;
+		};
+		B72B723B2416DBAE007B7C10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Framework/Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.formbound.Futures-tvOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.2;
+			};
+			name = Release;
+		};
+		B72B72492416DBBF007B7C10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Framework/Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.formbound.Futures-macOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B72B724A2416DBBF007B7C10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Framework/Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.formbound.Futures-macOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		B757AE1D20B8921F00850F92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -753,55 +973,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		B757AE2320B8921F00850F92 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ADDITIONAL_SDKS = "watchOS tvOS macOS";
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XPHB8XN6PN;
-				INFOPLIST_FILE = Framework/FuturesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.FuturesTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchos watchossimulator macosx appletvos appletvsimulator";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
-			};
-			name = Debug;
-		};
-		B757AE2420B8921F00850F92 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ADDITIONAL_SDKS = "watchOS tvOS macOS";
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XPHB8XN6PN;
-				INFOPLIST_FILE = Framework/FuturesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.formbound.FuturesTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchos watchossimulator macosx appletvos appletvsimulator";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 arm64e armv7 armv7s x86_64";
 			};
 			name = Release;
 		};
@@ -983,6 +1154,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B72B72292416DB8D007B7C10 /* Build configuration list for PBXNativeTarget "Futures iOS Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B72B722A2416DB8D007B7C10 /* Debug */,
+				B72B722B2416DB8D007B7C10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B72B72392416DBAE007B7C10 /* Build configuration list for PBXNativeTarget "Futures tvOS Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B72B723A2416DBAE007B7C10 /* Debug */,
+				B72B723B2416DBAE007B7C10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B72B72482416DBBF007B7C10 /* Build configuration list for PBXNativeTarget "Futures macOS Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B72B72492416DBBF007B7C10 /* Debug */,
+				B72B724A2416DBBF007B7C10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B757AE0520B8921E00850F92 /* Build configuration list for PBXProject "Futures" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -997,15 +1195,6 @@
 			buildConfigurations = (
 				B757AE2020B8921F00850F92 /* Debug */,
 				B757AE2120B8921F00850F92 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B757AE2220B8921F00850F92 /* Build configuration list for PBXNativeTarget "FuturesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B757AE2320B8921F00850F92 /* Debug */,
-				B757AE2420B8921F00850F92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

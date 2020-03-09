@@ -1,0 +1,26 @@
+#!/bin/bash -ef -o pipefail
+
+if [ -z "$1" ]
+    then
+    echo "Action not specified"
+    exit 1
+fi
+
+if [ -z "$2" ]
+    then
+    echo "Platform not specified"
+    exit 1
+fi
+
+echo "Running xcodebuild $1 for $2"
+
+if [ -z "$3" ]
+  then
+    set -o pipefail && env NSUnbufferedIO=YES \
+    xcodebuild clean $1 -project Futures.xcodeproj -scheme "Futures $2" | xcpretty
+  else
+    set -o pipefail && env NSUnbufferedIO=YES \
+    instruments -s devices | grep "$3" | sort -R | grep -m 1 "" | sed 's/.*\[\([^]]*\)].*/\1/' \
+    | xargs -I {} \
+    xcodebuild clean $1 -project Futures.xcodeproj -scheme "Futures $2" -destination "id={}" | xcpretty
+fi
