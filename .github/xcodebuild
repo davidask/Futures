@@ -22,7 +22,7 @@ if [ -z "$3" ]
     xcodebuild clean $1 -project Futures.xcodeproj -scheme "Futures $2" | xcpretty
   else
     set -o pipefail && env NSUnbufferedIO=YES \
-    instruments -s devices | grep "$3" | egrep '[0-9A-F]{8}-([0-9A-F]{4}-){3}[0-9A-F]{12}' -o \
+    instruments -s devices | grep "$3" | sort -R | grep -m 3 "" | egrep '[0-9A-F]{8}-([0-9A-F]{4}-){3}[0-9A-F]{12}' -o \
     | xargs -I {} \
     xcodebuild clean $1 -project Futures.xcodeproj -scheme "Futures $2" -destination "id={}" | xcpretty
 fi
