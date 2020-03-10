@@ -1,8 +1,8 @@
 /// A typed container in which to provide specialized futures.
 ///
-/// See `FutureSupport`.
-public struct Promises<Subject> {
-    public let subject: Subject
+/// See `PromisesExtended`.
+public struct Promises<Source> {
+    public let source: Source
 }
 
 /// A protocol that can be used to add support for futures to a type of your choice.
@@ -10,21 +10,21 @@ public struct Promises<Subject> {
 /// When you want an API that supports futures, i types that already have methods with callbacks,
 /// the signatures of the method providing the `Future<Value>` and the original function can conflict, especially
 /// when working with methods where a completion callback is optional.
-/// To get around this, when this protocol is conformed to by a type, it will expose one instance property, `futures`,
-/// and one static property also named `futures`. These properties both return a `FutureProvider<Source>` which you
-/// can extend to provide support for futures to any type. The returned `FutureProvider<Source>` provides the property
+/// To get around this, when this protocol is conformed to by a type, it will expose one instance property, `promise`,
+/// and one static property also named `promise`. These properties both return a `Promises<Source>` which you
+/// can extend to provide support for futures to any type. The returned `Promises<Source>` provides the property
 /// `source` for access to the instance it should be acting on.
 ///
 /// As an example, here's how we implement support for presenting view controllers:
 /// ```
-/// extension UIViewController: FutureSupport {}
+/// extension UIViewController: PromisesExtended {}
 ///
-/// extension Promises where Subject: UIViewController {
+/// extension Promises where Source: UIViewController {
 ///     func present(_ viewControllerToPresent: UIViewController, animated: Bool) -> Future<Void> {
 ///
 ///         let promise = Promise<Void>()
 ///         DispatchQueue.main.async {
-///             self.subject.present(viewControllerToPresent, animated: animated) {
+///             self.source.present(viewControllerToPresent, animated: animated) {
 ///                 promise.fulfill()
 ///             }
 ///         }
@@ -42,13 +42,13 @@ public struct Promises<Subject> {
 ///     someOtherFutureReturningMethod()
 /// }
 /// ```
-public protocol PromisesSubject {}
+public protocol PromisesExtended {}
 
-public extension PromisesSubject {
+public extension PromisesExtended {
 
     /// Returns an instance of `Promises<Self>`
     var promise: Promises<Self> {
-        return Promises(subject: self)
+        return Promises(source: self)
     }
 
     /// Returns the type of `Promises<Self>`
