@@ -16,7 +16,7 @@
     },
     {
       "file": "/Users/davidask/Github/formbound/Futures/Sources/Futures/Future.swift",
-      "line": 404,
+      "line": 428,
       "symbol": "Future.mapIfRejected(on:callback:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

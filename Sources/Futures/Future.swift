@@ -292,6 +292,14 @@ public extension Future {
         return promise.future
     }
 
+    /// :nodoc:
+    @available(*, deprecated, renamed: "flatMap")
+    func then<NewValue>(
+    on queue: DispatchQueue = .futures,
+    callback: @escaping (_ value: Value) -> Future<NewValue>) -> Future<NewValue> {
+        flatMap(on: queue, callback: callback)
+    }
+
     /// When the current `Future` is rejected, run the provided callback reurning a new `Future<Value>`.
     ///
     /// This allows you to proceed with some other operation if the current `Future` was rejected, due to an error
@@ -328,6 +336,14 @@ public extension Future {
         return promise.future
     }
 
+    /// :nodoc:
+    @available(*, deprecated, renamed: "flatMapIfRejected")
+    func thenIfRejected(
+    on queue: DispatchQueue = .futures,
+    callback: @escaping(Error) -> Future<Value>) -> Future<Value> {
+        flatMapIfRejected(on: queue, callback: callback)
+    }
+
     /// When the current `Future` is fulfilled, run the provided callback returning a fulfilled value of the
     /// `Future<NewValue>` returned by this method.
     ///
@@ -348,6 +364,14 @@ public extension Future {
                 return try callback(value)
             }
         }
+    }
+
+    /// :nodoc:
+    @available(*, deprecated, renamed: "flatMapThrowing")
+    func thenThrowing<NewValue>(
+    on queue: DispatchQueue = .futures,
+    callback: @escaping (Value) throws -> NewValue) -> Future<NewValue> {
+        flatMapThrowing(on: queue, callback: callback)
     }
 
     /// When the current `Future` is fulfilled, run the provided callback returning a fulfilled value of the
