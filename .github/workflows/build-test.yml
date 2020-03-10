@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build and test
-        run: .github/xcodebuild test macOS
+        run: .github/xcodebuild Futures.xcodeproj "Futures macOS" test
   iOS:
     name: Test iOS
     runs-on: macos-latest
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build and test
-        run: .github/xcodebuild test iOS "iPhone"
+        run: .github/xcodebuild Futures.xcodeproj "Futures iOS" test iPhone
   tvOS:
     name: Test tvOS
     runs-on: macos-latest
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build and test
-        run: .github/xcodebuild test tvOS "Apple TV"
+        run: .github/xcodebuild Futures.xcodeproj "Futures tvOS" test "Apple TV"
   watchOS:
     name: Build watchOS
     runs-on: macos-latest
@@ -35,7 +35,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: .github/xcodebuild build watchOS "Apple Watch"
+        run: .github/xcodebuild Futures.xcodeproj "Futures watchOS" build
 
   spm-macOS:
     name: Test Swift Package manager (macOS)
