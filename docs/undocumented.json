@@ -29,9 +29,9 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/davidask/Github/formbound/Futures/Sources/Futures/Promises.swift",
+      "file": "/Users/davidask/Github/formbound/Futures/Sources/Futures/PromisesExtended.swift",
       "line": 5,
-      "symbol": "Promises.subject",
+      "symbol": "Promises.source",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }

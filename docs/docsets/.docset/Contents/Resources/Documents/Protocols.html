@@ -90,7 +90,7 @@
                 <a class="nav-group-task-link" href="Protocols/AnyFutureObserver.html">AnyFutureObserver</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/PromisesSubject.html">PromisesSubject</a>
+                <a class="nav-group-task-link" href="Protocols/PromisesExtended.html">PromisesExtended</a>
               </li>
             </ul>
           </li>
@@ -180,9 +180,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7Futures15PromisesSubjectP"></a>
-                    <a name="//apple_ref/swift/Protocol/PromisesSubject" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7Futures15PromisesSubjectP">PromisesSubject</a>
+                    <a name="/s:7Futures16PromisesExtendedP"></a>
+                    <a name="//apple_ref/swift/Protocol/PromisesExtended" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures16PromisesExtendedP">PromisesExtended</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -195,20 +195,20 @@
 <p>When you want an API that supports futures, i types that already have methods with callbacks,
 the signatures of the method providing the <code><a href="Classes/Future.html">Future&lt;Value&gt;</a></code> and the original function can conflict, especially
 when working with methods where a completion callback is optional.
-To get around this, when this protocol is conformed to by a type, it will expose one instance property, <code>futures</code>,
-and one static property also named <code>futures</code>. These properties both return a <code>FutureProvider&lt;Source&gt;</code> which you
-can extend to provide support for futures to any type. The returned <code>FutureProvider&lt;Source&gt;</code> provides the property
+To get around this, when this protocol is conformed to by a type, it will expose one instance property, <code>promise</code>,
+and one static property also named <code>promise</code>. These properties both return a <code><a href="Structs/Promises.html">Promises&lt;Source&gt;</a></code> which you
+can extend to provide support for futures to any type. The returned <code><a href="Structs/Promises.html">Promises&lt;Source&gt;</a></code> provides the property
 <code>source</code> for access to the instance it should be acting on.</p>
 
 <p>As an example, here&rsquo;s how we implement support for presenting view controllers:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIViewController</span><span class="p">:</span> <span class="kt">FutureSupport</span> <span class="p">{}</span>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIViewController</span><span class="p">:</span> <span class="kt">PromisesExtended</span> <span class="p">{}</span>
 
-<span class="kd">extension</span> <span class="kt">Promises</span> <span class="k">where</span> <span class="kt">Subject</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+<span class="kd">extension</span> <span class="kt">Promises</span> <span class="k">where</span> <span class="kt">Source</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">present</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewControllerToPresent</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span> <span class="p">{</span>
 
         <span class="k">let</span> <span class="nv">promise</span> <span class="o">=</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span><span class="p">()</span>
         <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
-            <span class="k">self</span><span class="o">.</span><span class="n">subject</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">viewControllerToPresent</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="n">animated</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">viewControllerToPresent</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="n">animated</span><span class="p">)</span> <span class="p">{</span>
                 <span class="n">promise</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">()</span>
             <span class="p">}</span>
         <span class="p">}</span>
@@ -227,13 +227,13 @@ can extend to provide support for futures to any type. The returned <code>Future
 <span class="p">}</span>
 </code></pre>
 
-                        <a href="Protocols/PromisesSubject.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PromisesExtended.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PromisesSubject</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PromisesExtended</span></code></pre>
 
                         </div>
                       </div>
