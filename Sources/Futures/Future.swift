@@ -269,7 +269,6 @@ public extension Future {
     ///   - queue: DispatchQueue on which to resolve and return a new future.
     ///            Defaults to `DispatchQueue.futures`.
     ///   - callback: A function that will receive the value of this `Future` and return a new `Future<Value>`.
-    ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
     ///   - value: The fulfilled value of this `Future<Value>`.
     /// - Returns: A future that will receive the eventual value.
     func flatMap<NewValue>(
@@ -312,8 +311,6 @@ public extension Future {
     ///   - queue: DispatchQueue on which to resolve and return a new future.
     ///            Defaults to `DispatchQueue.futures`.
     ///   - callback: A function that will receive the error resulting in this `Future<Value>`s rejection.
-    ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
-    ///           and return a new `Future<Value>`.
     /// - Returns: A future that will receive the eventual value.
     func flatMapIfRejected(
         on queue: DispatchQueue = .futures,
@@ -380,8 +377,7 @@ public extension Future {
     /// - Parameters:
     ///   - queue: DispatchQueue on which to resolve and return a new value.
     ///            Defaults to `DispatchQueue.futures`.
-    ///   - callback: A function that will receive the value of this `Future` and return a new `Future<Value>`.
-    ///           Throwing an error in this function will result in the rejection of the returned `Future<Value>`.
+    ///   - callback: A function that will receive the value of this `Future` and return a new `Future<Value>`
     /// - Returns: A future that will receive the eventual value.
     func map<NewValue>(
         on queue: DispatchQueue = .futures,
@@ -394,6 +390,22 @@ public extension Future {
         }
 
         return promise.future
+    }
+
+    /// When the current `Future` is fulfilled, run the provided callback returning a fulfilled value of the
+    /// `Future<NewValue>` returned by this method.
+    ///
+    /// - Parameters:
+    ///   - queue: DispatchQueue on which to resolve and return a new value.
+    ///            Defaults to `DispatchQueue.futures`.
+    ///   - keyPath: A `KeyPath<Value, NewValue>` pointing to a value to return on the receiving `Future<Value>`.
+    /// - Returns: A future that will receive the eventual value.
+    func map<NewValue>(
+        _ keyPath: KeyPath<Value, NewValue>,
+        on queue: DispatchQueue = .futures) -> Future<NewValue> {
+        map { value in
+            value[keyPath: keyPath]
+        }
     }
 
     /// When the current `Future` is rejected, run the provided callback returning a fulfilled value of the

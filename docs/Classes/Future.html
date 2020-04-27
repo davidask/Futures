@@ -562,8 +562,7 @@ Note that, based on the result, you can decide what asynchronous work to perform
                               </td>
                               <td>
                                 <div>
-                                  <p>A function that will receive the value of this <code>Future</code> and return a new <code>Future&lt;Value&gt;</code>.
-  Throwing an error in this function will result in the rejection of the returned <code>Future&lt;Value&gt;</code>.</p>
+                                  <p>A function that will receive the value of this <code>Future</code> and return a new <code>Future&lt;Value&gt;</code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -646,9 +645,7 @@ thrown, or a <code>Future</code> which is rejected should be returned.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A function that will receive the error resulting in this <code>Future&lt;Value&gt;</code>s rejection.
-  Throwing an error in this function will result in the rejection of the returned <code>Future&lt;Value&gt;</code>.
-  and return a new <code>Future&lt;Value&gt;</code>.</p>
+                                  <p>A function that will receive the error resulting in this <code>Future&lt;Value&gt;</code>s rejection.</p>
                                 </div>
                               </td>
                             </tr>
@@ -783,8 +780,73 @@ thrown, or a <code>Future</code> which is rejected should be returned.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A function that will receive the value of this <code>Future</code> and return a new <code>Future&lt;Value&gt;</code>.
-  Throwing an error in this function will result in the rejection of the returned <code>Future&lt;Value&gt;</code>.</p>
+                                  <p>A function that will receive the value of this <code>Future</code> and return a new <code>Future&lt;Value&gt;</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A future that will receive the eventual value.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Futures6FutureC3map_2onACyqd__Gs7KeyPathCyxqd__G_So17OS_dispatch_queueCtlF"></a>
+                    <a name="//apple_ref/swift/Method/map(_:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Futures6FutureC3map_2onACyqd__Gs7KeyPathCyxqd__G_So17OS_dispatch_queueCtlF">map(_:on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the current <code>Future</code> is fulfilled, run the provided callback returning a fulfilled value of the
+<code>Future&lt;NewValue&gt;</code> returned by this method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">Value</span><span class="p">,</span> <span class="kt">NewValue</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">on</span> <span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span> <span class="o">=</span> <span class="o">.</span><span class="n">futures</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">NewValue</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>DispatchQueue on which to resolve and return a new value.
+   Defaults to <code><a href="../Extensions/DispatchQueue.html#/s:So17OS_dispatch_queueC7FuturesE7futuresABvpZ">DispatchQueue.futures</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>keyPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code>KeyPath&lt;Value, NewValue&gt;</code> pointing to a value to return on the receiving <code>Future&lt;Value&gt;</code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1562,7 +1624,7 @@ consider using <code>flatMap()</code>, <code>flatMapThrowing()</code>, or some o
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2020-03-10)</p>
+      <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external">Formbound</a>. All rights reserved. (Last updated: 2020-04-27)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
