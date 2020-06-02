@@ -125,7 +125,7 @@ extension FutureObserver: Equatable {
 /// prevent receivers of `Future<Value>` to resolve the future themselves.
 public final class Future<Value>: AnyFuture {
 
-    fileprivate let stateQueue = DispatchQueue(label: "com.formbound.future.state", attributes: .concurrent)
+    fileprivate let stateQueue = DispatchQueue(label: "future.state", attributes: .concurrent)
 
     private var observers: [FutureObserver<Value>] = []
 

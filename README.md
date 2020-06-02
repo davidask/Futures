@@ -1,5 +1,5 @@
 # Futures
-![Build & Test](https://github.com/formbound/Futures/workflows/Build%20&%20Test/badge.svg)
+![Tests](https://github.com/davidask/Futures/workflows/Tests/badge.svg)
 
 Futures is a cross-platform framework for simplifying asynchronous programming, written in Swift. It's lightweight, fast, and easy to understand.
 
@@ -114,7 +114,7 @@ promise(String.self) { completion in
 
 ## Documentation
 
-The complete documentation can be found [here](https://formbound.github.io/Futures/).
+The complete documentation can be found [here](https://davidask.github.io/Futures/).
 
 ## Getting started
 
@@ -125,7 +125,7 @@ If you want to depend on Futures in your project, it's as simple as adding a `d
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/formbound/Futures.git", from: "1.6.0")
+    .package(url: "https://github.com/davidask/Futures.git", from: "1.6.0")
 ]
 ```
 
@@ -142,3 +142,10 @@ Lastly, import the module in your Swift files
 ```swift
 import Futures
 ```
+
+## Contribute
+Please feel welcome contributing to **Futures**, check the ``LICENSE`` file for more info.
+
+## Credits
+
+David Ask

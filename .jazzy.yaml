@@ -1,7 +1,7 @@
 output: docs
 clean: true
 exclude: [Packages]
-author: Formbound
-github_url: https://github.com/formbound/Futures
+author: David Ask
+github_url: https://github.com/davidask/Futures
 readme: README.md
 theme: fullwidth
