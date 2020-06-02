@@ -558,7 +558,6 @@ public extension Future {
                 case .failure(let error):
                     promise.reject(error)
                 }
-
             }
         }
 
@@ -684,7 +683,6 @@ public extension Future {
         self.addObserver(observer)
 
         return observer
-
     }
 }
 
