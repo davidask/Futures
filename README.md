@@ -132,7 +132,7 @@ dependencies: [
 Or, add a dependency in your `Cartfile`:
 
 ```
-github "formbound/Futures"
+github "davidask/Futures"
 ```
 
 More details on using Carthage can be found [here](https://github.com/Carthage/Carthage#quick-start).
