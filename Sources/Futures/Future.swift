@@ -294,8 +294,8 @@ public extension Future {
     /// :nodoc:
     @available(*, deprecated, renamed: "flatMap")
     func then<NewValue>(
-    on queue: DispatchQueue = .futures,
-    callback: @escaping (_ value: Value) -> Future<NewValue>) -> Future<NewValue> {
+        on queue: DispatchQueue = .futures,
+        callback: @escaping (_ value: Value) -> Future<NewValue>) -> Future<NewValue> {
         flatMap(on: queue, callback: callback)
     }
 
@@ -336,8 +336,8 @@ public extension Future {
     /// :nodoc:
     @available(*, deprecated, renamed: "flatMapIfRejected")
     func thenIfRejected(
-    on queue: DispatchQueue = .futures,
-    callback: @escaping(Error) -> Future<Value>) -> Future<Value> {
+        on queue: DispatchQueue = .futures,
+        callback: @escaping(Error) -> Future<Value>) -> Future<Value> {
         flatMapIfRejected(on: queue, callback: callback)
     }
 
@@ -366,8 +366,8 @@ public extension Future {
     /// :nodoc:
     @available(*, deprecated, renamed: "flatMapThrowing")
     func thenThrowing<NewValue>(
-    on queue: DispatchQueue = .futures,
-    callback: @escaping (Value) throws -> NewValue) -> Future<NewValue> {
+        on queue: DispatchQueue = .futures,
+        callback: @escaping (Value) throws -> NewValue) -> Future<NewValue> {
         flatMapThrowing(on: queue, callback: callback)
     }
 
@@ -440,6 +440,14 @@ public extension Future {
     func mapIfRejected(on queue: DispatchQueue = .futures, callback: @escaping (Error) -> Value) -> Future<Value> {
         return recover(on: queue, callback: callback)
     }
+
+    func print(on queue: DispatchQueue = .futures) -> Future<Value> {
+        whenFulfilled { value in
+            Swift.print(value)
+        }
+
+        return self
+    }
 }
 
 public extension Future {
@@ -492,11 +500,11 @@ public extension Future {
         with combiningFunction: @escaping (Value, NewValue) -> Future<Value>) -> Future<Value>
         where S.Element == Future<NewValue> {
 
-        return futures.reduce(self) { future1, future2 in
-            return future1.and(future2, on: queue).flatMap(on: queue) { value1, value2 in
-                return combiningFunction(value1, value2)
+            return futures.reduce(self) { future1, future2 in
+                return future1.and(future2, on: queue).flatMap(on: queue) { value1, value2 in
+                    return combiningFunction(value1, value2)
+                }
             }
-        }
     }
 
     /// Returns a new `Future<Value>` that fires only when all the provided `Future<NewValue>`s have been resolved.
@@ -521,11 +529,11 @@ public extension Future {
         nextPartialResult: @escaping (Value, NewValue) -> Value) -> Future<Value>
         where S.Element == Future<NewValue> {
 
-        let initialResult = Future<Value>(fulfilledWith: initialResult)
+            let initialResult = Future<Value>(fulfilledWith: initialResult)
 
-        return initialResult.fold(futures, on: queue) { value1, value2 in
-            return Future(fulfilledWith: nextPartialResult(value1, value2))
-        }
+            return initialResult.fold(futures, on: queue) { value1, value2 in
+                return Future(fulfilledWith: nextPartialResult(value1, value2))
+            }
     }
 
     /// Returns a new `Future<Value>` that will resolve with result of this `Future` **after**
@@ -599,18 +607,9 @@ public extension Future {
     /// - Returns: A future that will receive the eventual value.
     @discardableResult
     func discard(on queue: DispatchQueue = .futures) -> Future<Void> {
-
-        let promise = Promise<Void>()
-
-        whenFulfilled(on: queue) { _ in
-            promise.fulfill()
+        map(on: queue) { _ in
+            return ()
         }
-
-        whenRejected { error in
-            promise.reject(error)
-        }
-
-        return promise.future
     }
 }
 

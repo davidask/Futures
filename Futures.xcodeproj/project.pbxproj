@@ -22,7 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		OBJ_30 /* AnyFuture.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* AnyFuture.swift */; };
-		OBJ_31 /* DispatchQueue+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* DispatchQueue+Promise.swift */; };
+		OBJ_31 /* DispatchQueue+Futures.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* DispatchQueue+Futures.swift */; };
 		OBJ_32 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* Future.swift */; };
 		OBJ_33 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Promise.swift */; };
 		OBJ_34 /* PromisesExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* PromisesExtended.swift */; };
@@ -51,7 +51,7 @@
 /* Begin PBXFileReference section */
 		"Futures::Futures::Product" /* Futures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Futures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Futures::FuturesTests::Product" /* FuturesTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_10 /* DispatchQueue+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Promise.swift"; sourceTree = "<group>"; };
+		OBJ_10 /* DispatchQueue+Futures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Futures.swift"; sourceTree = "<group>"; };
 		OBJ_11 /* Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		OBJ_13 /* PromisesExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisesExtended.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -123,7 +123,6 @@
 				OBJ_23 /* LICENSE */,
 				OBJ_24 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -138,7 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* AnyFuture.swift */,
-				OBJ_10 /* DispatchQueue+Promise.swift */,
+				OBJ_10 /* DispatchQueue+Futures.swift */,
 				OBJ_11 /* Future.swift */,
 				OBJ_12 /* Promise.swift */,
 				OBJ_13 /* PromisesExtended.swift */,
@@ -214,7 +213,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_17 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -254,7 +253,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_30 /* AnyFuture.swift in Sources */,
-				OBJ_31 /* DispatchQueue+Promise.swift in Sources */,
+				OBJ_31 /* DispatchQueue+Futures.swift in Sources */,
 				OBJ_32 /* Future.swift in Sources */,
 				OBJ_33 /* Promise.swift in Sources */,
 				OBJ_34 /* PromisesExtended.swift in Sources */,
